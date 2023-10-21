@@ -2,7 +2,7 @@
 
 Welcome to the OneStopShop repo!
 
-The wiki contains more info on the development process and the team.
+The [wiki](https://github.com/CMPUT301F23T27/OneStopShop/wiki) contains more info on the development process and the team.
 
 # Members:
 
