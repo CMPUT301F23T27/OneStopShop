@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- Left column -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Item name -->
+            <TextView
+                android:id="@+id/itemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <!-- Purchase date -->
+            <TextView
+                android:id="@+id/purchaseDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Purchase Date" />
+        </LinearLayout>
+
+        <!-- Right column -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Estimated value -->
+            <TextView
+                android:id="@+id/estimatedValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estimated Value"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <!-- Associated tag -->
+            <TextView
+                android:id="@+id/tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Associated Tags" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Line Separator  -->
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#E0E0E0" />
+
+</LinearLayout>
