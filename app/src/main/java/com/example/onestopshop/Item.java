@@ -2,20 +2,22 @@ package com.example.onestopshop;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Item {
     private String itemName;
     private String description;
-    private Date purchaseDate;
+    private String purchaseDate;
     private String make;
     private String model;
     private double estimatedValue;
     private String comment;
     private String serialNumber;
-    private String tags;
+    private ArrayList<String> tags;
 
-    public Item(String itemName, String description, Date purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, String tags) {
+
+    public Item(String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, ArrayList<String> tags) {
         this.itemName = itemName;
         this.description = description;
         this.purchaseDate = purchaseDate;
@@ -26,7 +28,17 @@ public class Item {
         this.serialNumber = serialNumber;
         this.tags = tags;
     }
-    public Item(String itemName, Date purchaseDate, double estimatedValue, String tags) {
+    public Item(String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String serialNumber, ArrayList<String> tags) {
+        this.itemName = itemName;
+        this.description = description;
+        this.purchaseDate = purchaseDate;
+        this.make = make;
+        this.model = model;
+        this.estimatedValue = estimatedValue;
+        this.serialNumber = serialNumber;
+        this.tags = tags;
+    }
+    public Item(String itemName, String purchaseDate, double estimatedValue, ArrayList<String> tags) {
         this.itemName = itemName;
         this.purchaseDate = purchaseDate;
         this.estimatedValue = estimatedValue;
@@ -51,11 +63,11 @@ public class Item {
         this.description = description;
     }
 
-    public Date getPurchaseDate() {
+    public String getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
+    public void setPurchaseDate(String purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
@@ -99,10 +111,10 @@ public class Item {
         this.serialNumber = serialNumber;
     }
 
-    public String getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
-    public void setTags(String tags) {
+    public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
 }

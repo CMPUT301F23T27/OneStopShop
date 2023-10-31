@@ -47,18 +47,18 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        //set text fields for each item in recyclerView
         Item item = inventory.get(position);
 
         holder.itemName.setText(item.getItemName());
-        // Format the date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        holder.purchaseDate.setText(sdf.format(item.getPurchaseDate()));
+
+
+        holder.purchaseDate.setText(item.getPurchaseDate());
 
         // Format the estimated value to 2 decimal places
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         holder.estimatedValue.setText("$" + decimalFormat.format(item.getEstimatedValue()));
-        holder.tags.setText(item.getTags());
+        holder.tags.setText(item.getTags().toString());
 
     }
 
