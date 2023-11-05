@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070707"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="146dp"
+        android:layout_height="152dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/baseline_person_24"
+        android:background="@drawable/circle"
+        android:scaleType="centerCrop"
+        />
+
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileImage"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="71dp"
+        android:text="Name: "
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="71dp"
+        android:text="Email: "
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#BD2AC0"
+        android:text="Log Out"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
