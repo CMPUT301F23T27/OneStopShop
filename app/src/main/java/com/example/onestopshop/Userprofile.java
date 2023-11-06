@@ -3,7 +3,6 @@ package com.example.onestopshop;
 public class Userprofile{
     private String name;
     private String email;
-    private String phoneNumber;
     private String imageUrl;
 
     public String getName() {
@@ -25,15 +24,6 @@ public class Userprofile{
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-
-        this.phoneNumber = phoneNumber;
-    }
 
     public String getImageUrl() {
 
