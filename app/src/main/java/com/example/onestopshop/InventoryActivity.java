@@ -27,14 +27,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private ArrayList<Item> dataList;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
-<<<<<<< HEAD
     private InventoryController inventoryController;
-=======
     private FirebaseFirestore db;
     private CollectionReference itemsRef;
     private TextView totalValueTextView;
     private double totalEstimatedValue;
->>>>>>> 9e8737a6299f7bc19f9bb9d8d6c85d7a9f80d357
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,46 +41,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         inventoryController.setListener(this);
         dataList = new ArrayList<>();
 
-
+        totalValueTextView = findViewById(R.id.total_estimated_value);
         recyclerView = findViewById(R.id.item_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
-
-<<<<<<< HEAD
-
-=======
-        totalValueTextView = findViewById(R.id.total_estimated_value);
-
-        itemsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot querySnapshots,
-                                @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.e("Firestore", error.toString());
-                    return;
-                }
-                if (querySnapshots != null) {
-                    dataList.clear();
-                    totalEstimatedValue = 0;
-                    for (QueryDocumentSnapshot doc: querySnapshots) {
-                        String itemName = doc.getString("itemName");
-                        String purchaseDate = doc.getString("purchaseDate");
-                        double estimatedValue = doc.getDouble("estimatedValue");
-                        totalEstimatedValue += estimatedValue;
-                        ArrayList<String> tags = (ArrayList<String>) doc.get("tags");
-                        Log.d("Firestore", String.format("Item(%s, %s) fetched",
-                                itemName, purchaseDate));
-                        dataList.add(new Item(itemName, purchaseDate, estimatedValue, tags));
-                    }
-                    itemAdapter.notifyDataSetChanged();
-                    totalValueTextView.setText("$" + totalEstimatedValue);
-                }
-            }
-        });
->>>>>>> 9e8737a6299f7bc19f9bb9d8d6c85d7a9f80d357
-
-
 
     }
 
@@ -91,6 +53,12 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     public void onInventoryDataChanged(ArrayList<Item> updatedData) {
         dataList.clear();
         dataList.addAll(updatedData);
+        totalEstimatedValue = 0;
+        for(Item item : dataList) {
+            totalEstimatedValue += item.getEstimatedValue();
+        }
+        totalValueTextView.setText("$" + String.format("%.2f", totalEstimatedValue));
         itemAdapter.notifyDataSetChanged();
     }
+
 }

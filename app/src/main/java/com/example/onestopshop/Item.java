@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Item {
-    private String itemID;
+
+
+    private String itemId;
     private String itemName;
     private String description;
     private String purchaseDate;
@@ -18,8 +20,8 @@ public class Item {
     private ArrayList<String> tags;
 
 
-    public Item(String itemID, String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, ArrayList<String> tags) {
-        this.itemID = itemID;
+    public Item(String itemId, String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, ArrayList<String> tags) {
+        this.itemId = itemId;
         this.itemName = itemName;
         this.description = description;
         this.purchaseDate = purchaseDate;
@@ -30,8 +32,20 @@ public class Item {
         this.serialNumber = serialNumber;
         this.tags = tags;
     }
-    public Item(String itemID, String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String serialNumber, ArrayList<String> tags) {
-        this.itemID = itemID;
+    public Item(String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, ArrayList<String> tags) {
+
+        this.itemName = itemName;
+        this.description = description;
+        this.purchaseDate = purchaseDate;
+        this.make = make;
+        this.model = model;
+        this.estimatedValue = estimatedValue;
+        this.comment = comment;
+        this.serialNumber = serialNumber;
+        this.tags = tags;
+    }
+    public Item(String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String serialNumber, ArrayList<String> tags) {
+
         this.itemName = itemName;
         this.description = description;
         this.purchaseDate = purchaseDate;
@@ -41,8 +55,27 @@ public class Item {
         this.serialNumber = serialNumber;
         this.tags = tags;
     }
-    public Item(String itemID, String itemName, String purchaseDate, double estimatedValue, ArrayList<String> tags) {
-        this.itemID = itemID;
+    public Item(String itemId, String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String serialNumber, ArrayList<String> tags) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.description = description;
+        this.purchaseDate = purchaseDate;
+        this.make = make;
+        this.model = model;
+        this.estimatedValue = estimatedValue;
+        this.serialNumber = serialNumber;
+        this.tags = tags;
+    }
+
+    //These are for testing
+    public Item(String itemId, String itemName, String purchaseDate, double estimatedValue, ArrayList<String> tags) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.purchaseDate = purchaseDate;
+        this.estimatedValue = estimatedValue;
+        this.tags = tags;
+    }
+    public Item( String itemName, String purchaseDate, double estimatedValue, ArrayList<String> tags) {
         this.itemName = itemName;
         this.purchaseDate = purchaseDate;
         this.estimatedValue = estimatedValue;
@@ -51,13 +84,11 @@ public class Item {
 
     // Getters and Setters for the Item attributes
 
-<<<<<<< HEAD
-    public String getItemID() {
-        return itemID;
+    public String getItemId() {
+        return itemId;
     }
-=======
 
->>>>>>> 9e8737a6299f7bc19f9bb9d8d6c85d7a9f80d357
+
     public String getItemName() {
         return itemName;
     }
