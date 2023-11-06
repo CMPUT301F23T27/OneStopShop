@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="Item Name"
                 android:textStyle="bold"
+                android:textColor="#BD2AC0"
                 android:textSize="16sp" />
 
             <!-- Purchase date -->
@@ -35,6 +36,7 @@
                 android:id="@+id/purchaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#BD2AC0"
                 android:text="Purchase Date" />
         </LinearLayout>
 
@@ -51,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Estimated Value"
+                android:textColor="#BD2AC0"
                 android:textStyle="bold"
                 android:textSize="16sp" />
 
@@ -59,7 +62,8 @@
                 android:id="@+id/tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Associated Tags" />
+                android:text="Associated Tags"
+                android:textColor="#BD2AC0"/>
         </LinearLayout>
 
     </LinearLayout>

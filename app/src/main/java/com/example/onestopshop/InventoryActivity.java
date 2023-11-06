@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class InventoryActivity extends AppCompatActivity {
     private CustomList itemAdapter;
     private FirebaseFirestore db;
     private CollectionReference itemsRef;
+    private TextView totalValueTextView;
+    private double totalEstimatedValue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,8 @@ public class InventoryActivity extends AppCompatActivity {
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
 
+        totalValueTextView = findViewById(R.id.total_estimated_value);
+
         itemsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshots,
@@ -52,19 +58,24 @@ public class InventoryActivity extends AppCompatActivity {
                 }
                 if (querySnapshots != null) {
                     dataList.clear();
+                    totalEstimatedValue = 0;
                     for (QueryDocumentSnapshot doc: querySnapshots) {
                         String itemName = doc.getString("itemName");
                         String purchaseDate = doc.getString("purchaseDate");
                         double estimatedValue = doc.getDouble("estimatedValue");
+                        totalEstimatedValue += estimatedValue;
                         ArrayList<String> tags = (ArrayList<String>) doc.get("tags");
                         Log.d("Firestore", String.format("Item(%s, %s) fetched",
                                 itemName, purchaseDate));
                         dataList.add(new Item(itemName, purchaseDate, estimatedValue, tags));
                     }
                     itemAdapter.notifyDataSetChanged();
+                    totalValueTextView.setText("$" + totalEstimatedValue);
                 }
             }
         });
+
+
 
     }
 
