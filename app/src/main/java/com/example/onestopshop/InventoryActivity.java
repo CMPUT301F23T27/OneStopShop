@@ -22,18 +22,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class InventoryActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener{
     private ArrayList<Item> dataList;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
-    private FirebaseFirestore db;
-    private CollectionReference itemsRef;
+    private InventoryController inventoryController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        db = FirebaseFirestore.getInstance();
-        itemsRef = db.collection("items");
+        inventoryController = new InventoryController(); // Initialize the Inventory Controller
+        inventoryController.setListener(this);
         dataList = new ArrayList<>();
 
 
@@ -42,30 +42,14 @@ public class InventoryActivity extends AppCompatActivity {
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
 
-        itemsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot querySnapshots,
-                                @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.e("Firestore", error.toString());
-                    return;
-                }
-                if (querySnapshots != null) {
-                    dataList.clear();
-                    for (QueryDocumentSnapshot doc: querySnapshots) {
-                        String itemName = doc.getString("itemName");
-                        String purchaseDate = doc.getString("purchaseDate");
-                        double estimatedValue = doc.getDouble("estimatedValue");
-                        ArrayList<String> tags = (ArrayList<String>) doc.get("tags");
-                        Log.d("Firestore", String.format("Item(%s, %s) fetched",
-                                itemName, purchaseDate));
-                        dataList.add(new Item(itemName, purchaseDate, estimatedValue, tags));
-                    }
-                    itemAdapter.notifyDataSetChanged();
-                }
-            }
-        });
+
 
     }
 
+    @Override
+    public void onInventoryDataChanged(ArrayList<Item> updatedData) {
+        dataList.clear();
+        dataList.addAll(updatedData);
+        itemAdapter.notifyDataSetChanged();
+    }
 }
