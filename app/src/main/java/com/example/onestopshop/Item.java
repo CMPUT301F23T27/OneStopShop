@@ -51,9 +51,13 @@ public class Item {
 
     // Getters and Setters for the Item attributes
 
+<<<<<<< HEAD
     public String getItemID() {
         return itemID;
     }
+=======
+
+>>>>>>> 9e8737a6299f7bc19f9bb9d8d6c85d7a9f80d357
     public String getItemName() {
         return itemName;
     }
