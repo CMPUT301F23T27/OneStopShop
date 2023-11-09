@@ -19,6 +19,9 @@ public class Item {
     private String serialNumber;
     private ArrayList<String> tags;
 
+    public Item() {
+
+    }
 
     public Item(String itemId, String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, ArrayList<String> tags) {
         this.itemId = itemId;
