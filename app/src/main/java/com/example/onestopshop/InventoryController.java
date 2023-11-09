@@ -3,11 +3,13 @@ package com.example.onestopshop;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InventoryController {
@@ -32,7 +34,8 @@ public class InventoryController {
                     String itemName = doc.getString("itemName");
                     String purchaseDate = doc.getString("purchaseDate");
                     double estimatedValue = doc.getDouble("estimatedValue");
-                    ArrayList<String> tags = (ArrayList<String>) doc.get("tags");
+                    List<String> tags = (List<String>) doc.get("tags");
+
                     Item item = new Item(itemId, itemName, purchaseDate, estimatedValue, tags);
                     updatedData.add(item);
                 }
@@ -49,6 +52,12 @@ public class InventoryController {
         itemData.put("purchaseDate", newItem.getPurchaseDate());
         itemData.put("estimatedValue", newItem.getEstimatedValue());
         itemData.put("tags", newItem.getTags());
+        itemData.put("serialNumber", newItem.getSerialNumber());
+        itemData.put("make", newItem.getMake());
+        itemData.put("model", newItem.getModel());
+        itemData.put("comments", newItem.getComments());
+        itemData.put("description", newItem.getDescription());
+
         // Add the new item to Firestore
         itemsRef.add(itemData)
                 .addOnSuccessListener(documentReference -> {
@@ -61,6 +70,29 @@ public class InventoryController {
                     // Handle failure to add the item to Firestore
                 });
     }
+    public void updateItem(String itemId, Item newItem) {
+        DocumentReference itemRef = itemsRef.document(itemId);
+        Map<String, Object> itemData = new HashMap<>();
+        itemData.put("itemName", newItem.getItemName());
+        itemData.put("purchaseDate", newItem.getPurchaseDate());
+        itemData.put("estimatedValue", newItem.getEstimatedValue());
+        itemData.put("tags", newItem.getTags());
+        itemData.put("serialNumber", newItem.getSerialNumber());
+        itemData.put("make", newItem.getMake());
+        itemData.put("model", newItem.getModel());
+        itemData.put("comments", newItem.getComments());
+        itemData.put("description", newItem.getDescription());
+
+        // Add the new item to Firestore
+        itemRef.update(itemData)
+                .addOnSuccessListener(documentReference -> {
+
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure to add the item to Firestore
+                });
+    }
+
     public void deleteItem(String itemId) {
         itemsRef.document(itemId).delete();
     }

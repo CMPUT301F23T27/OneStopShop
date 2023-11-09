@@ -22,6 +22,8 @@ public class ViewItemActivity extends AppCompatActivity {
     private TextView comments;
     private Button btnBack;
     private Button btnDelete;
+    private Button btnEdit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class ViewItemActivity extends AppCompatActivity {
         comments = findViewById(R.id.comment);
         btnBack = findViewById(R.id.btnBack);
         btnDelete = findViewById(R.id.btnDelete);
+        btnEdit = findViewById(R.id.btnEdit);
 
 
         Intent intent = getIntent();
@@ -79,6 +82,16 @@ public class ViewItemActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewItemActivity.this, EditItemActivity.class);
+                intent.putExtra("itemId", itemId);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
 

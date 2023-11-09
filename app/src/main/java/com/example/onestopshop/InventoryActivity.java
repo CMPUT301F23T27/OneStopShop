@@ -1,8 +1,12 @@
 package com.example.onestopshop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +36,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private CollectionReference itemsRef;
     private TextView totalValueTextView;
     private double totalEstimatedValue;
+    private LinearLayout addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +48,16 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
         totalValueTextView = findViewById(R.id.total_estimated_value);
         recyclerView = findViewById(R.id.item_list);
+        addButton = findViewById(R.id.btn_add_item);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InventoryActivity.this, AddItemActivity.class));
+            }
+        });
 
     }
 

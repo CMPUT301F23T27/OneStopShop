@@ -71,24 +71,39 @@
 
     <LinearLayout
         android:id="@+id/productDetails"
-        android:layout_width="393dp"
-        android:layout_height="425dp"
+        android:layout_width="377dp"
+        android:layout_height="400dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="89dp"
         android:background="#BD2AC0"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        tools:ignore="ExtraText">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Product Name: "
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Name: "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Product Name"
+                android:id="@+id/itemName"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -97,12 +112,10 @@
             android:text="Description:"
             android:textColor="#000000"
             android:textSize="16sp"
-
-
             />
 
-        <TextView
-            android:id="@+id/tvDescriptionContent"
+        <EditText
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -113,159 +126,203 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="17dp">
+            android:layout_height="0dp">
 
         </Space>
 
-        <TextView
-            android:id="@+id/date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date of Purchase: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Purchase: "
+                android:textColor="@color/black"
+
+                />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="yyyy-mm-dd"
+                android:textSize="10dp"
+                android:id="@+id/purchaseDate"/>
+        </LinearLayout>
+
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="17dp">
+            android:layout_height="0dp">
 
         </Space>
 
-        <TextView
-            android:id="@+id/make"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Make: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"
+                android:id="@+id/make"/>
+        </LinearLayout>
+
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="17dp">
+            android:layout_height="0dp">
 
         </Space>
 
-        <TextView
-            android:id="@+id/model"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Model: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Model: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/model"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
+
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="17dp">
+            android:layout_height="0dp">
 
         </Space>
 
-        <TextView
-            android:id="@+id/serialnumber"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Serial Number: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:orientation="horizontal">
 
-        <TextView
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estimated Value: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/estimatedValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serial Number (opt.): "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/serialnumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/scan_icon_black" />
+
+
+        </LinearLayout>
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="17dp">
-
+            android:layout_height="0dp">
         </Space>
 
-        <TextView
-            android:id="@+id/value"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Estimated Value: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
+            <TextView
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="17dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comments (opt.): "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
 
-        </Space>
+            <EditText
+                android:id="@+id/comments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tags: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="15dp">
-
-        </Space>
-
-        <TextView
-            android:id="@+id/comment"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comments: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
+            <TextView
 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tags: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
 
+            <EditText
+                android:id="@+id/tags"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
     </LinearLayout>
 
     <Button
