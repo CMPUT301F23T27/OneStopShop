@@ -67,7 +67,12 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         // Format the estimated value to 2 decimal places
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         holder.estimatedValue.setText("$" + decimalFormat.format(item.getEstimatedValue()));
-        holder.tags.setText(item.getTags().toString());
+//        holder.tags.setText(item.getTags().toString());
+        if (item.getTags() != null) {
+            holder.tags.setText(android.text.TextUtils.join(", ", item.getTags()));
+        } else {
+            holder.tags.setText("No Tags");
+        }
 
     }
 
