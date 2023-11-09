@@ -214,6 +214,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="HOME"
+                    android:textStyle="bold"
                     android:textSize="12sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
@@ -240,6 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ADD ITEM"
+                    android:textStyle="bold"
                     android:textSize="12sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
@@ -255,20 +257,22 @@
                 android:orientation="vertical">
 
                 <!-- Right Button (Profile) -->
+
                 <ImageButton
                     android:id="@+id/profile_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="end"
                     android:background="#BD2AC0"
-                    android:src="@drawable/rsz_profile"
+                    android:contentDescription="CLick to view profile"
                     android:paddingEnd="10dp"
-                    android:contentDescription="CLick to view profile"/>
+                    android:src="@drawable/rsz_profile" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PROFILE"
+                    android:textStyle="bold"
                     android:textSize="12sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
