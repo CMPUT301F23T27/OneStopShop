@@ -1,5 +1,7 @@
 package com.example.onestopshop;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -10,11 +12,13 @@ import java.util.Map;
 
 public class InventoryController {
     private CollectionReference itemsRef;
+
     private OnInventoryUpdateListener listener;
 
     public InventoryController() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        itemsRef = db.collection("items");
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        itemsRef = db.collection("users").document(userId).collection("items");
 
         itemsRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
@@ -65,6 +69,22 @@ public class InventoryController {
             itemsRef.document(itemId).delete();
         }
     }
+    public void getItemById(String itemId, final OnItemFetchListener listener) {
+        itemsRef.document(itemId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Item item = documentSnapshot.toObject(Item.class);
+                        listener.onItemFetched(item);
+                    } else {
+                        listener.onItemFetchFailed();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    listener.onItemFetchFailed();
+                });
+    }
+
+
 
     public void setListener(OnInventoryUpdateListener listener) {
         this.listener = listener;
@@ -72,5 +92,9 @@ public class InventoryController {
 
     public interface OnInventoryUpdateListener {
         void onInventoryDataChanged(ArrayList<Item> updatedData);
+    }
+    public interface OnItemFetchListener {
+        void onItemFetched(Item item);
+        void onItemFetchFailed();
     }
 }
