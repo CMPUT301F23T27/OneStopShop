@@ -1,26 +1,25 @@
 package com.example.onestopshop;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Locale;
 
 public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
     private final Context context;
     private ArrayList<Item> inventory;
-
-
     public CustomList(Context context, ArrayList<Item> inventory) {
         this.inventory = inventory;
         this.context = context;
@@ -60,21 +59,6 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         holder.estimatedValue.setText("$" + decimalFormat.format(item.getEstimatedValue()));
         holder.tags.setText(item.getTags().toString());
-        // Set an OnClickListener for the item at this position
-        holder.itemView.setOnClickListener(view -> {
-            // Retrieve the item at the clicked position
-            Item selectedItem = inventory.get(position);
-
-            // Create an Intent to start ViewActivity
-            Intent intent = new Intent(view.getContext(), ViewItemActivity.class);
-
-
-            intent.putExtra("itemId", selectedItem.getItemId());
-            // Include other item details as needed
-
-            // Start the ViewActivity
-            view.getContext().startActivity(intent);
-        });
 
     }
 

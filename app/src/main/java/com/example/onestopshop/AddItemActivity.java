@@ -1,77 +1,77 @@
 package com.example.onestopshop;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 public class AddItemActivity extends AppCompatActivity {
+
+    // Declare UI elements
+    private EditText edtItemName, edtDescription, edtPurchaseDate, edtMake, edtModel, edtEstimatedValue, edtSerialNumber, edtComments;
+    private Button btnAddItem, BtnCancel;
     private InventoryController inventoryController;
-    private EditText itemNameText;
-    private EditText descriptionText;
-    private EditText purchaseDateText;
-    private EditText makeText;
-    private EditText modelText;
-    private EditText serialNumberText;
-    private EditText estimatedValueText;
-    private EditText tagsText;
-    private EditText commentsText;
-    private Button btnCancel;
-    private Button confirm;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
-        confirm = findViewById(R.id.btn_add_item);
-        // Initialize Views
-        itemNameText = findViewById(R.id.itemName);
-        descriptionText = findViewById(R.id.description);
-        purchaseDateText = findViewById(R.id.purchaseDate);
-        makeText = findViewById(R.id.make);
-        modelText = findViewById(R.id.model);
-        serialNumberText = findViewById(R.id.serialnumber);
-        estimatedValueText = findViewById(R.id.estimatedValue);
-        tagsText = findViewById(R.id.tags);
-        commentsText = findViewById(R.id.comments);
-        btnCancel = findViewById(R.id.btnCancel);
+        setContentView(R.layout.activity_add);
 
-        confirm.setOnClickListener(new View.OnClickListener() {
+        // Initialize InventoryController
+        inventoryController = new InventoryController();
+
+        // Initialize UI elements
+        edtItemName = findViewById(R.id.Name);
+        edtDescription = findViewById(R.id.tvDescriptionContent);
+        edtPurchaseDate = findViewById(R.id.date);
+        edtMake = findViewById(R.id.make);
+        edtModel = findViewById(R.id.model);
+        edtEstimatedValue = findViewById(R.id.value);
+        edtSerialNumber = findViewById(R.id.serialnumber);
+        edtComments = findViewById(R.id.comment);
+        btnAddItem = findViewById(R.id.btn_add_item);
+
+        // Set up click listener for Add Item button
+        btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String itemName = itemNameText.getText().toString();
-                String description = descriptionText.getText().toString();
-                String purchaseDate = purchaseDateText.getText().toString();
-                String make = makeText.getText().toString();
-                String model = modelText.getText().toString();
-                String serialNumber = serialNumberText.getText().toString();
-                Double estimatedValue = Double.parseDouble(estimatedValueText.getText().toString());
-                List<String> tags = Arrays.asList(tagsText.getText().toString().split(","));
-                String comments = commentsText.getText().toString();
-                boolean validItem = validItem();
-                if(validItem){
-                    inventoryController = new InventoryController();
-                    inventoryController.addItem(new Item(itemName, description, purchaseDate, make,
-                            model, estimatedValue, comments, serialNumber, tags));
-                    finish();
-                }
+            public void onClick(View view) {
+                addItemToFirebase();
             }
         });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+
+        // Set up click listener for Cancel button
+        BtnCancel = findViewById(R.id.btnCancel);
+        BtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }
-    public boolean validItem(){
-        return true;
+
+    // Method to add item to Firebase
+    private void addItemToFirebase() {
+        // Get data from UI elements
+        String itemName = edtItemName.getText().toString();
+        String description = edtDescription.getText().toString();
+        String purchaseDate = edtPurchaseDate.getText().toString();
+        String make = edtMake.getText().toString();
+        String model = edtModel.getText().toString();
+        double estimatedValue = Double.parseDouble(edtEstimatedValue.getText().toString());
+        String serialNumber = edtSerialNumber.getText().toString();
+        String comments = edtComments.getText().toString();
+
+        // Create an Item object
+        Item newItem = new Item(itemName, description, purchaseDate, make, model, estimatedValue, comments, serialNumber, new ArrayList<String>());
+
+        // Add the item to Firebase using InventoryController
+        inventoryController.addItem(newItem);
+
+        // Finish the activity or perform any other actions you want
+        finish();
     }
 }

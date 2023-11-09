@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">OneStopShop</string>
-    <string name="default_web_client_id">773261094696-5uc92mt5qje69itfql24ggduis7e7irq.apps.googleusercontent.com</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
 </resources>

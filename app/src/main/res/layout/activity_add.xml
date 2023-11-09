@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".AddItemActivity">
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#BD2AC0"
+        android:fontFamily="sans-serif-black"
+        android:text="Cancel"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/btn_scan_barcode"
+        android:layout_width="202dp"
+        android:layout_height="56dp"
+
+        android:layout_above="@+id/productDetails"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="102dp"
+
+        android:layout_marginBottom="-3dp"
+        android:backgroundTint="#BD2AC0"
+        android:fontFamily="sans-serif-black"
+        android:text="Scan Barcode"
+
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"></Button>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="104dp"
+        android:text="ADD ITEM"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#BD2CA0"
+        android:textSize="34sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="131dp"
+        android:layout_height="101dp"
+        android:layout_alignBottom="@+id/productDetails"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="461dp"
+        android:background="#BD2AC0"
+        android:src="@drawable/baseline_image_24" />
+
+    <RelativeLayout
+        android:id="@+id/productDetails"
+        android:layout_width="381dp"
+        android:layout_height="396dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+
+        android:layout_marginBottom="67dp"
+        android:padding="16dp"
+        tools:ignore="ExtraText">
+
+
+        <EditText
+            android:id="@+id/Name"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:hint="Product Name"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="16sp"
+            android:textStyle="bold">
+
+
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Name"
+            android:layout_marginTop="1dp"
+            android:text="Description:"
+            android:textColor="#BD2AC0"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tvDescriptionContent"
+            android:layout_width="336dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="-346dp"
+            android:layout_marginBottom="257dp"
+            android:layout_toRightOf="@id/Name"
+            android:background="@drawable/border"
+            android:padding="8dp"
+            android:textColor="#BD2CA0" />
+
+        <EditText
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="215dp"
+            android:hint="Date of Purchase"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/make"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="180dp"
+            android:hint="Make"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="145dp"
+            android:hint="Model"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="110dp"
+            android:hint="Estimated Value"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/serialnumber"
+            android:layout_width="346dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="75dp"
+            android:hint="Serial Number:"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
+            android:hint="Comments"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+        <EditText
+            android:id="@+id/tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:hint="Tags"
+            android:textColor="#BD2CA0"
+            android:textColorHint="#BD2AC0"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="42dp"
+        android:layout_height="34dp"
+        android:layout_above="@+id/productDetails"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="90dp"
+        android:background="#FFBD2AC0"
+        android:contentDescription="Enter How Much Cookies You Want"
+        android:src="@drawable/baseline_camera_alt_24"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_item"
+        android:layout_width="341dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="26dp"
+        android:background="@drawable/square"
+        android:fontFamily="sans-serif-black"
+        android:text="ADD ITEM"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,8 +25,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
-
-public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener{
+public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener {
     private ArrayList<Item> dataList;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
@@ -36,7 +34,6 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private CollectionReference itemsRef;
     private TextView totalValueTextView;
     private double totalEstimatedValue;
-    private LinearLayout addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +45,20 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
         totalValueTextView = findViewById(R.id.total_estimated_value);
         recyclerView = findViewById(R.id.item_list);
-        addButton = findViewById(R.id.btn_add_item);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
-        addButton.setOnClickListener(new View.OnClickListener() {
+
+        // Add Item Button
+        ImageButton addItemButton = findViewById(R.id.add_button);
+        addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InventoryActivity.this, AddItemActivity.class));
+                // Open the "AddItemActivity" to add a new item
+                Intent intent = new Intent(InventoryActivity.this, AddItemActivity.class);
+                startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -66,11 +66,10 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         dataList.clear();
         dataList.addAll(updatedData);
         totalEstimatedValue = 0;
-        for(Item item : dataList) {
+        for (Item item : dataList) {
             totalEstimatedValue += item.getEstimatedValue();
         }
         totalValueTextView.setText("$" + String.format("%.2f", totalEstimatedValue));
         itemAdapter.notifyDataSetChanged();
     }
-
 }

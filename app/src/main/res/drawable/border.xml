@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#BD2AC0" />
-            <stroke android:width="2dp" android:color="#000000" /> <!-- Change this to your desired border color -->
+            <solid android:color="#0B0A0B" />
+            <stroke android:width="2dp" android:color="#BD2AC0" /> <!-- Change this to your desired border color -->
             <corners android:radius="4dp" />
         </shape>
     </item>
