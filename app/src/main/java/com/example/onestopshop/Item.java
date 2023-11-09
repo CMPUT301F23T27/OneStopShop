@@ -5,10 +5,6 @@ package com.example.onestopshop;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * This is a class that represents an item and its details
- */
-
 public class Item {
 
 
@@ -24,29 +20,6 @@ public class Item {
     private ArrayList<String> tags;
 
 
-    /**
-     * Create and Item object with ID and comment
-     * @param itemId
-     *      ID of the Item
-     * @param itemName
-     *      Name of the item
-     * @param description
-     *      Brief Description of the item
-     * @param purchaseDate
-     *      date the item was purchased/acquired
-     * @param make
-     *      make of the item
-     * @param model
-     *      model of the item
-     * @param estimatedValue
-     *      estimated worth of the item
-     * @param comment
-     *      comment regarding the item
-     * @param serialNumber
-     *      serial number for the item
-     * @param tags
-     *      set of tags applied to the item
-     */
     public Item(String itemId, String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, ArrayList<String> tags) {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -59,28 +32,6 @@ public class Item {
         this.serialNumber = serialNumber;
         this.tags = tags;
     }
-
-    /**
-     * Create and Item object without ID and with comment
-     * @param itemName
-     *      Name of the item
-     * @param description
-     *      Brief Description of the item
-     * @param purchaseDate
-     *      date the item was purchased/acquired
-     * @param make
-     *      make of the item
-     * @param model
-     *      model of the item
-     * @param estimatedValue
-     *      estimated worth of the item
-     * @param comment
-     *      comment regarding the item
-     * @param serialNumber
-     *      serial number for the item
-     * @param tags
-     *      set of tags applied to the item
-     */
     public Item(String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String comment, String serialNumber, ArrayList<String> tags) {
 
         this.itemName = itemName;
@@ -93,26 +44,6 @@ public class Item {
         this.serialNumber = serialNumber;
         this.tags = tags;
     }
-
-    /**
-     * Create and Item object without ID and comment
-     * @param itemName
-     *      Name of the item
-     * @param description
-     *      Brief Description of the item
-     * @param purchaseDate
-     *      date the item was purchased/acquired
-     * @param make
-     *      make of the item
-     * @param model
-     *      model of the item
-     * @param estimatedValue
-     *      estimated worth of the item
-     * @param serialNumber
-     *      serial number for the item
-     * @param tags
-     *      set of tags applied to the item
-     */
     public Item(String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String serialNumber, ArrayList<String> tags) {
 
         this.itemName = itemName;
@@ -124,28 +55,6 @@ public class Item {
         this.serialNumber = serialNumber;
         this.tags = tags;
     }
-
-    /**
-     * Create and Item object with ID and without comment
-     * @param itemId
-     *      ID of the Item
-     * @param itemName
-     *      Name of the item
-     * @param description
-     *      Brief Description of the item
-     * @param purchaseDate
-     *      date the item was purchased/acquired
-     * @param make
-     *      make of the item
-     * @param model
-     *      model of the item
-     * @param estimatedValue
-     *      estimated worth of the item
-     * @param serialNumber
-     *      serial number for the item
-     * @param tags
-     *      set of tags applied to the item
-     */
     public Item(String itemId, String itemName, String description, String purchaseDate, String make, String model, double estimatedValue, String serialNumber, ArrayList<String> tags) {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -175,173 +84,78 @@ public class Item {
 
     // Getters and Setters for the Item attributes
 
-    /**
-     * This returns the ID of the item
-     * @return
-     *      Return item ID
-     */
     public String getItemId() {
         return itemId;
     }
 
-    /**
-     * This returns the name of the item
-     * @return
-     *      Return the item name
-     */
+
     public String getItemName() {
         return itemName;
     }
 
-    /**
-     * This sets the name of the item
-     * @param itemName
-     *      New item name
-     */
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
-    /**
-     * This returns the description for the item
-     * @return
-     *      Return item description
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * This sets the description of the item
-     * @param description
-     *      New item description
-     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * This returns the purchaseDate of the item
-     * @return
-     *      Return item purchase date
-     */
     public String getPurchaseDate() {
         return purchaseDate;
     }
 
-    /**
-     * This sets the purchaseDate of the item
-     * @param purchaseDate
-     *      New purchaseDate
-     */
     public void setPurchaseDate(String purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
-    /**
-     * This returns the make of the item
-     * @return
-     *      Return item make
-     */
     public String getMake() {
         return make;
     }
 
-    /**
-     * This sets the make of the item
-     * @param make
-     *      New make of the item
-     */
     public void setMake(String make) {
         this.make = make;
     }
 
-    /**
-     * This returns the model of the item
-     * @return
-     *      Return item model
-     */
     public String getModel() {
         return model;
     }
 
-    /**
-     * This sets the model of the item
-     * @param model
-     *      New item model
-     */
     public void setModel(String model) {
         this.model = model;
     }
 
-    /**
-     * This returns the estimatedValue of the item
-     * @return
-     *      Return estimatedValue
-     */
     public double getEstimatedValue() {
         return estimatedValue;
     }
 
-    /**
-     * This sets the estimatedValue of the item
-     * @param estimatedValue
-     *      New estimatedValue
-     */
     public void setEstimatedValue(double estimatedValue) {
         this.estimatedValue = estimatedValue;
     }
 
-    /**
-     * This returns the comment of the item
-     * @return
-     *      Return comment
-     */
     public String getComments() {
         return comment;
     }
 
-    /**
-     * This sets the comment of the item
-     * @param comments
-     *      New comment
-     */
     public void setComments(String comments) {
         this.comment = comments;
     }
 
-    /**
-     * This returns the serialNumber of the item
-     * @return
-     *      Return serialNumber
-     */
     public String getSerialNumber() {
         return serialNumber;
     }
 
-    /**
-     * This sets the serialNumber of the item
-     * @param serialNumber
-     *      Return serialNumber
-     */
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
 
-    /**
-     * This returns an array of the items tags
-     * @return
-     *      Return tags
-     */
     public ArrayList<String> getTags() {
         return tags;
     }
-
-    /**
-     * This sets the tags of the item
-     * @param tags
-     *      New array of tags
-     */
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
