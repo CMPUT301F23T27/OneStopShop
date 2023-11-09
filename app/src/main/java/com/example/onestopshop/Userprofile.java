@@ -1,17 +1,20 @@
 package com.example.onestopshop;
 
 public class Userprofile{
-    private String name;
+    private String displayName;
     private String email;
-    private String imageUrl;
 
-    public String getName() {
-        return name;
+
+    private Userprofile(){
+
     }
 
-    public void setName(String name) {
+    public String getDisplayName() {
+        return displayName;
+    }
 
-        this.name = name;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getEmail() {
@@ -24,14 +27,4 @@ public class Userprofile{
         this.email = email;
     }
 
-
-    public String getImageUrl() {
-
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-
-        this.imageUrl = imageUrl;
-    }
 }

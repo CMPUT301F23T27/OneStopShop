@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "773261094696",
+    "project_id": "onestopshop-5101b",
+    "storage_bucket": "onestopshop-5101b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773261094696:android:cbc6f93148ec1bb040aa1d",
+        "android_client_info": {
+          "package_name": "com.example.onestopshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773261094696-cggea1ogsg4kp6n7petl0gmog0bhaek8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "7e5552348851703463df578d23e74035a83d865f"
+          }
+        },
+        {
+          "client_id": "773261094696-j7b1mi28nq9idnecihei5plv47g1ft4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "63fad3195d5d1ebd180fd78d5820fe561c0bab08"
+          }
+        },
+        {
+          "client_id": "773261094696-5uc92mt5qje69itfql24ggduis7e7irq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5xC4b7wLEdTwu9AIIoHjqUXJ-KNovHe4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773261094696-5uc92mt5qje69itfql24ggduis7e7irq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

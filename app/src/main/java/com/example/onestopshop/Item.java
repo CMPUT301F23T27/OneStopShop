@@ -47,7 +47,6 @@ public class Item {
 
     // Getters and Setters for the Item attributes
 
-
     public String getItemName() {
         return itemName;
     }
