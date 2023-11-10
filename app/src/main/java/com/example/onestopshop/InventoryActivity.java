@@ -1,8 +1,13 @@
 package com.example.onestopshop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,60 +28,58 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class InventoryActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener{
     private ArrayList<Item> dataList;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
+    private InventoryController inventoryController;
     private FirebaseFirestore db;
     private CollectionReference itemsRef;
     private TextView totalValueTextView;
     private double totalEstimatedValue;
+    private ImageView addButton;
+    private ImageView profileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        db = FirebaseFirestore.getInstance();
-        itemsRef = db.collection("items");
+        inventoryController = new InventoryController(); // Initialize the Inventory Controller
+        inventoryController.setListener(this);
         dataList = new ArrayList<>();
 
-
+        totalValueTextView = findViewById(R.id.total_estimated_value);
         recyclerView = findViewById(R.id.item_list);
+        addButton = findViewById(R.id.add_button);
+        profileButton = findViewById(R.id.profile_button);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
-
-        totalValueTextView = findViewById(R.id.total_estimated_value);
-
-        itemsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot querySnapshots,
-                                @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.e("Firestore", error.toString());
-                    return;
-                }
-                if (querySnapshots != null) {
-                    dataList.clear();
-                    totalEstimatedValue = 0;
-                    for (QueryDocumentSnapshot doc: querySnapshots) {
-                        String itemName = doc.getString("itemName");
-                        String purchaseDate = doc.getString("purchaseDate");
-                        double estimatedValue = doc.getDouble("estimatedValue");
-                        totalEstimatedValue += estimatedValue;
-                        ArrayList<String> tags = (ArrayList<String>) doc.get("tags");
-                        Log.d("Firestore", String.format("Item(%s, %s) fetched",
-                                itemName, purchaseDate));
-                        dataList.add(new Item(itemName, purchaseDate, estimatedValue, tags));
-                    }
-                    itemAdapter.notifyDataSetChanged();
-                    totalValueTextView.setText("$" + totalEstimatedValue);
-                }
+            public void onClick(View v) {
+                startActivity(new Intent(InventoryActivity.this, AddItemActivity.class));
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InventoryActivity.this, UserProfileActivity.class));
             }
         });
 
+    }
 
-
+    @Override
+    public void onInventoryDataChanged(ArrayList<Item> updatedData) {
+        dataList.clear();
+        dataList.addAll(updatedData);
+        totalEstimatedValue = 0;
+        for(Item item : dataList) {
+            totalEstimatedValue += item.getEstimatedValue();
+        }
+        totalValueTextView.setText("$" + String.format("%.2f", totalEstimatedValue));
+        itemAdapter.notifyDataSetChanged();
     }
 
 }
