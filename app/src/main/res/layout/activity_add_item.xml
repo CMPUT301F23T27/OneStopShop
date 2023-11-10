@@ -120,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/border"
+            android:background="@drawable/border_pink"
             android:padding="8dp"
             android:text=""
             android:textColor="#000000" />
@@ -265,7 +265,7 @@
                 android:hint=""
                 android:textSize="10dp"></EditText>
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/scanButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/scan_icon_black" />

@@ -115,6 +115,40 @@ public class InventoryController {
                     listener.onItemFetchFailed();
                 });
     }
+    public String getUserEmail(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null) {
+            String email = user.getEmail();
+
+            if (email != null) {
+                return email;
+            }
+        } else {
+            // User is not signed in
+        }
+        return "";
+    }
+    public String getUserName(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null) {
+            String displayName = user.getDisplayName();
+            String email = user.getEmail();
+
+            // Use the display name and email as needed
+            if (displayName != null) {
+                return displayName;
+            }
+
+        } else {
+            // User is not signed in
+
+        }
+        return "";
+    }
 
 
 

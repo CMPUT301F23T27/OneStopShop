@@ -103,7 +103,11 @@ public class ScanActivity extends AppCompatActivity {
 
         if (matcher.find()) {
             String extractedSerialNumber = matcher.group();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("serialNumber", extractedSerialNumber);
+            setResult(RESULT_OK, resultIntent);
             Toast.makeText(this, "Serial Number: " + extractedSerialNumber, Toast.LENGTH_LONG).show();
+            finish();
         } else {
             Toast.makeText(this, "No valid serial number found in the text.", Toast.LENGTH_LONG).show();
         }

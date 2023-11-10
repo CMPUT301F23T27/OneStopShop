@@ -94,26 +94,52 @@ public class ViewItemActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        String itemId = intent.getStringExtra("itemId");
+        inventoryController = new InventoryController(); // Initialize your controller
+        if (itemId != null) {
+            inventoryController.getItemById(itemId, new InventoryController.OnItemFetchListener() {
+                @Override
+                public void onItemFetched(Item item) {
+                    if (item != null) {
+                        // Item retrieved successfully, now use it to populate the UI
+                        displayItemDetails(item);
+                    } else {
+                        // Handle case when item fetch fails
+                    }
+                }
 
-    private void displayItemDetails(Item item) {
-        // Update your views with the retrieved item data
-        itemName.setText("Product Name: " + item.getItemName());
-        tvDescriptionContent.setText("" + item.getDescription());
-        date.setText("Date of Purchase:  " + item.getPurchaseDate());
-        make.setText("Make:  "+ item.getMake());
-        model.setText("Model:  "+ item.getModel());
-        String serialNumberStr = "";
-        if(!(item.getSerialNumber() == null || item.getSerialNumber().isEmpty())){
-            serialNumberStr = item.getSerialNumber().toString();
+                @Override
+                public void onItemFetchFailed() {
+                    // Handle failure to fetch item
+                    Toast.makeText(ViewItemActivity.this, "Error fetching item details.", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        serialNumber.setText("Serial Number:  "+ serialNumberStr);
-        estimatedValue.setText("Estimated Value:  "+String.format("$%.2f", item.getEstimatedValue()));
-        String commentsStr = "";
-        if(!(item.getComments() == null || item.getComments().isEmpty())){
-            commentsStr = item.getComments();
-        }
-        comments.setText("Comments: "+ commentsStr);
-        tags.setText("Tags:  "+ item.getTags().toString());
     }
+        private void displayItemDetails (Item item){
+            // Update your views with the retrieved item data
+            itemName.setText("Product Name: " + item.getItemName());
+            tvDescriptionContent.setText("" + item.getDescription());
+            date.setText("Date of Purchase:  " + item.getPurchaseDate());
+            make.setText("Make:  " + item.getMake());
+            model.setText("Model:  " + item.getModel());
+            String serialNumberStr = "";
+            if (!(item.getSerialNumber() == null || item.getSerialNumber().isEmpty())) {
+                serialNumberStr = item.getSerialNumber().toString();
+            }
+            serialNumber.setText("Serial Number:  " + serialNumberStr);
+            estimatedValue.setText("Estimated Value:  " + String.format("$%.2f", item.getEstimatedValue()));
+            String commentsStr = "";
+            if (!(item.getComments() == null || item.getComments().isEmpty())) {
+                commentsStr = item.getComments();
+            }
+            comments.setText("Comments: " + commentsStr);
+            tags.setText("Tags:  " + item.getTags().toString());
+        }
+
 
 }

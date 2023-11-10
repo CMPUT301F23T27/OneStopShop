@@ -102,7 +102,8 @@ public class EditItemActivity extends AppCompatActivity {
             commentsStr = item.getComments();
         }
         commentsText.setText(commentsStr);
-        tagsText.setText(item.getTags().toString());
+        //remove brackets
+        tagsText.setText(item.getTags().toString().substring(1,item.getTags().toString().length() -1));
     }
     public boolean validItem(){
         return true;
