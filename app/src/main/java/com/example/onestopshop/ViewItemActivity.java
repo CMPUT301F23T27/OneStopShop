@@ -9,6 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Activity for viewing the details of a specific item.
+ * This class is responsible for displaying item details
+ * and handling user interactions for editing or deleting an item.
+ */
+
 public class ViewItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
     private TextView itemName;
