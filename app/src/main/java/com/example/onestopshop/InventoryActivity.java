@@ -27,14 +27,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/**
+ * InventoryActivity displays the user's inventory, allowing them to view, add, and manage items.
+ */
 public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener{
     private ArrayList<Item> dataList;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
     private InventoryController inventoryController;
-    private FirebaseFirestore db;
-    private CollectionReference itemsRef;
     private TextView totalValueTextView;
     private double totalEstimatedValue;
     private ImageView addButton;
@@ -70,6 +70,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
     }
 
+    /**
+     * Callback method invoked when the inventory data is changed.
+     *
+     * @param updatedData The updated list of items in the inventory.
+     */
     @Override
     public void onInventoryDataChanged(ArrayList<Item> updatedData) {
         dataList.clear();
