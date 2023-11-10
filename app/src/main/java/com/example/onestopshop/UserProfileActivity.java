@@ -1,12 +1,20 @@
 package com.example.onestopshop;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -14,11 +22,12 @@ import com.google.firebase.auth.FirebaseAuth;
  * UserProfileActivity displays user profile information and allows users to log out.
  */
 public class UserProfileActivity extends AppCompatActivity {
-    private Button logOutButton; // Button for logging out
-    private Button backButton;   // Button for going back
-    private TextView displayName; // TextView for displaying user's name
-    private TextView email;       // TextView for displaying user's email
-    private InventoryController inventoryController; // Controller for managing inventory data
+    private Button logOutButton;
+    private Button backButton;
+    private TextView displayName;
+    private TextView email;
+    private InventoryController inventoryController;
+    GoogleSignInClient googleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +47,28 @@ public class UserProfileActivity extends AppCompatActivity {
         email.setText("Email: " + inventoryController.getUserEmail());
         displayName.setText("Name: " + inventoryController.getUserName());
 
-        // Set an onClickListener for the log out button
+        googleSignInClient = GoogleSignIn.getClient(UserProfileActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Sign out the user from Firebase Authentication
-                FirebaseAuth.getInstance().signOut();
+                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // Check condition
+                        if (task.isSuccessful()) {
+                            // When task is successful sign out from firebase
+                            FirebaseAuth.getInstance().signOut();
+                            // Display Toast
+                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(UserProfileActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            // Finish activity
+                            finish();
+                        }
+                    }
+                });
 
-                // Redirect the user to the LoginActivity
-                Intent intent = new Intent(UserProfileActivity.this, LoginActivity.class);
-                startActivity(intent);
-
-                finish(); // Optional: Finish the UserProfileActivity to prevent going back via the back button
             }
         });
 
