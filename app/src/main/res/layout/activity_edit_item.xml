@@ -72,7 +72,7 @@
     <LinearLayout
         android:id="@+id/productDetails"
         android:layout_width="377dp"
-        android:layout_height="400dp"
+        android:layout_height="425dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/border"
+            android:background="@drawable/border_pink"
             android:padding="8dp"
             android:text=""
             android:textColor="#000000" />
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:text="Date of Purchase: "
                 android:textColor="@color/black"
-
+                android:textSize="12dp"
                 />
 
             <EditText
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="yyyy-mm-dd"
-                android:textSize="10dp"
+                android:textSize="14dp"
                 android:id="@+id/purchaseDate"/>
         </LinearLayout>
 
@@ -165,12 +165,11 @@
             android:orientation="horizontal">
 
             <TextView
-
+                android:textSize="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Make: "
                 android:textColor="@color/black"
-                android:textSize="15dp"
                 />
 
             <EditText
@@ -178,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"
+                android:textSize="14dp"
                 android:id="@+id/make"/>
         </LinearLayout>
 
@@ -200,8 +199,7 @@
                 android:layout_height="wrap_content"
                 android:text="Model: "
                 android:textColor="@color/black"
-                android:textSize="15dp"
-                />
+                android:textSize="12dp" />
 
             <EditText
                 android:id="@+id/model"
@@ -209,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="14dp"></EditText>
         </LinearLayout>
 
 
@@ -230,7 +228,7 @@
                 android:layout_height="wrap_content"
                 android:text="Estimated Value: "
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 />
 
             <EditText
@@ -239,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="12dp"></EditText>
         </LinearLayout>
 
         <LinearLayout
@@ -253,7 +251,7 @@
                 android:layout_height="wrap_content"
                 android:text="Serial Number (opt.): "
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 />
 
             <EditText
@@ -262,7 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="14dp"></EditText>
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="30dp"
@@ -289,7 +287,7 @@
                 android:layout_height="wrap_content"
                 android:text="Comments (opt.): "
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 />
 
             <EditText
@@ -298,7 +296,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="14dp"></EditText>
         </LinearLayout>
 
         <LinearLayout
@@ -312,7 +310,7 @@
                 android:layout_height="wrap_content"
                 android:text="Tags: "
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 />
 
             <EditText
@@ -321,7 +319,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="14dp"></EditText>
         </LinearLayout>
     </LinearLayout>
 

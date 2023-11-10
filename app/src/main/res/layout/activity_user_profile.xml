@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070707"
+    tools:context=".UserProfileActivity">
+
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="152dp"
+        android:layout_height="152dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="157dp"
+        android:layout_marginEnd="134dp"
+        android:background="@drawable/circle"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_person_24" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileImage"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginEnd="69dp"
+        android:text="Name: "
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="64dp"
+        android:text="Email: "
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="102dp"
+        android:layout_marginBottom="51dp"
+        android:backgroundTint="#BD2AC0"
+        android:text="Log Out"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/profileImage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="310dp"
+        android:layout_marginBottom="187dp"
+        android:text="Back"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:backgroundTint="#BD2CA0" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#BD2CA0"
+        android:text="OneStopShop"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"></TextView>
+
+
+</RelativeLayout>
