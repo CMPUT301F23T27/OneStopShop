@@ -12,7 +12,52 @@
           "package_name": "com.example.onestopshop"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "773261094696-1naefvkkacqgec6s89s3u81ns3t364sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "3e086141f024fd0b9e05e4316b415d1627900475"
+          }
+        },
+        {
+          "client_id": "773261094696-cggea1ogsg4kp6n7petl0gmog0bhaek8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "7e5552348851703463df578d23e74035a83d865f"
+          }
+        },
+        {
+          "client_id": "773261094696-i8tpuebpv9qkaroq10294e748cg3p1ee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "574fc4d392f41b42440bda9a96293abd5af63e8f"
+          }
+        },
+        {
+          "client_id": "773261094696-j7b1mi28nq9idnecihei5plv47g1ft4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "63fad3195d5d1ebd180fd78d5820fe561c0bab08"
+          }
+        },
+        {
+          "client_id": "773261094696-r6ugn8ua9611ol8ol1tqnrk6f55q1898.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "dedc41ca0770a3525dc8aac62c31a830333745fc"
+          }
+        },
+        {
+          "client_id": "773261094696-5uc92mt5qje69itfql24ggduis7e7irq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC5xC4b7wLEdTwu9AIIoHjqUXJ-KNovHe4"
@@ -20,7 +65,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773261094696-5uc92mt5qje69itfql24ggduis7e7irq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

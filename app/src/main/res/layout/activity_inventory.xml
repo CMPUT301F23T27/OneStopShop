@@ -1,15 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".InventoryActivity">
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/item_list">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".InventoryActivity">
 
+    <!-- Upper Layout Bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutTop"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_top"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#BD2AC0">
+
+            <!-- Left Button (Sort) -->
+            <ImageButton
+                android:id="@+id/sort_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="#BD2AC0"
+                android:layout_gravity="start"
+                android:src="@drawable/rsz_sort"
+                android:contentDescription="Click to Sort Items"/>
+
+            <!-- App Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/app_name"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <!-- Right Button (Search) -->
+            <ImageButton
+                android:id="@+id/search_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:paddingEnd="10dp"
+                android:background="#BD2AC0"
+                android:src="@drawable/rsz_search"
+                android:contentDescription="Click to Search for Items"/>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Sorted by block -->
+    <RelativeLayout
+        android:id="@+id/sort_block"
+        android:layout_width="match_parent"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayoutTop"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:paddingEnd="48dp">
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Sorted by -->
+
+            <!-- Sort -->
+
+            <TextView
+                android:id="@+id/sorted_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:text="Sorted By: "
+                android:textColor="#BD2AC0"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/sort"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="#BD2AC0"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="NAME"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <!-- Change Sort -->
+            <ImageView
+                android:id="@+id/switch_sort"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@color/black"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="Click to switch the sorting of items"
+                android:src="@drawable/rsz_arrow" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/select_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:background="#BD2AC0"
+            android:text="Select"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!-- Line Separator  -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#E0E0E0"
+        app:layout_constraintTop_toBottomOf="@id/sort_block"/>
+
+
+    <!-- List of Items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/sort_block"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/total_value_layout">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <!-- Total Estimated Value Layout -->
+    <LinearLayout
+        android:id="@+id/total_value_layout"
+        app:layout_constraintTop_toBottomOf="@id/item_list"
+        app:layout_constraintBottom_toTopOf="@id/appBarLayoutBottom"
+        android:gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="#BD2AC0"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Prompt -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="TOTAL VALUE: "
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <!-- Total Estimated Value -->
+        <TextView
+            android:id="@+id/total_estimated_value"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text=""/>
+
+
+
+    </LinearLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#BD2AC0">
+
+            <!-- Left Button/Text Pair -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Left Button (Home) -->
+                <ImageButton
+                    android:id="@+id/home_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="#BD2AC0"
+                    android:layout_gravity="start"
+                    android:src="@drawable/rsz_home"
+                    android:contentDescription="CLick to return to Home Page"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HOME"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <!-- Middle Button/Text Pair -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/btn_add_item">
+
+                <!-- Middle Button (Add) -->
+                <ImageButton
+                    android:id="@+id/add_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="#BD2AC0"
+                    android:layout_gravity="center"
+                    android:src="@drawable/rsz_add"
+                    android:contentDescription="Click to add an item"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD ITEM"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <!-- Right Button/Text Pair -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="8dp"
+                android:orientation="vertical">
+
+                <!-- Right Button (Profile) -->
+
+                <ImageButton
+                    android:id="@+id/profile_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="end"
+                    android:background="#BD2AC0"
+                    android:contentDescription="CLick to view profile"
+                    android:paddingEnd="10dp"
+                    android:src="@drawable/rsz_profile" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PROFILE"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
