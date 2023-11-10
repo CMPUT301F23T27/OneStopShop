@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "773261094696-1naefvkkacqgec6s89s3u81ns3t364sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "3e086141f024fd0b9e05e4316b415d1627900475"
+          }
+        },
+        {
+          "client_id": "773261094696-7d81ufahl4stqksprq5qusketncfls6e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "e1a64d1c9128d9f6ce2ec35bd66ce4cff39a4f06"
+          }
+        },
+        {
           "client_id": "773261094696-cggea1ogsg4kp6n7petl0gmog0bhaek8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -35,6 +51,14 @@
           "android_info": {
             "package_name": "com.example.onestopshop",
             "certificate_hash": "63fad3195d5d1ebd180fd78d5820fe561c0bab08"
+          }
+        },
+        {
+          "client_id": "773261094696-r6ugn8ua9611ol8ol1tqnrk6f55q1898.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onestopshop",
+            "certificate_hash": "dedc41ca0770a3525dc8aac62c31a830333745fc"
           }
         },
         {
