@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * UserProfileActivity displays user profile information and allows users to log out.
+ */
 public class UserProfileActivity extends AppCompatActivity {
     private Button logOutButton; // Button for logging out
     private Button backButton;   // Button for going back
