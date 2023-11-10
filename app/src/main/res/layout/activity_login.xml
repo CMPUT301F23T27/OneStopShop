@@ -3,36 +3,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/login"
     android:padding="16dp"
     tools:context=".LoginActivity"
     android:background="#000000">
 
     <!-- Triangle Shape -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/triangle_shape"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"/>
+
+    <!-- Login Text in the middle -->
 
     <!-- Welcome back message -->
+
+    <View
+        android:layout_width="189dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="206dp"
+        android:background="@drawable/triangle_shape" />
+
+    <TextView
+        android:id="@+id/textViewLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sign_in_btn"
+        android:layout_alignStart="@+id/sign_in_btn"
+        android:layout_marginStart="82dp"
+        android:layout_marginBottom="56dp"
+        android:text="Login"
+        android:textColor="#FF00FF"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/textViewWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewLogin"
+        android:layout_alignStart="@+id/textViewLogin"
+        android:layout_marginStart="-50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="18dp"
         android:text="Good to see you again!"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="250dp"
-        android:layout_centerHorizontal="true" />
-
+        android:textColor="#FF00FF"
+        android:textSize="18sp" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_btn"
-        android:layout_width="match_parent"
+        android:layout_width="249dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp" />
+
+        android:layout_marginBottom="105dp" />
+
+
 </RelativeLayout>
