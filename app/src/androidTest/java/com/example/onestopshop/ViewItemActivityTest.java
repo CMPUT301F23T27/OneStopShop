@@ -2,8 +2,9 @@ package com.example.onestopshop;
 
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import android.support.test.rule.ActivityTestRule;
+;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
