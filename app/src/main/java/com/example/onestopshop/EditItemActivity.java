@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,7 @@ public class EditItemActivity extends AppCompatActivity {
     private EditText commentsText;
     private Button btnCancel;
     private Button confirm;
+    private ImageButton addPhoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class EditItemActivity extends AppCompatActivity {
         tagsText = findViewById(R.id.tags);
         commentsText = findViewById(R.id.comments);
         btnCancel = findViewById(R.id.btnCancel);
+        addPhoto = findViewById(R.id.add_image_button);
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
 
@@ -83,6 +86,14 @@ public class EditItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        addPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(EditItemActivity.this, EditGalleryActivity.class);
+                galleryIntent.putExtra("itemId", itemId);
+                startActivity(galleryIntent);
             }
         });
 

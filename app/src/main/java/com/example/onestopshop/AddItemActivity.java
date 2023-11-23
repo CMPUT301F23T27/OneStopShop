@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class AddItemActivity extends AppCompatActivity {
     private Button btnCancel;
     private Button confirm;
     private ImageView scanButton;
+    private ImageButton addPhoto;
 
     // Activity result launcher for handling results from ScanActivity
     private final ActivityResultLauncher<Intent> startForResult =
@@ -114,6 +116,13 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        addPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(AddItemActivity.this, AddGalleryActivity.class);
+                startActivity(galleryIntent);
             }
         });
     }
