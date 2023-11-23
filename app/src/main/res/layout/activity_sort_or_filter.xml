@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/border_sort"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="649dp"
+        android:text="Sort and Filter"
+        android:textColor="#BD2CA0"
+        android:textSize="34sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="34dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="371dp"
+        android:layout_marginBottom="694dp"
+        android:background="#BD2CA0"
+        android:src="@drawable/baseline_cancel_24"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck">
+
+
+    </ImageButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="294dp"
+        android:layout_marginBottom="585dp"
+        android:text="Sort By "
+        android:textColor="#BD2CA0"
+        android:textSize="24sp"
+        android:textStyle="bold">
+
+
+    </TextView>
+
+    <Spinner
+        android:id="@+id/spinner_dropdown_sortby"
+        android:layout_width="164dp"
+        android:layout_height="29dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="91dp"
+        android:layout_marginBottom="587dp"
+        android:background="#BD2CA0"
+        android:minHeight="48dp" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="2dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="554dp"
+        android:background="#FFFFFF" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="300dp"
+        android:layout_height="2dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="335dp"
+        android:background="#FFFFFF" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="300dp"
+        android:layout_height="2dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="232dp"
+        android:background="#FFFFFF" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="300dp"
+        android:layout_height="2dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="123dp"
+        android:background="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/filter_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="299dp"
+        android:layout_marginBottom="495dp"
+        android:text="Filter By"
+        android:textColor="#BD2CA0"
+        android:textSize="24sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="135dp"
+        android:layout_marginBottom="472dp"
+        android:text="Date"
+        android:textColor="#BD2CA0"
+        android:textSize="22sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/textview_before"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="281dp"
+        android:layout_marginBottom="427dp"
+        android:text="Before"
+        android:textColor="#BD2CA0"
+        android:textSize="22sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/make"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="313dp"
+        android:layout_marginBottom="277dp"
+        android:text="Make"
+        android:textColor="#BD2CA0"
+        android:textSize="22sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="316dp"
+        android:layout_marginBottom="164dp"
+        android:text="Tags"
+        android:textColor="#BD2CA0"
+        android:textSize="22sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/textView_after"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="298dp"
+        android:layout_marginBottom="370dp"
+        android:text="After"
+        android:textColor="#BD2CA0"
+        android:textSize="22sp"
+        android:textStyle="bold"></TextView>
+
+    <EditText
+        android:id="@+id/date_before"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="429dp"
+        android:background="#BD2CA0"
+        android:text="Date"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        tools:ignore="TouchTargetSizeCheck"></EditText>
+
+    <EditText
+        android:id="@+id/date_after"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="373dp"
+        android:background="#BD2CA0"
+        android:text="Date"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        tools:ignore="TouchTargetSizeCheck"></EditText>
+
+    <Spinner
+        android:id="@+id/spinner_dropdown_make"
+        android:layout_width="213dp"
+        android:layout_height="27dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="278dp"
+        android:background="#BD2CA0"
+        android:minHeight="48dp" />
+
+    <Spinner
+        android:id="@+id/spinner_dropdown_tags"
+        android:layout_width="213dp"
+        android:layout_height="27dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="164dp"
+        android:background="#BD2CA0"
+        android:minHeight="48dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/select_button"
+        android:layout_width="410dp"
+        android:layout_height="72dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="1dp"
+        android:background="#BD2AC0"
+        android:text="Apply"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="587dp"
+        android:background="#BD2CA0"
+        android:src="@drawable/baseline_arrow_downward_24"></ImageButton>
+
+
+</RelativeLayout>
