@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView itemName, purchaseDate, tags, estimatedValue;
+        CheckBox checkBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -45,6 +47,18 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
             purchaseDate = itemView.findViewById(R.id.purchaseDate);
             estimatedValue = itemView.findViewById(R.id.estimatedValue);
             tags = itemView.findViewById(R.id.tags);
+            checkBox = itemView.findViewById(R.id.itemCheckBox);
+
+            // Set a click listener for the checkbox
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int adapterPosition = getAdapterPosition();
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        inventory.get(adapterPosition).setSelected(checkBox.isChecked());
+                    }
+                }
+            });
         }
     }
 
@@ -112,7 +126,6 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
     public int getItemCount() {
         return inventory.size();
     }
-
 
 
 }

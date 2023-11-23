@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,6 +40,9 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private double totalEstimatedValue;
     private ImageView addButton;
     private ImageView profileButton;
+    private Button selectButton;
+    private CheckBox itemCheckBox;
+    private boolean checkboxVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         recyclerView = findViewById(R.id.item_list);
         addButton = findViewById(R.id.add_button);
         profileButton = findViewById(R.id.profile_button);
+        selectButton = findViewById(R.id.select_button);
+        checkboxVisible = false;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
@@ -65,6 +71,14 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(InventoryActivity.this, UserProfileActivity.class));
+            }
+        });
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkboxVisible = !checkboxVisible;
+                selectButton.setText(checkboxVisible ? "DESELECT" : "SELECT");
+                updateCheckboxVisibility(recyclerView);
             }
         });
 
@@ -87,4 +101,27 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         itemAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Changes the visibility of checkboxes
+     *
+     * @param recycler recyclerview containing checkbox
+     */
+    private void updateCheckboxVisibility(RecyclerView recycler) {
+        for (int i = 0; i < recycler.getChildCount(); i++) {
+            View itemView = recycler.getChildAt(i);
+            CheckBox checkBox = itemView.findViewById(R.id.itemCheckBox);
+
+            // OnClickListener sets checkboxVisible to what we want
+            if (checkBox != null) {
+                if (checkboxVisible) {
+                    checkBox.setVisibility(View.VISIBLE);
+                } else {
+                    checkBox.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+
+        // Notify the adapter
+        recycler.getAdapter().notifyDataSetChanged();
+    }
 }
