@@ -68,46 +68,43 @@
         android:paddingEnd="48dp">
 
         <LinearLayout
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
+            android:layout_width="258dp"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="7dp"
+            android:layout_toStartOf="@+id/select_button"
             android:orientation="horizontal">
 
             <!-- Sorted by -->
-
-            <!-- Sort -->
-
             <TextView
                 android:id="@+id/sorted_by"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="89dp"
+                android:layout_height="19dp"
                 android:layout_alignParentStart="true"
-                android:gravity="center"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:text="Sorted By: "
                 android:textColor="#BD2AC0"
                 android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/sort"
-                android:padding="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+            <!-- Sort Dropdown -->
+            <Spinner
+                android:id="@+id/sort_spinner"
+                android:layout_width="56dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="#BD2AC0"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="NAME"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:entries="@array/sort_criteria" />
 
             <!-- Change Sort -->
-            <ImageView
+            <ImageButton
                 android:id="@+id/switch_sort"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@color/black"
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:background="@color/black"
                 android:contentDescription="Click to switch the sorting of items"
                 android:src="@drawable/rsz_arrow" />
         </LinearLayout>
@@ -122,8 +119,9 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-
     </RelativeLayout>
+
+
 
     <!-- Line Separator  -->
     <View
