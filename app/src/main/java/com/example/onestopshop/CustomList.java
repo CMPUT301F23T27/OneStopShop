@@ -2,6 +2,7 @@ package com.example.onestopshop;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,10 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
     public int getItemCount() {
         return inventory.size();
     }
+
+
+
+
 
 
 

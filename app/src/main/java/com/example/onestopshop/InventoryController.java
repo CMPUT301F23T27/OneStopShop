@@ -1,10 +1,13 @@
 package com.example.onestopshop;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -162,5 +165,30 @@ public class InventoryController {
     public interface OnItemFetchListener {
         void onItemFetched(Item item);
         void onItemFetchFailed();
+    }
+
+
+    public void fetchDataFilteredAndSortedByMake(String makeFilter) {
+        Query query = itemsRef.whereEqualTo("make", makeFilter).orderBy("make");
+        Log.d("InventoryController", "makeFilter: " + makeFilter);
+
+
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                ArrayList<Item> filteredList = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Item item = document.toObject(Item.class);
+                    Log.d("InventoryController", "Item: " + item.getMake());
+                    filteredList.add(item);
+
+                }
+                Log.d("InventoryController", "Size: " + filteredList.size());
+                if (listener != null) {
+                    listener.onInventoryDataChanged(filteredList);
+                }
+            } else {
+                Log.e("InventoryController", "Error fetching filtered and sorted data: ", task.getException());
+            }
+        });
     }
 }
