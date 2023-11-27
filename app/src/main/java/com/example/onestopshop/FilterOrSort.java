@@ -1,16 +1,17 @@
 package com.example.onestopshop;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,54 +19,84 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener {
+public class FilterOrSort extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener {
 
     private ArrayList<Item> dataList;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
     private InventoryController inventoryController;
-    private TextView totalValueTextView;
-    private ImageButton addButton;
-    private ImageButton profileButton;
     private Spinner sortSpinner;
     private ImageButton switchSortButton; // Separate button for ascending/descending
     private boolean isAscending = true;
+    private EditText makeEditText;
+    private AppCompatButton applyFilterButton;
+    private String currentFilterText = "";
 
-    private ImageView sortButton;
+    private ImageButton cancelButton;
+
+    private AppCompatButton resetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inventory);
+        setContentView(R.layout.activity_sort_or_filter);
 
-
+        recyclerView = findViewById(R.id.item_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         inventoryController = new InventoryController();
         inventoryController.setListener(this);
 
         dataList = new ArrayList<>();
-        totalValueTextView = findViewById(R.id.total_estimated_value);
-        recyclerView = findViewById(R.id.item_list);
-        addButton = findViewById(R.id.add_button);
-        profileButton = findViewById(R.id.profile_button);
+
         sortSpinner = findViewById(R.id.sort_spinner);
         switchSortButton = findViewById(R.id.switch_sort); // Separate button for ascending/descending
-        sortButton = findViewById(R.id.sort_button);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
+        makeEditText = findViewById(R.id.make); // Replace with your actual EditText ID for entering the make
+        applyFilterButton = findViewById(R.id.select_button);
+        cancelButton = findViewById(R.id.sort_cancel);
+        resetButton = findViewById(R.id.reset_button);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        if (!currentFilterText.isEmpty()) {
+            makeEditText.setText(currentFilterText);
+        }
+        SharedPreferences preferences = getSharedPreferences("FilterPreferences", MODE_PRIVATE);
+        String savedFilterText = preferences.getString("filterText", "");
+
+        // Set the filter text in the EditText
+        makeEditText.setText(savedFilterText);
+
+        applyFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InventoryActivity.this, AddItemActivity.class));
+
+                currentFilterText = makeEditText.getText().toString();
+                Intent intent = new Intent(FilterOrSort.this, InventoryActivity.class);
+                intent.putExtra("MAKE_FILTER", currentFilterText); // Pass the make filter
+                SharedPreferences preferences = getSharedPreferences("FilterPreferences", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("filterText", currentFilterText);
+                editor.apply();
+                startActivity(intent);
+
             }
         });
 
-        profileButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InventoryActivity.this, UserProfileActivity.class));
+                finish();
+
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeEditText.setText("");
             }
         });
 
@@ -101,30 +132,13 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                 updateSwitchSortButtonAppearance();
             }
         });
-
-
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InventoryActivity.this, FilterOrSort.class));
-            }
-        });
     }
 
     @Override
     public void onInventoryDataChanged(ArrayList<Item> updatedData) {
         dataList.clear();
         dataList.addAll(updatedData);
-        totalValueTextView.setText("$" + String.format("%.2f", calculateTotalEstimatedValue()));
         itemAdapter.notifyDataSetChanged();
-    }
-
-    private double calculateTotalEstimatedValue() {
-        double totalEstimatedValue = 0;
-        for (Item item : dataList) {
-            totalEstimatedValue += item.getEstimatedValue();
-        }
-        return totalEstimatedValue;
     }
 
     private void sortItemList(String selectedSortCriteria) {
@@ -150,7 +164,6 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
         // Notify the adapter of the data change
         itemAdapter.notifyDataSetChanged();
-
     }
 
     private void updateSwitchSortButtonAppearance() {
@@ -200,16 +213,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         Collections.reverse(dataList);
     }
 
-
-
-
-
     private void sortItemsByMake() {
         Collections.sort(dataList, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
                 // Check if the make contains a number
-
                 String make1 = item1.getMake();
                 String make2 = item2.getMake();
 
@@ -232,10 +240,6 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         Collections.reverse(dataList);
     }
 
-
-
-
-
     private void sortItemsByEstimatedValue() {
         Collections.sort(dataList, new Comparator<Item>() {
             @Override
@@ -247,6 +251,4 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             Collections.reverse(dataList);
         }
     }
-
-
 }
