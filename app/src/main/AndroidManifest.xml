@@ -26,9 +26,7 @@
         <activity
             android:name=".UserProfileActivity"
             android:exported="false" />
-        <activity
-            android:name=".FilterOrSort"
-            android:exported="false" />
+
         <activity
             android:name=".AddItemActivity"
             android:exported="false" />

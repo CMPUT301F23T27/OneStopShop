@@ -103,12 +103,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         });
 
 
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InventoryActivity.this, FilterOrSort.class));
-            }
-        });
+
     }
 
     @Override
