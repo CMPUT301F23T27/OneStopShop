@@ -140,8 +140,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                     checkBox.setVisibility(View.INVISIBLE);
                 }
                 // In both situations we want all items to default as unselected
-                Item item = dataList.get(i);
-                item.setSelected(false);
+                int adapterPosition = recycler.getChildAdapterPosition(itemView);
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    Item item = dataList.get(i);
+                    item.setSelected(false);
+                }
             }
         }
 

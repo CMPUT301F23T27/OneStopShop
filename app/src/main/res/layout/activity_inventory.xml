@@ -204,6 +204,7 @@
             android:layout_marginEnd="40dp"
             android:background="#BD2AC0"
             android:text="Delete"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -215,6 +216,7 @@
             android:layout_marginEnd="20dp"
             android:background="#BD2AC0"
             android:text="Add Tags"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
