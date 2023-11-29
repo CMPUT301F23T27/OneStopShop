@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * ScanActivity allows the user to capture or choose an image and extracts a serial number using ML Kit Text Recognition.
+ */
 public class ScanActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> takePictureLauncher;
@@ -75,6 +78,11 @@ public class ScanActivity extends AppCompatActivity {
         pickImageLauncher.launch(pickImageIntent);
     }
 
+    /**
+     * Processes the captured or selected image using ML Kit Text Recognition.
+     *
+     * @param imageBitmap The captured or selected image.
+     */
     private void processImageWithMLKit(Bitmap imageBitmap) {
         TextRecognizer textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 
@@ -95,6 +103,11 @@ public class ScanActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Extracts the serial number from the recognized text and sets the result for the calling activity.
+     *
+     * @param resultText The text recognized from the image.
+     */
     private void extractSerialNumber(String resultText) {
         // Pattern to match a sequence of digits or an uppercase letter followed by digits until a space is encountered
         String pattern = "(?:(?=[A-Z])[A-Z0-9]*\\d[A-Z0-9]*|\\d{6,})";
@@ -113,4 +126,5 @@ public class ScanActivity extends AppCompatActivity {
         }
 
     }
+
 }

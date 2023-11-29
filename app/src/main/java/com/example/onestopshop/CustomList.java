@@ -16,17 +16,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-
+/**
+ * CustomList is a RecyclerView adapter for displaying a list of items in the inventory.
+ */
 public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
     private final Context context;
     private ArrayList<Item> inventory;
 
-
+    /**
+     * Constructs a new CustomList.
+     *
+     * @param context   The context in which the RecyclerView will be displayed.
+     * @param inventory The list of items to be displayed.
+     */
     public CustomList(Context context, ArrayList<Item> inventory) {
         this.inventory = inventory;
         this.context = context;
     }
 
+    /**
+     * ViewHolder class representing each item view in the RecyclerView.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView itemName, purchaseDate, tags, estimatedValue;
 
@@ -39,6 +49,14 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         }
     }
 
+    /**
+     * Called when RecyclerView needs a new ViewHolder of the given type to represent
+     * an item.
+     *
+     * @param parent   The ViewGroup into which the new View will be added.
+     * @param viewType The view type of the new View.
+     * @return A new ViewHolder that holds a View representing an item.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,6 +65,13 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         return new ViewHolder(itemView);
     }
 
+    /**
+     * Called by RecyclerView to display the data at the specified position.
+     *
+     * @param holder   The ViewHolder that should be updated to represent the contents
+     *                 of the item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         //set text fields for each item in recyclerView
@@ -79,6 +104,11 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
 
     }
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return The total number of items in this adapter.
+     */
     @Override
     public int getItemCount() {
         return inventory.size();

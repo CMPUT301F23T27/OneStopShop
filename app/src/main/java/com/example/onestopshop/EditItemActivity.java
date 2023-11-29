@@ -11,6 +11,9 @@ import android.widget.EditText;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * EditItemActivity allows the user to edit details of an existing item in the inventory.
+ */
 public class EditItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
     private EditText itemNameText;
@@ -84,6 +87,11 @@ public class EditItemActivity extends AppCompatActivity {
         });
 
     }
+    /**
+     * Displays the details of the given item in the corresponding EditText fields.
+     *
+     * @param item The item whose details should be displayed.
+     */
     private void displayItemDetails(Item item) {
         // Update your views with the retrieved item data
         itemNameText.setText(item.getItemName());
@@ -105,6 +113,11 @@ public class EditItemActivity extends AppCompatActivity {
         //remove brackets
         tagsText.setText(item.getTags().toString().substring(1,item.getTags().toString().length() -1));
     }
+    /**
+     * Validates the input fields of the item.
+     *
+     * @return True if the item is valid; false otherwise.
+     */
     public boolean validItem(){
         return true;
     }

@@ -17,5 +17,10 @@
         android:text="Choose from Gallery"
         android:layout_below="@id/btnTakePhoto"
         android:layout_centerInParent="true" />
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </RelativeLayout>

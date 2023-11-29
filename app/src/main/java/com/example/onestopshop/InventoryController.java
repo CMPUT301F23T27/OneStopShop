@@ -15,11 +15,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * InventoryController manages interactions with the Firebase Firestore database for inventory-related data.
+ */
 public class InventoryController {
+
     private CollectionReference itemsRef;
 
     private OnInventoryUpdateListener listener;
-
+    /**
+     * Constructs a new InventoryController and sets up a listener for inventory data changes.
+     */
     public InventoryController() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -48,7 +54,11 @@ public class InventoryController {
             }
         });
     }
-
+    /**
+     * Adds a new item to the inventory in Firestore.
+     *
+     * @param newItem The item to be added.
+     */
     public void addItem(Item newItem) {
         Map<String, Object> itemData = new HashMap<>();
         itemData.put("itemName", newItem.getItemName());
@@ -73,6 +83,13 @@ public class InventoryController {
                     // Handle failure to add the item to Firestore
                 });
     }
+
+    /**
+     * Updates an existing item in the inventory in Firestore.
+     *
+     * @param itemId  The ID of the item to be updated.
+     * @param newItem The updated item data.
+     */
     public void updateItem(String itemId, Item newItem) {
         DocumentReference itemRef = itemsRef.document(itemId);
         Map<String, Object> itemData = new HashMap<>();
@@ -96,6 +113,11 @@ public class InventoryController {
                 });
     }
 
+    /**
+     * Deletes an item from the inventory in Firestore.
+     *
+     * @param itemId The ID of the item to be deleted.
+     */
     public void deleteItem(String itemId) {
         itemsRef.document(itemId).delete();
     }
@@ -104,6 +126,12 @@ public class InventoryController {
             itemsRef.document(itemId).delete();
         }
     }
+    /**
+     * Fetches details of an item from the inventory by its ID.
+     *
+     * @param itemId   The ID of the item to be fetched.
+     * @param listener Callback for handling the fetched item or failure.
+     */
     public void getItemById(String itemId, final OnItemFetchListener listener) {
         itemsRef.document(itemId).get()
                 .addOnSuccessListener(documentSnapshot -> {
@@ -159,9 +187,15 @@ public class InventoryController {
         this.listener = listener;
     }
 
+    /**
+     * Interface for receiving inventory data update events.
+     */
     public interface OnInventoryUpdateListener {
         void onInventoryDataChanged(ArrayList<Item> updatedData);
     }
+    /**
+     * Interface for fetching details of a specific item.
+     */
     public interface OnItemFetchListener {
         void onItemFetched(Item item);
         void onItemFetchFailed();
