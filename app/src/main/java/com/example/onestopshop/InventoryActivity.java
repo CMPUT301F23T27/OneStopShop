@@ -5,28 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener{
@@ -45,6 +34,9 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private double totalEstimatedValue;
     private ImageView addButton;
     private ImageView profileButton;
+
+    private long dateBefore;
+    private long dateAfter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,21 +78,27 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         });
         Intent intent = getIntent();
         currentMakeFilter = intent.getStringExtra("MAKE_FILTER");
+        String dateB = intent.getStringExtra("DATE_BEFORE");
+        String dateA = intent.getStringExtra("DATE_AFTER");
 
         Log.e("InventoryActivity", "Current Make Filter: " + currentMakeFilter);
+        Log.e("InventoryActivity", "Current Before: " + dateB);
+        Log.e("InventoryActivity", "After: " + dateA);
         if (currentMakeFilter != null && !currentMakeFilter.isEmpty()) {
-            fetchDataFilteredAndSortedByMake(currentMakeFilter);
+            fetchDataFilteredAndSortedByMake(dateB,dateA,currentMakeFilter);
+        }
+
+
+            // Use these dates to filter your data
         }
 
 
 
 
 
-
-    }
-    private void fetchDataFilteredAndSortedByMake(String makeFilter) {
+    private void fetchDataFilteredAndSortedByMake(String dateBefore, String dateAfter, String makeFilter) {
         // Call the method from the InventoryController
-        inventoryController.fetchDataFilteredAndSortedByMake(makeFilter);
+        inventoryController.fetchDataFilteredAndSortedByMake(dateBefore,dateAfter,makeFilter);
     }
 
 

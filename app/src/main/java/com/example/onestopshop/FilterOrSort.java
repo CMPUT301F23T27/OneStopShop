@@ -13,9 +13,9 @@ import androidx.appcompat.widget.AppCompatButton;
 
 public class FilterOrSort extends AppCompatActivity {
 
-    private EditText makeEditText;
+    private EditText makeEditText, dateBefore, dateAfter;
     private AppCompatButton applyFilterButton;
-    private String currentFilterText = "";
+    private String currentFilterText = "", date_after="", date_before="";
 
     private ImageButton cancelButton;
 
@@ -30,6 +30,8 @@ public class FilterOrSort extends AppCompatActivity {
         applyFilterButton = findViewById(R.id.select_button);
         cancelButton = findViewById(R.id.sort_cancel);
         resetButton = findViewById(R.id.reset_button);
+        dateAfter = findViewById(R.id.date_after);
+        dateBefore = findViewById(R.id.date_before);
 
 
         if (!currentFilterText.isEmpty()) {
@@ -53,6 +55,13 @@ public class FilterOrSort extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("filterText", currentFilterText);
                 editor.apply();
+
+
+                date_after = dateAfter.getText().toString();
+                date_before = dateBefore.getText().toString();
+                intent.putExtra("DATE_BEFORE", date_before); // dateBefore is the value from the date picker/field
+                intent.putExtra("DATE_AFTER", date_after); // dateAfter is the value from the date picker/field
+
                 startActivity(intent);
 
             }

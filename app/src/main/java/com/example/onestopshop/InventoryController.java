@@ -168,9 +168,19 @@ public class InventoryController {
     }
 
 
-    public void fetchDataFilteredAndSortedByMake(String makeFilter) {
-        Query query = itemsRef.whereEqualTo("make", makeFilter).orderBy("make");
+    public void fetchDataFilteredAndSortedByMake(String dateBefore,String dateAfter,String makeFilter) {
+        Query query = itemsRef;
         Log.d("InventoryController", "makeFilter: " + makeFilter);
+        if (makeFilter != null && !makeFilter.isEmpty()) {
+            query = query.whereEqualTo("make", makeFilter);
+        }
+        Log.d("InventoryController", "date before: " + dateBefore);
+        Log.d("InventoryController", "date after: " + dateAfter);
+        if (dateBefore != null && dateAfter != null) {
+            query = query.whereGreaterThanOrEqualTo("purchaseDate", dateAfter)
+                    .whereLessThanOrEqualTo("purchaseDate", dateBefore);
+        }
+
 
 
         query.get().addOnCompleteListener(task -> {
