@@ -354,10 +354,20 @@ public class Item {
         this.tags = tags;
     }
 
+    /**
+     * This returns the selection state of the item
+     * @return
+     *      Return isSelected
+     */
     public boolean isSelected() {
         return isSelected;
     }
 
+    /**
+     * This sets the selected state of the item
+     * @param selected
+     *      New selection state
+     */
     public void setSelected(boolean selected) {
         isSelected = selected;
     }

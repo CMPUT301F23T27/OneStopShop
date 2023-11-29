@@ -41,8 +41,10 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private ImageView addButton;
     private ImageView profileButton;
     private Button selectButton;
+    private Button deleteMultipleButton;
     private CheckBox itemCheckBox;
     private boolean checkboxVisible;
+    private LinearLayout totalValueLayout, multipleSelectButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         addButton = findViewById(R.id.add_button);
         profileButton = findViewById(R.id.profile_button);
         selectButton = findViewById(R.id.select_button);
+        deleteMultipleButton = findViewById(R.id.deleteMultipleBtn);
+        totalValueLayout = findViewById(R.id.total_value_layout);
+        multipleSelectButtons = findViewById(R.id.multipleSelectBtns);
         checkboxVisible = false;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList);
@@ -78,7 +83,24 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             public void onClick(View v) {
                 checkboxVisible = !checkboxVisible;
                 selectButton.setText(checkboxVisible ? "DESELECT" : "SELECT");
+                setupMultipleSelect();
                 updateCheckboxVisibility(recyclerView);
+            }
+        });
+
+        deleteMultipleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // First get an array of selected item ids
+                ArrayList<String> selectedItemIds = new ArrayList<>();
+
+                for (Item item: dataList) {
+                    if (item.isSelected()) {
+                        selectedItemIds.add(item.getItemId());
+                    }
+                }
+                // Call Inventory Controller for multiple delete
+                inventoryController.deleteMultipleItems(selectedItemIds);
             }
         });
 
@@ -102,7 +124,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     }
 
     /**
-     * Changes the visibility of checkboxes
+     * Changes the visibility of checkboxes based on value of global boolean checkboxVisible
      *
      * @param recycler recyclerview containing checkbox
      */
@@ -111,17 +133,34 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             View itemView = recycler.getChildAt(i);
             CheckBox checkBox = itemView.findViewById(R.id.itemCheckBox);
 
-            // OnClickListener sets checkboxVisible to what we want
             if (checkBox != null) {
                 if (checkboxVisible) {
                     checkBox.setVisibility(View.VISIBLE);
                 } else {
                     checkBox.setVisibility(View.INVISIBLE);
                 }
+                // In both situations we want all items to default as unselected
+                Item item = dataList.get(i);
+                item.setSelected(false);
             }
         }
 
         // Notify the adapter
         recycler.getAdapter().notifyDataSetChanged();
+    }
+
+
+    /**
+     * Enables/Disables the layout for select mode
+     */
+    private void setupMultipleSelect() {
+        if (checkboxVisible) {
+            totalValueLayout.setVisibility(View.INVISIBLE);
+            multipleSelectButtons.setVisibility(View.VISIBLE);
+
+        } else {
+            totalValueLayout.setVisibility(View.VISIBLE);
+            multipleSelectButtons.setVisibility(View.GONE);
+        }
     }
 }

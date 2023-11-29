@@ -115,6 +115,8 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
             view.getContext().startActivity(intent);
         });
 
+        holder.checkBox.setChecked(item.isSelected());
+
     }
 
     /**
