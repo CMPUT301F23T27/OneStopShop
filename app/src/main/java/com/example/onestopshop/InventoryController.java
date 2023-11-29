@@ -1,10 +1,13 @@
 package com.example.onestopshop;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -163,4 +166,62 @@ public class InventoryController {
         void onItemFetched(Item item);
         void onItemFetchFailed();
     }
+
+
+    public void fetchDataFilteredAndSortedByMake(String makeFilter) {
+        Query query = itemsRef;
+        Log.d("InventoryController", "makeFilter: " + makeFilter);
+        if (makeFilter != null && !makeFilter.isEmpty()) {
+            query = query.whereEqualTo("make", makeFilter);
+        }
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                ArrayList<Item> filteredList = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Item item = document.toObject(Item.class);
+                    Log.d("InventoryController", "Item: " + item.getMake());
+                    filteredList.add(item);
+
+                }
+                Log.d("InventoryController", "Size: " + filteredList.size());
+                if (listener != null) {
+                    listener.onInventoryDataChanged(filteredList);
+                }
+            } else {
+                Log.e("InventoryController", "Error fetching filtered and sorted data: ", task.getException());
+            }
+        });
+    }
+    public void fetchDataFilteredAndSortedByDate(String date_A, String date_B) {
+        Query query = itemsRef;
+        Log.d("InventoryController", "Date Range: " + date_A + " to " + date_B);
+
+        if (date_A != null && !date_A.isEmpty() && date_B != null && !date_B.isEmpty()) {
+            // Assuming you have a "date" field in your Firestore documents
+            query = query.whereGreaterThanOrEqualTo("purchaseDate", date_A)
+                    .whereLessThanOrEqualTo("purchaseDate", date_B);
+        }
+
+        // Assuming you want to sort by the "date" field
+        query = query.orderBy("purchaseDate");
+
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                ArrayList<Item> filteredList = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Item item = document.toObject(Item.class);
+                    Log.d("InventoryController", "Item: " + item.getPurchaseDate());
+                    filteredList.add(item);
+                }
+                Log.d("InventoryController", "Size: " + filteredList.size());
+                if (listener != null) {
+                    listener.onInventoryDataChanged(filteredList);
+                }
+            } else {
+                Log.e("InventoryController", "Error fetching filtered and sorted data: ", task.getException());
+            }
+        });
+    }
+
+
 }

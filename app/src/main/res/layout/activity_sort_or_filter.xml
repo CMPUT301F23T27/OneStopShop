@@ -1,268 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/border_sort"
+    android:orientation="vertical"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="142dp"
-        android:layout_marginBottom="649dp"
-        android:text="Sort and Filter"
-        android:textColor="#BD2CA0"
-        android:textSize="34sp"
-        android:textStyle="bold">
-
-    </TextView>
-
     <ImageButton
+        android:id="@+id/sort_cancel"
         android:layout_width="36dp"
         android:layout_height="34dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="371dp"
-        android:layout_marginBottom="694dp"
         android:background="#BD2CA0"
         android:src="@drawable/baseline_cancel_24"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck">
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
 
-    </ImageButton>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="294dp"
-        android:layout_marginBottom="585dp"
-        android:text="Sort By "
+        android:text="Sort and Filter"
         android:textColor="#BD2CA0"
-        android:textSize="24sp"
-        android:textStyle="bold">
+        android:paddingLeft="55dp"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+    </Space>
+
+    <!-- Place other views and elements here -->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:layout_marginLeft="20dp"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textView_sort_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Sort By"
+            android:textColor="#BD2CA0"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner_dropdown_sortby"
+            android:layout_width="171dp"
+            android:layout_height="34dp"
+            android:layout_alignTop="@+id/textView_sort_by"
+            android:layout_marginStart="18dp"
+
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@id/textView_sort_by"
+            android:background="#BD2CA0"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:id="@+id/imageView_arrow"
+            android:layout_width="39dp"
+            android:layout_height="41dp"
+            android:layout_alignBottom="@+id/spinner_dropdown_sortby"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="1dp"
+            android:layout_toEndOf="@id/spinner_dropdown_sortby"
+            android:background="#BD2CA0"
+            android:paddingTop="5dp"
+            android:src="@drawable/baseline_arrow_downward_24" />
 
 
-    </TextView>
-
-    <Spinner
-        android:id="@+id/spinner_dropdown_sortby"
-        android:layout_width="164dp"
-        android:layout_height="29dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="91dp"
-        android:layout_marginBottom="587dp"
-        android:background="#BD2CA0"
-        android:minHeight="48dp" />
+    </RelativeLayout>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"></Space>
 
     <View
-        android:layout_width="300dp"
-        android:layout_height="2dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="554dp"
-        android:background="#FFFFFF" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="300dp"
-        android:layout_height="2dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="335dp"
-        android:background="#FFFFFF" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="300dp"
-        android:layout_height="2dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="232dp"
-        android:background="#FFFFFF" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="300dp"
-        android:layout_height="2dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="46dp"
-        android:layout_marginBottom="123dp"
-        android:background="#FFFFFF" />
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="30dp"></View>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"></Space>
 
     <TextView
         android:id="@+id/filter_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="299dp"
-        android:layout_marginBottom="495dp"
         android:text="Filter By"
         android:textColor="#BD2CA0"
+        android:paddingLeft="29dp"
         android:textSize="24sp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15.5dp">
 
+    </Space>
     <TextView
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="135dp"
-        android:layout_marginBottom="472dp"
         android:text="Date"
         android:textColor="#BD2CA0"
-        android:textSize="22sp"
-        android:textStyle="bold"></TextView>
-
-    <TextView
-        android:id="@+id/textview_before"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="281dp"
-        android:layout_marginBottom="427dp"
-        android:text="Before"
-        android:textColor="#BD2CA0"
-        android:textSize="22sp"
-        android:textStyle="bold"></TextView>
-
-    <TextView
-        android:id="@+id/make"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="313dp"
-        android:layout_marginBottom="277dp"
-        android:text="Make"
-        android:textColor="#BD2CA0"
-        android:textSize="22sp"
-        android:textStyle="bold"></TextView>
-
-    <TextView
-        android:id="@+id/tags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="316dp"
-        android:layout_marginBottom="164dp"
-        android:text="Tags"
-        android:textColor="#BD2CA0"
-        android:textSize="22sp"
-        android:textStyle="bold"></TextView>
-
-    <TextView
-        android:id="@+id/textView_after"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="298dp"
-        android:layout_marginBottom="370dp"
-        android:text="After"
-        android:textColor="#BD2CA0"
-        android:textSize="22sp"
-        android:textStyle="bold"></TextView>
-
-    <EditText
-        android:id="@+id/date_before"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="429dp"
-        android:background="#BD2CA0"
-        android:text="Date"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        tools:ignore="TouchTargetSizeCheck"></EditText>
-
-    <EditText
-        android:id="@+id/date_after"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="373dp"
-        android:background="#BD2CA0"
-        android:text="Date"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        tools:ignore="TouchTargetSizeCheck"></EditText>
-
-    <Spinner
-        android:id="@+id/spinner_dropdown_make"
-        android:layout_width="213dp"
-        android:layout_height="27dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="49dp"
-        android:layout_marginBottom="278dp"
-        android:background="#BD2CA0"
-        android:minHeight="48dp" />
-
-    <Spinner
-        android:id="@+id/spinner_dropdown_tags"
-        android:layout_width="213dp"
-        android:layout_height="27dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="164dp"
-        android:background="#BD2CA0"
-        android:minHeight="48dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/select_button"
-        android:layout_width="410dp"
-        android:layout_height="72dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="1dp"
-        android:background="#BD2AC0"
-        android:text="Apply"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:paddingLeft="250dp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
-    <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="29dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="587dp"
-        android:background="#BD2CA0"
-        android:src="@drawable/baseline_arrow_downward_24"></ImageButton>
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="51dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/black"
+        android:padding="8dp">
+
+        <!-- Repeat similar structure for other TextViews and Views -->
+
+        <TextView
+            android:id="@+id/before"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="35dp"
+            android:text="Before"
+            android:textColor="#BD2CA0"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/date_before"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/before"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="3dp"
+            android:background="#BD2CA0"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="362dp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/black"
+        android:padding="8dp">
+
+        <!-- Repeat similar structure for other TextViews and Views -->
+
+        <TextView
+            android:id="@+id/after"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="35dp"
+            android:text="After"
+            android:textColor="#BD2CA0"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/date_after"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/after"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="39dp"
+            android:layout_marginBottom="6dp"
+            android:background="#BD2CA0"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"></Space>
+
+    <View
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="30dp"></View>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="23dp"></Space>
+
+    <RelativeLayout
+        android:layout_width="365dp"
+        android:layout_height="49dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/black"
+        android:padding="8dp">
+
+        <!-- Repeat similar structure for other TextViews and Views -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="Make"
+            android:textColor="#BD2CA0"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/make"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="3dp"
+            android:background="#BD2CA0"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"></Space>
+
+    <View
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="30dp"></View>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="23dp"></Space>
+
+    <RelativeLayout
+        android:layout_width="363dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/black"
+        android:padding="8dp">
+
+        <!-- Repeat similar structure for other TextViews and Views -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="Tags"
+            android:textColor="#BD2CA0"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/tags"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="3dp"
+            android:background="#BD2CA0"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RelativeLayout>
+    <!-- Add other EditTexts, Spinners, etc. -->
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"></Space>
+
+    <View
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="30dp"></View>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"></Space>
 
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="376dp"
+        android:layout_height="58dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/black"
+        android:padding="8dp">
+
+        <!-- Repeat similar structure for other TextViews and Views -->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/select_button"
+            android:layout_width="183dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="#BD2AC0"
+            android:text="Apply"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reset_button"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="193dp"
+            android:layout_marginBottom="0dp"
+            android:background="#BD2AC0"
+            android:text="Reset"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+</LinearLayout>
