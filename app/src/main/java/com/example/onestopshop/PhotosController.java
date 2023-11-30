@@ -13,12 +13,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PhotosController {
     private StorageReference storageRef;
@@ -26,6 +26,10 @@ public class PhotosController {
     private OnPhotoListUpdateListener photoListUpdateListener;
 
     public PhotosController(String itemId) {
+        if (itemId == null || itemId.isEmpty()) {
+            // Create a child reference using the itemId
+            return;
+        }
         storageRef = FirebaseStorage.getInstance().getReference().child("photos").child(itemId);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -53,10 +57,10 @@ public class PhotosController {
     public void uploadPhoto(Uri photoUri) {
         // Get a reference to the location where you want to store the photo in Firebase Storage
         String photoId = UUID.randomUUID().toString();
-        storageRef.child(photoId);
+
 
         // Upload the photo to Firebase Storage
-        storageRef.putFile(photoUri)
+        storageRef.child(photoId).putFile(photoUri)
                 .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(Task<UploadTask.TaskSnapshot> task) {
@@ -90,8 +94,10 @@ public class PhotosController {
                     // Handle failure to store download link
                 });
     }
-    public void uploadAllPhotos(String itemId, List<Uri> photoUris) {
-
+    public void uploadAllPhotos(List<Uri> photoUris) {
+        for(Uri uri : photoUris){
+            uploadPhoto(uri);
+        }
     }
     public void deletePhoto(String photoId) {
         // Create references to the photo in Firebase Storage and Firestore
@@ -114,6 +120,25 @@ public class PhotosController {
                 .addOnFailureListener(e -> {
                     // Handle failure to delete photo from storage
                 });
+    }
+
+    public void getDownloadUrl(DownloadUrlCallback callback) {
+        photosRef.limit(1).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        String downloadUrl = queryDocumentSnapshots.getDocuments().get(0).getString("photoUrl");
+                        callback.onSuccess(downloadUrl);
+                    } else {
+
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure(e));
+    }
+
+    public interface DownloadUrlCallback {
+        void onSuccess(String downloadUrl);
+
+        void onFailure(Exception e);
     }
     public void setOnPhotoListUpdateListener(OnPhotoListUpdateListener listener) {
         photoListUpdateListener = listener;

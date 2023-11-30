@@ -7,6 +7,9 @@ public class ItemPhoto {
         this.photoId = photoId;
         this.photoUrl = photoUrl;
     }
+    ItemPhoto(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public String getPhotoUrl() {
         return photoUrl;

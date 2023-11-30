@@ -1,70 +1,70 @@
 package com.example.onestopshop;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditGalleryActivity extends AppCompatActivity implements PhotosController.OnPhotoListUpdateListener {
+public class GalleryFragment extends Fragment {
+    private List<Uri> localUris;
     private List<ItemPhoto> photoList;
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
-    private PhotosController photosController;
     private Button addBtn;
-    private Button deleteBtn;
     private Button backBtn;
     private ActivityResultLauncher<Intent> takePictureLauncher;
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_gallery);
-        Intent intent = getIntent();
-        String itemId = intent.getStringExtra("itemId");
-        recyclerView = findViewById(R.id.recyclerView);
-        addBtn = findViewById(R.id.btnAddPhoto);
-        deleteBtn = findViewById(R.id.btnDelete);
-        backBtn = findViewById(R.id.back_button);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_gallery, container, false);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        addBtn = view.findViewById(R.id.btnAddPhoto);
+        backBtn = view.findViewById(R.id.back_button);
         photoList = new ArrayList<>();
-        photosController = new PhotosController(itemId);
-        photosController.setOnPhotoListUpdateListener(this);
+        localUris = ((AddItemActivity) requireActivity()).getUriList();
+        //treat uris as download urls for the adapter so we can use the same adapter
+        for(Uri uri : localUris) {
+            photoList.add(new ItemPhoto(uri.toString()));
+        }
         addBtn.setOnClickListener(v -> showPhotoOptionsDialog());
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         photoAdapter = new PhotoAdapter(photoList);
         recyclerView.setAdapter(photoAdapter);
 
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    if (result.getResultCode() == requireActivity().RESULT_OK && result.getData() != null) {
                         Uri selectedImage = result.getData().getData();
-                        photosController.uploadPhoto(selectedImage);
+                        photoList.add(new ItemPhoto(selectedImage.toString()));
+                        localUris.add(selectedImage);
+                        //String tag = "AddGalleryActivity";
+                        //Log.d(tag, "" + localUris.size());
+                        photoAdapter.notifyDataSetChanged();
                     }
                 });
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
+        backBtn.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
         });
-        backBtn.setOnClickListener(v -> finish());
-
+        return view;
     }
     private void showPhotoOptionsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Add a Photo");
 
         // Add options to the dialog
@@ -90,11 +90,5 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
         pickImageLauncher.launch(pickImageIntent);
     }
 
-    @Override
-    public void onPhotoListUpdated(List<ItemPhoto> updatedPhotoList) {
-        photoList.clear();
-        photoList.addAll(updatedPhotoList);
-        photoAdapter.notifyDataSetChanged();
-    }
 
 }
