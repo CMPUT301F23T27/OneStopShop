@@ -64,7 +64,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         multipleSelectButtons = findViewById(R.id.multipleSelectBtns);
         checkboxVisible = false;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        itemAdapter = new CustomList(this, dataList);
+        itemAdapter = new CustomList(this, dataList, checkboxVisible);
         recyclerView.setAdapter(itemAdapter);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +82,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             @Override
             public void onClick(View v) {
                 checkboxVisible = !checkboxVisible;
+                itemAdapter.setCheckboxVisible(checkboxVisible);
                 selectButton.setText(checkboxVisible ? "DESELECT" : "SELECT");
                 setupMultipleSelect();
                 updateCheckboxVisibility(recyclerView);
@@ -142,14 +143,14 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                 // In both situations we want all items to default as unselected
                 int adapterPosition = recycler.getChildAdapterPosition(itemView);
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    Item item = dataList.get(i);
+                    Item item = dataList.get(adapterPosition);
                     item.setSelected(false);
                 }
             }
         }
-
         // Notify the adapter
-        recycler.getAdapter().notifyDataSetChanged();
+        int itemCount = recycler.getAdapter().getItemCount();
+        recycler.getAdapter().notifyItemRangeChanged(0,itemCount);
     }
 
 

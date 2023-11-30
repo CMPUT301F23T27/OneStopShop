@@ -1,5 +1,7 @@
 package com.example.onestopshop;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
     private final Context context;
     private ArrayList<Item> inventory;
+    private boolean checkboxVisible;
 
     /**
      * Constructs a new CustomList.
@@ -29,9 +32,15 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
      * @param context   The context in which the RecyclerView will be displayed.
      * @param inventory The list of items to be displayed.
      */
-    public CustomList(Context context, ArrayList<Item> inventory) {
+    public CustomList(Context context, ArrayList<Item> inventory, boolean checkBoxVisible) {
         this.inventory = inventory;
         this.context = context;
+        this.checkboxVisible = checkBoxVisible;
+    }
+
+    public void setCheckboxVisible(boolean checkboxVisible) {
+        this.checkboxVisible = checkboxVisible;
+        notifyDataSetChanged();
     }
 
     /**
@@ -92,9 +101,8 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
 
         holder.itemName.setText(item.getItemName());
 
-
+        holder.checkBox.setVisibility(this.checkboxVisible ? View.VISIBLE : View.INVISIBLE);
         holder.purchaseDate.setText(item.getPurchaseDate());
-
         // Format the estimated value to 2 decimal places
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         holder.estimatedValue.setText("$" + decimalFormat.format(item.getEstimatedValue()));
@@ -115,7 +123,6 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
             view.getContext().startActivity(intent);
         });
 
-        holder.checkBox.setChecked(item.isSelected());
 
     }
 
