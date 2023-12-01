@@ -6,13 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 /**
  * Activity for viewing the details of a specific item.
@@ -22,7 +17,6 @@ import java.util.List;
 
 public class ViewItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
-    private PhotosController photosController;
     private TextView itemName;
     private TextView tvDescriptionContent;
     private TextView date;
@@ -35,7 +29,6 @@ public class ViewItemActivity extends AppCompatActivity {
     private Button btnBack;
     private Button btnDelete;
     private Button btnEdit;
-    private ImageView itemPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +48,10 @@ public class ViewItemActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnDelete = findViewById(R.id.btnDelete);
         btnEdit = findViewById(R.id.btnEdit);
-        itemPhoto = findViewById(R.id.productImage);
+
+
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
-        photosController = new PhotosController(itemId);
         inventoryController = new InventoryController(); // Initialize your controller
 
         if (itemId != null) {
@@ -81,34 +74,6 @@ public class ViewItemActivity extends AppCompatActivity {
             });
         }
 
-        photosController.getDownloadUrl(new PhotosController.DownloadUrlCallback() {
-            @Override
-            public void onSuccess(String downloadUrl) {
-                if (downloadUrl != null && !downloadUrl.isEmpty()) {
-                    // Use the download URL here, for example, load it into an ImageView
-                    Picasso.get().load(downloadUrl).into(itemPhoto);
-                    itemPhoto.setBackgroundColor(0);
-                } else {
-                    // If there's no download URL leave the default image
-
-                }
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                // Handle failure, for example
-
-            }
-        });
-
-        itemPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryIntent = new Intent(ViewItemActivity.this, EditGalleryActivity.class);
-                galleryIntent.putExtra("itemId", itemId);
-                startActivity(galleryIntent);
-            }
-        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

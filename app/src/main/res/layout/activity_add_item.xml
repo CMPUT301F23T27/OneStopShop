@@ -1,16 +1,357 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".AddItemActivity">
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+    tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#BD2AC0"
+        android:text="Cancel"
+        android:textColor="#000000" />
+
+
+    <Button
+        android:id="@+id/btn_scan_barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/productDetails"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="135dp"
+
+        android:layout_marginBottom="11dp"
+        android:backgroundTint="#BD2AC0"
+        android:text="Scan Barcode"
+        android:textColor="#000000"
+
+        ></Button>
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="wrap_content"
+        android:layout_height="124dp"
+        android:layout_alignBottom="@+id/productDetails"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="133dp"
+        android:layout_marginBottom="471dp"
+        android:background="#BD2AC0"
+        android:src="@drawable/baseline_image_24" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/productImage" />
+
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/productImage"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="96dp"
+        android:layout_toStartOf="@+id/productImage" />
+
+
+
+    <LinearLayout
+        android:id="@+id/productDetails"
+        android:layout_width="377dp"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="89dp"
+        android:background="#BD2AC0"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:ignore="ExtraText">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Name: "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Product Name"
+                android:id="@+id/itemName"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Description:"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border_pink"
+            android:padding="8dp"
+            android:text=""
+            android:textColor="#000000" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp">
+
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Purchase: "
+                android:textColor="@color/black"
+
+                />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="yyyy-mm-dd"
+                android:textSize="10dp"
+                android:id="@+id/purchaseDate"/>
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp">
+
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                 />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"
+                android:id="@+id/make"/>
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp">
+
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Model: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/model"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp">
+
+        </Space>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estimated Value: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/estimatedValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serial Number (opt.): "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/serialnumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+            <ImageView
+                android:id="@+id/scanButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/scan_icon_black" />
+
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp">
+        </Space>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comments (opt.): "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/comments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tags: "
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/tags"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint=""
+                android:textSize="10dp"></EditText>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="42dp"
+        android:layout_height="34dp"
+        android:layout_above="@+id/productDetails"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="43dp"
+        android:layout_marginBottom="132dp"
+        android:background="#FFBD2AC0"
+        android:src="@drawable/baseline_camera_alt_24"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/btn_add_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#BD2AC0"
+        android:text="ADD ITEM"
+        android:textColor="#000000" />
 
 
 </RelativeLayout>

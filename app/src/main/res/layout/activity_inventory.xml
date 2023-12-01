@@ -51,6 +51,7 @@
                 android:paddingEnd="10dp"
                 android:background="#BD2AC0"
                 android:src="@drawable/rsz_search"
+                android:onClick="search"
                 android:contentDescription="Click to Search for Items"/>
 
         </androidx.appcompat.widget.Toolbar>

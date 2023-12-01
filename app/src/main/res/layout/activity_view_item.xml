@@ -30,8 +30,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="126dp"
         android:layout_marginBottom="444dp"
-        android:background="#BD2AC0"
-        android:src="@drawable/baseline_image_24"/>
+        android:background="#E0E0E0" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -40,13 +39,13 @@
         android:layout_marginEnd="10dp"
         android:layout_toStartOf="@+id/productImage" />
 
-    <!--<ImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/btnBack"
         android:layout_marginLeft="55dp"
         android:layout_marginBottom="-73dp"
-        android:src="@drawable/baseline_arrow_back_24" />-->
+        android:src="@drawable/baseline_arrow_back_24" />
 
     <Spinner
         android:id="@+id/spinner2"
@@ -57,7 +56,7 @@
         android:layout_marginBottom="96dp"
         android:layout_toStartOf="@+id/productImage" />
 
-    <!--<ImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/btnBack"
@@ -66,7 +65,7 @@
         android:layout_marginEnd="64dp"
         android:layout_marginRight="50dp"
         android:layout_marginBottom="-72dp"
-        android:src="@drawable/baseline_arrow_forward_24" />-->
+        android:src="@drawable/baseline_arrow_forward_24" />
 
     <LinearLayout
         android:id="@+id/productDetails"
