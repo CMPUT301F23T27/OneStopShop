@@ -98,7 +98,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                 ArrayList<String> selectedItemIds = new ArrayList<>();
                 for (Item item: dataList) {
                     if (item.isSelected()) {
-                        if (item.getItemId() != null) {
+                        if (item.getItemId() != null && item.getItemId().isEmpty() == false) {
                             selectedItemIds.add(item.getItemId());
                         }
                     }
