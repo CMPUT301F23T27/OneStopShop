@@ -72,6 +72,16 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                 startActivity(new Intent(InventoryActivity.this, UserProfileActivity.class));
             }
         });
+        filterSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    applyFilter();
+                } else {
+                    clearFilter();
+                }
+            }
+        });
 
         sortButton = findViewById(R.id.sort_button);
         sortButton.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +115,23 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         inventoryController.fetchDataFilteredAndSortedByMake(dateBefore,dateAfter,makeFilter);
     }
 
+
+    private void applyFilter() {
+        Log.e("InventoryActivity", "make: "+ currentMakeFilter);
+        filterSwitch.setChecked(true);
+        if (currentMakeFilter != null && !currentMakeFilter.isEmpty()) {
+            fetchDataFilteredAndSortedByMake(currentMakeFilter);
+        }
+
+    }
+
+    private void clearFilter() {
+        filterSwitch.setChecked(false);
+        fetchDataOriginal();
+    }
+    private void fetchDataOriginal() {
+        inventoryController.fetchAllData();
+    }
 
 
 
