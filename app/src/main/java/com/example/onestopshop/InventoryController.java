@@ -202,21 +202,12 @@ public class InventoryController {
     }
 
 
-    public void fetchDataFilteredAndSortedByMake(String dateBefore,String dateAfter,String makeFilter) {
+    public void fetchDataFilteredAndSortedByMake(String makeFilter) {
         Query query = itemsRef;
         Log.d("InventoryController", "makeFilter: " + makeFilter);
         if (makeFilter != null && !makeFilter.isEmpty()) {
             query = query.whereEqualTo("make", makeFilter);
         }
-        Log.d("InventoryController", "date before: " + dateBefore);
-        Log.d("InventoryController", "date after: " + dateAfter);
-        if (dateBefore != null && dateAfter != null) {
-            query = query.whereGreaterThanOrEqualTo("purchaseDate", dateAfter)
-                    .whereLessThanOrEqualTo("purchaseDate", dateBefore);
-        }
-
-
-
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 ArrayList<Item> filteredList = new ArrayList<>();
@@ -232,6 +223,23 @@ public class InventoryController {
                 }
             } else {
                 Log.e("InventoryController", "Error fetching filtered and sorted data: ", task.getException());
+            }
+        });
+    }
+
+    public void fetchAllData() {
+        itemsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                ArrayList<Item> allItems = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Item item = document.toObject(Item.class);
+                    allItems.add(item);
+                }
+                if (listener != null) {
+                    listener.onInventoryDataChanged(allItems);
+                }
+            } else {
+                Log.e("InventoryController", "Error fetching data: ", task.getException());
             }
         });
     }
