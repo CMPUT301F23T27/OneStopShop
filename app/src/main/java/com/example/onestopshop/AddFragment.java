@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -115,12 +116,21 @@ public class AddFragment extends Fragment {
                 String make = makeText.getText().toString();
                 String model = modelText.getText().toString();
                 String serialNumber = serialNumberText.getText().toString();
-                Double estimatedValue = Double.parseDouble(estimatedValueText.getText().toString());
+                Double estimatedValue = 0.0;
+                if(estimatedValueText.getText().toString() != null && estimatedValueText.getText().toString().isEmpty() == false) {
+                    try {
+                        estimatedValue = Double.parseDouble(estimatedValueText.getText().toString());
+                    }
+                    catch(Exception e) {
+                        Toast.makeText(getContext(), "Invalid Estimated Value", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 List<String> tags = Arrays.asList(tagsText.getText().toString().split(","));
                 String comments = commentsText.getText().toString();
 
                 // Validate the item
-                boolean validItem = validItem();
+                boolean validItem = validItem(new Item(itemName, description, purchaseDate, make,
+                        model, estimatedValue, comments, serialNumber, tags));
 
                 // If the item is valid, add it to the inventory
                 if (validItem) {
@@ -169,9 +179,26 @@ public class AddFragment extends Fragment {
      *
      * @return True if the item is valid, false otherwise.
      */
-    public boolean validItem() {
-        // TODO: Add validation logic
-        return true;
+    public boolean validItem(Item item) {
+        boolean valid = true;
+        if(item.getItemName() == null || item.getItemName().isEmpty()) {
+            Toast.makeText(getContext(), "Invalid Product Name", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(item.getDescription() == null || item.getDescription().isEmpty()) {
+            Toast.makeText(getContext(), "Invalid Description", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(item.getMake() == null || item.getMake().isEmpty()) {
+            Toast.makeText(getContext(), "Invalid Make", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(item.getModel() == null || item.getModel().isEmpty()) {
+            Toast.makeText(getContext(), "Invalid Model", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        return valid;
     }
     public void launchGalleryFragment() {
         requireActivity().getSupportFragmentManager().beginTransaction()

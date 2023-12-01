@@ -67,7 +67,16 @@
         </LinearLayout>
 
     </LinearLayout>
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clickable="false"
+        android:layout_marginTop="8dp">
+        <!-- Tags will be dynamically added here -->
 
+    </com.google.android.material.chip.ChipGroup>
     <!-- Line Separator  -->
     <View
     android:layout_width="match_parent"
