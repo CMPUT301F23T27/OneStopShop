@@ -27,6 +27,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private String currentMakeFilter = null;
     private ArrayAdapter adapter;
     private RecyclerView recyclerView;
+    private Switch filterSwitch;
     private CustomList itemAdapter;
     private InventoryController inventoryController;
 
