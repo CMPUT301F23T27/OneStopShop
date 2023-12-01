@@ -66,7 +66,6 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
                     int adapterPosition = getAdapterPosition();
                     if (adapterPosition != RecyclerView.NO_POSITION) {
                         inventory.get(adapterPosition).setSelected(checkBox.isChecked());
-                        Log.d("Multiple Delete", "isSelected: "+inventory.get(adapterPosition).isSelected());
                     }
                 }
             });

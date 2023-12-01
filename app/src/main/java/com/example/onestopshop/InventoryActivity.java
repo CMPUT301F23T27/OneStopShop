@@ -95,10 +95,8 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             public void onClick(View v) {
                 // First get an array of selected item ids
                 ArrayList<String> selectedItemIds = new ArrayList<>();
-                Log.d("Multiple Delete", ""+dataList.size());
                 for (Item item: dataList) {
                     if (item.isSelected()) {
-                        Log.d("Multiple Delete", "Item Name: "+item.getItemName());
                         selectedItemIds.add(item.getItemId());
                     }
                 }
