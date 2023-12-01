@@ -98,12 +98,14 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                 ArrayList<String> selectedItemIds = new ArrayList<>();
                 for (Item item: dataList) {
                     if (item.isSelected()) {
-                        selectedItemIds.add(item.getItemId());
+                        if (item.getItemId() != null) {
+                            selectedItemIds.add(item.getItemId());
+                        }
                     }
                 }
                 // Call Inventory Controller for multiple delete
                 inventoryController.deleteMultipleItems(selectedItemIds);
-
+                itemAdapter.notifyDataSetChanged();
             }
         });
 
