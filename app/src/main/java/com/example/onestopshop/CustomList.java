@@ -4,6 +4,7 @@ import static android.view.View.VISIBLE;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
                     int adapterPosition = getAdapterPosition();
                     if (adapterPosition != RecyclerView.NO_POSITION) {
                         inventory.get(adapterPosition).setSelected(checkBox.isChecked());
+                        Log.d("Multiple Delete", "isSelected: "+inventory.get(adapterPosition).isSelected());
                     }
                 }
             });
@@ -102,6 +104,7 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         holder.itemName.setText(item.getItemName());
 
         holder.checkBox.setVisibility(this.checkboxVisible ? View.VISIBLE : View.INVISIBLE);
+        holder.checkBox.setChecked(item.isSelected());
         holder.purchaseDate.setText(item.getPurchaseDate());
         // Format the estimated value to 2 decimal places
         DecimalFormat decimalFormat = new DecimalFormat("0.00");

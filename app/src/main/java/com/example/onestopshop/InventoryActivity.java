@@ -82,6 +82,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             @Override
             public void onClick(View v) {
                 checkboxVisible = !checkboxVisible;
+                deselectAll();
                 itemAdapter.setCheckboxVisible(checkboxVisible);
                 selectButton.setText(checkboxVisible ? "DESELECT" : "SELECT");
                 setupMultipleSelect();
@@ -94,14 +95,16 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             public void onClick(View v) {
                 // First get an array of selected item ids
                 ArrayList<String> selectedItemIds = new ArrayList<>();
-
+                Log.d("Multiple Delete", ""+dataList.size());
                 for (Item item: dataList) {
                     if (item.isSelected()) {
+                        Log.d("Multiple Delete", "Item Name: "+item.getItemName());
                         selectedItemIds.add(item.getItemId());
                     }
                 }
                 // Call Inventory Controller for multiple delete
                 inventoryController.deleteMultipleItems(selectedItemIds);
+
             }
         });
 
@@ -141,11 +144,6 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                     checkBox.setVisibility(View.INVISIBLE);
                 }
                 // In both situations we want all items to default as unselected
-                int adapterPosition = recycler.getChildAdapterPosition(itemView);
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    Item item = dataList.get(adapterPosition);
-                    item.setSelected(false);
-                }
             }
         }
         // Notify the adapter
@@ -165,6 +163,12 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         } else {
             totalValueLayout.setVisibility(View.VISIBLE);
             multipleSelectButtons.setVisibility(View.GONE);
+        }
+    }
+
+    private void deselectAll() {
+        for (Item item : dataList) {
+            item.setSelected(false);
         }
     }
 }
