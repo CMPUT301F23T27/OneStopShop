@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +58,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
         totalValueTextView = findViewById(R.id.total_estimated_value);
         recyclerView = findViewById(R.id.item_list);
+        filterSwitch = findViewById(R.id.switch2);
         addButton = findViewById(R.id.add_button);
         profileButton = findViewById(R.id.profile_button);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -93,27 +96,26 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         });
         Intent intent = getIntent();
         currentMakeFilter = intent.getStringExtra("MAKE_FILTER");
-        String dateB = intent.getStringExtra("DATE_BEFORE");
-        String dateA = intent.getStringExtra("DATE_AFTER");
+
 
         Log.e("InventoryActivity", "Current Make Filter: " + currentMakeFilter);
-        Log.e("InventoryActivity", "Current Before: " + dateB);
-        Log.e("InventoryActivity", "After: " + dateA);
+
         if (currentMakeFilter != null && !currentMakeFilter.isEmpty()) {
-            fetchDataFilteredAndSortedByMake(dateB,dateA,currentMakeFilter);
+            filterSwitch.setChecked(true);
+            fetchDataFilteredAndSortedByMake(currentMakeFilter);
         }
 
 
-            // Use these dates to filter your data
-        }
+        // Use these dates to filter your data
+    }
 
 
 
 
 
-    private void fetchDataFilteredAndSortedByMake(String dateBefore, String dateAfter, String makeFilter) {
+    private void fetchDataFilteredAndSortedByMake(String makeFilter) {
         // Call the method from the InventoryController
-        inventoryController.fetchDataFilteredAndSortedByMake(dateBefore,dateAfter,makeFilter);
+        inventoryController.fetchDataFilteredAndSortedByMake(makeFilter);
     }
 
 
