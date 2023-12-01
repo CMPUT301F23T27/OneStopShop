@@ -66,6 +66,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemAdapter = new CustomList(this, dataList, checkboxVisible);
         recyclerView.setAdapter(itemAdapter);
+        deselectAll();
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
