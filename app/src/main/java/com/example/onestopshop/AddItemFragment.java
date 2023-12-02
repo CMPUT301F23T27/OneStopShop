@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Add an item
  */
-public class AddFragment extends Fragment {
+public class AddItemFragment extends Fragment {
 
     // Inventory controller to manage inventory data
     private InventoryController inventoryController;
@@ -66,7 +66,7 @@ public class AddFragment extends Fragment {
                     });
 
 
-    public AddFragment() {
+    public AddItemFragment() {
         // Required empty public constructor
     }
 
