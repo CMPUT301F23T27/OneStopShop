@@ -6,6 +6,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -47,11 +48,6 @@ public class InventoryActivityTest {
 
 
     @Test
-    public void testTopToolbar_isDisplayed() {
-        onView(withId(R.id.toolbar_top)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void testSelectMode() {
         // add item
         addTestItem();
@@ -74,10 +70,18 @@ public class InventoryActivityTest {
     }
 
     @Test
-    public void testBottomToolbar_isDisplayed() {
-        onView(withId(R.id.toolbar_bottom)).check(matches(isDisplayed()));
+    public void testItemIsDisplayed() {
+        // Should be no items displayed to begin with
+        onView(withId(R.id.item_list)).check(matches(isDisplayed()))
+                .check(matches(hasChildCount(0)));
+        // add an item
+        addTestItem();
+        // There should now be 1 item visible
+        onView(withId(R.id.item_list)).check(matches(isDisplayed()))
+                .check(matches(hasChildCount(1)));
+        // delete test item
+        deleteTestItem();
     }
-
     @Test
     public void testTotalValue_isDisplayed() {
         onView(withId(R.id.total_value_layout)).check(matches((isDisplayed())));
