@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.not;
 
 import android.app.Activity;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -57,13 +58,18 @@ public class InventoryActivityTest {
 
         // press select button
         onView(withId(R.id.select_button)).perform(click());
-        // Verify buttons are visible
+        // Verify buttons are visible and total value is not visible
         onView(withId(R.id.multipleSelectBtns)).check(matches(isDisplayed()));
+        onView(withId(R.id.total_value_layout)).check(matches(not(isDisplayed())));
         onView(withId(R.id.item_list)).perform(RecyclerViewActions.scrollToPosition(0))
                 .check(matches(hasDescendant(withId(R.id.itemCheckBox))))
                 .check(matches(isDisplayed()));
 
+        // Deselect
         onView(withId(R.id.select_button)).perform(click());
+        // Verify buttons are not visible and total value is visible
+        onView(withId(R.id.total_value_layout)).check(matches(isDisplayed()));
+        onView(withId(R.id.multipleSelectBtns)).check(matches(not(isDisplayed())));
         deleteTestItem();
     }
 
