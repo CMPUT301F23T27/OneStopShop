@@ -9,4 +9,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+    <string-array name="sort_criteria">
+        <item>Date</item>
+        <item>Description</item>
+        <item>Make</item>
+        <item>Estimated Value</item>
+    </string-array>
+
+
+
 </resources>
