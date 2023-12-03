@@ -42,7 +42,6 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private ImageView profileButton;
     private Button selectButton;
     private Button deleteMultipleButton;
-    private CheckBox itemCheckBox;
     private boolean checkboxVisible;
     private LinearLayout totalValueLayout, multipleSelectButtons;
 
@@ -64,7 +63,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         multipleSelectButtons = findViewById(R.id.multipleSelectBtns);
         checkboxVisible = false;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        itemAdapter = new CustomList(this, dataList, checkboxVisible);
+        itemAdapter = new CustomList(this, dataList);
         recyclerView.setAdapter(itemAdapter);
         deselectAll();
         addButton.setOnClickListener(new View.OnClickListener() {
