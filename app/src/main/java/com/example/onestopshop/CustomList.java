@@ -33,10 +33,10 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
      * @param context   The context in which the RecyclerView will be displayed.
      * @param inventory The list of items to be displayed.
      */
-    public CustomList(Context context, ArrayList<Item> inventory, boolean checkBoxVisible) {
+    public CustomList(Context context, ArrayList<Item> inventory) {
         this.inventory = inventory;
         this.context = context;
-        this.checkboxVisible = checkBoxVisible;
+        this.checkboxVisible = false;
     }
 
     public void setCheckboxVisible(boolean checkboxVisible) {
