@@ -39,6 +39,11 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         this.checkboxVisible = false;
     }
 
+    /**
+     * Changes boolean handling checkbox visibility
+     * @param checkboxVisible
+     *      New boolean value
+     */
     public void setCheckboxVisible(boolean checkboxVisible) {
         this.checkboxVisible = checkboxVisible;
         notifyDataSetChanged();
@@ -61,6 +66,7 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
 
             // Set a click listener for the checkbox
             checkBox.setOnClickListener(new View.OnClickListener() {
+                // Changes selected state of items when user checks checkbox
                 @Override
                 public void onClick(View v) {
                     int adapterPosition = getAdapterPosition();
@@ -102,6 +108,7 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
 
         holder.itemName.setText(item.getItemName());
 
+        // Checkbox appearance relies on checkboxVisible
         holder.checkBox.setVisibility(this.checkboxVisible ? View.VISIBLE : View.INVISIBLE);
         holder.checkBox.setChecked(item.isSelected());
         holder.purchaseDate.setText(item.getPurchaseDate());

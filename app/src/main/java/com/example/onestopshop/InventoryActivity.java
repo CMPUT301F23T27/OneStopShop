@@ -92,6 +92,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             @Override
             public void onClick(View v) {
                 checkboxVisible = !checkboxVisible;
+                // Deselect all items
                 deselectAll();
                 itemAdapter.setCheckboxVisible(checkboxVisible);
                 selectButton.setText(checkboxVisible ? "DESELECT" : "SELECT");
@@ -202,6 +203,9 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         }
     }
 
+    /**
+     * Sets isSelected of each item in the list to false
+     */
     private void deselectAll() {
         for (Item item : dataList) {
             item.setSelected(false);
