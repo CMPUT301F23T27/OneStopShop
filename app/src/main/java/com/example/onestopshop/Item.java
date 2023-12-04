@@ -23,6 +23,7 @@ public class Item {
     private String comment;
     private String serialNumber;
     private List<String> tags;
+    private boolean isSelected;
 
     public Item() {
 
@@ -62,6 +63,7 @@ public class Item {
         this.comment = comment;
         this.serialNumber = serialNumber;
         this.tags = tags;
+        this.isSelected = false;
     }
 
     /**
@@ -96,6 +98,7 @@ public class Item {
         this.comment = comment;
         this.serialNumber = serialNumber;
         this.tags = tags;
+        this.isSelected = false;
     }
 
     /**
@@ -126,6 +129,7 @@ public class Item {
         this.estimatedValue = estimatedValue;
         this.serialNumber = serialNumber;
         this.tags = tags;
+        this.isSelected = false;
     }
 
     /**
@@ -159,6 +163,7 @@ public class Item {
         this.estimatedValue = estimatedValue;
         this.serialNumber = serialNumber;
         this.tags = tags;
+        this.isSelected = false;
     }
 
     //These are for testing
@@ -349,6 +354,24 @@ public class Item {
      */
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    /**
+     * This returns the selection state of the item
+     * @return
+     *      Return isSelected
+     */
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    /**
+     * This sets the selected state of the item
+     * @param selected
+     *      New selection state
+     */
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
 

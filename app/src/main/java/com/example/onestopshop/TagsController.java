@@ -58,43 +58,15 @@ public class TagsController {
                     listener.onFailure(e);
                 });
     }
-    /*public void uploadNewTagsToTagsField(List<String> selectedTags) {
+    public void uploadTag(String itemId, String tag) {
+        itemsRef.document(itemId).update("tags", FieldValue.arrayUnion(tag))
+                .addOnSuccessListener(documentReference -> {
 
-        // Get the current document to check if the 'tags' field exists
-        usersRef.get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // Document exists, check if 'tags' field exists
-                        if (documentSnapshot.contains("tags")) {
-                            String[] selectedTagsArray = selectedTags.toArray(new String[0]);
-                            // 'tags' field exists, update it
-                            usersRef
-                                    .update("tags", FieldValue.arrayUnion(selectedTagsArray))
-                                    .addOnSuccessListener(aVoid -> {
-                                        // Tag added successfully
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        // Handle the failure to add the tag
-                                    });
-                        } else {
-                            // 'tags' field does not exist, create it with the new tag
-                            usersRef
-                                    .update("tags", selectedTags)
-                                    .addOnSuccessListener(aVoid -> {
-                                        // Tag added successfully
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        // Handle the failure to add the tag
-                                    });
-                        }
-                    } else {
-                        // Handle the case where the document does not exist
-                    }
                 })
                 .addOnFailureListener(e -> {
-                    // Handle failure
+                    // Handle failure to add the item to Firestore
                 });
-    }*/
+    }
 
     public interface OnTagsFetchListener {
         void onSuccess(List<String> existingTags);
