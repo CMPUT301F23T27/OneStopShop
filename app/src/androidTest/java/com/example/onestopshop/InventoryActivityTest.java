@@ -16,8 +16,6 @@ import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.not;
 
 import android.app.Activity;
-
-import androidx.annotation.IdRes;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -40,8 +38,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -75,27 +71,24 @@ public class InventoryActivityTest {
 
     @Test
     public void testItemIsDisplayed() {
-        int itemCount = getItemCount(R.id.item_list);
         // Should be no items displayed to begin with
         onView(withId(R.id.item_list)).check(matches(isDisplayed()))
-                .check(matches(hasChildCount(itemCount)));
+                .check(matches(hasChildCount(0)));
         // add an item
         addTestItem();
         // There should now be 1 item visible
         onView(withId(R.id.item_list)).check(matches(isDisplayed()))
-                .check(matches(hasChildCount(itemCount + 1)));
+                .check(matches(hasChildCount(1)));
         // delete test item
         deleteTestItem();
     }
     @Test
     public void testTotalValue_isDisplayed() {
-        double totalValue = calculateTotalValue();
         onView(withId(R.id.total_value_layout)).check(matches((isDisplayed())));
         ActivityScenario<InventoryActivity> scenario = activityScenario.getScenario();
-        onView(withId(R.id.total_estimated_value)).check(matches(withText("$" + String.format("%.2f", totalValue))));
+        onView(withId(R.id.total_estimated_value)).check(matches(withText("$0.00")));
         addTestItem();
-        onView(withId(R.id.total_estimated_value)).
-                check(matches(withText("$" + String.format("%.2f", totalValue + 500.00))));
+        onView(withId(R.id.total_estimated_value)).check(matches(withText("$500.00")));
         deleteTestItem();
     }
 
@@ -113,48 +106,8 @@ public class InventoryActivityTest {
     }
 
     private void deleteTestItem() {
-        int positionToDelete = getPositionOfTestItem();
-        onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(positionToDelete, click()));
+        onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.btnDelete)).perform(click());
-    }
-
-    private double calculateTotalValue() {
-        final double[] totalValue = {0.0};
-        activityScenario.getScenario().onActivity(activity -> {
-            totalValue[0] = activity.calculateTotalEstimatedValue();
-        });
-        return totalValue[0];
-    }
-
-    private int getItemCount(@IdRes int recyclerViewId) {
-        final int[] itemCount = {0};
-        activityScenario.getScenario().onActivity(activity -> {
-            RecyclerView recyclerView = activity.findViewById(recyclerViewId);
-            if (recyclerView != null && recyclerView.getAdapter() != null ) {
-                itemCount[0] = recyclerView.getAdapter().getItemCount();
-            }
-        });
-        return itemCount[0];
-    }
-
-    private int getPositionOfTestItem() {
-        final int[] position = {-1};
-        activityScenario.getScenario().onActivity(activity -> {
-            RecyclerView recyclerView = activity.findViewById(R.id.item_list);
-            RecyclerView.Adapter adapter = recyclerView.getAdapter();
-
-            ArrayList<Item> itemList = ((CustomList) adapter).getItemList();
-            String testName = "Test";
-            String testDate = "2023-12-03";
-
-            for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i).getItemName().equals(testName) && itemList.get(i).getPurchaseDate().equals(testDate)) {
-                    position[0] = i;
-                    break;
-                }
-            }
-        });
-        return position[0];
     }
 
     //}

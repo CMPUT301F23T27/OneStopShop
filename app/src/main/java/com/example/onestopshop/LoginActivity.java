@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @param data The Intent containing the sign-in result.
      */
-    private void handleSignInResult(Intent data) {
+    void handleSignInResult(Intent data) {
         try {
             GoogleSignInAccount account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @param acct The GoogleSignInAccount containing user information.
      */
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Handles successful user authentication.
      */
-    private void handleAuthenticationSuccess() {
+    void handleAuthenticationSuccess() {
         Toast.makeText(this, "Authentication Success", Toast.LENGTH_SHORT).show();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
