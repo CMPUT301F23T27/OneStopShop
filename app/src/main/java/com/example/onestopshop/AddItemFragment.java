@@ -63,6 +63,7 @@ public class AddItemFragment extends Fragment {
     private Button btnCancel;
     private Button confirm;
     private ImageView scanButton;
+    private Button scanBarcodeButton;
     private ImageButton addPhoto;
 
     // Activity result launcher for handling results from ScanActivity
@@ -79,7 +80,27 @@ public class AddItemFragment extends Fragment {
                             // Handle when the result is not OK
                         }
                     });
-
+    private final ActivityResultLauncher<Intent> scanBarcodeLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == requireActivity().RESULT_OK) {
+                    Log.d("AddItemBarcode", "ResultOK");
+                    // Handle the result, extract the scanned information
+                    Intent data = result.getData();
+                    if (data != null) {
+                        Log.d("AddItemBarcode", "Data Available");
+                        String scannedDescription = data.getStringExtra("scannedDescription");
+                        String scannedMake = data.getStringExtra("scannedMake");
+                        Double scannedEstimatedValue = data.getDoubleExtra("scannedEstimatedValue", 0);
+                        Log.d("AddItemBarcode", scannedDescription);
+                        // Set the text to EditText
+                        descriptionText.setText(scannedDescription);
+                        makeText.setText(scannedMake);
+                        estimatedValueText.setText("" + scannedEstimatedValue);
+                    }
+                }
+            }
+    );
 
     public AddItemFragment() {
         // Required empty public constructor
@@ -103,6 +124,7 @@ public class AddItemFragment extends Fragment {
         modelText = view.findViewById(R.id.model);
         serialNumberText = view.findViewById(R.id.serialnumber);
         estimatedValueText = view.findViewById(R.id.estimatedValue);
+        scanBarcodeButton = view.findViewById(R.id.btn_scan_barcode);
         //tagsText = view.findViewById(R.id.tags);
         tagsChipGroup = view.findViewById(R.id.addFragmentTagsChipGroup);
         addTagBtn = view.findViewById(R.id.add_tag_button);
@@ -220,6 +242,13 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 launchGalleryFragment();
+            }
+        });
+        scanBarcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), BarcodeActivity.class);
+                scanBarcodeLauncher.launch(intent);
             }
         });
 

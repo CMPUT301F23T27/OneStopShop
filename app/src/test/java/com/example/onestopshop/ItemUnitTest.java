@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ItemUnitTest {
     @Test
@@ -21,8 +22,20 @@ public class ItemUnitTest {
         String comments = "this is a comment";
         ArrayList<String> tags = new ArrayList<>(Arrays.asList("test", "device"));
         Item newItem = new Item(itemId, itemName, description, purchaseDate, make,
-                model, estimatedValue, serialNumber, comments , tags);
+                model, estimatedValue, comments, serialNumber, tags);
         assertEquals("1234567", newItem.getItemId());
+        assertEquals("Phone", newItem.getItemName());
+        assertEquals("this is a phone", newItem.getDescription());
+        assertEquals("2023-03-01", newItem.getPurchaseDate());
+        assertEquals("apple", newItem.getMake());
+        assertEquals("14", newItem.getModel());
+        assertEquals(200.0, newItem.getEstimatedValue(), 0.1);
+        assertEquals("12345", newItem.getSerialNumber());
+        assertEquals("this is a comment", newItem.getComments());
+        assertEquals("apple", newItem.getMake());
+        List<String> expectedTags = Arrays.asList("test", "device");
+        List<String> actualTags = newItem.getTags();
+        assertEquals(expectedTags, actualTags);
     }
 
 }
