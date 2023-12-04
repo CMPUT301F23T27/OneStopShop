@@ -49,6 +49,7 @@
                 android:layout_height="48dp"
                 android:layout_gravity="end"
                 android:paddingEnd="10dp"
+                android:onClick="search"
                 android:background="#BD2AC0"
                 android:src="@drawable/rsz_search"
                 android:contentDescription="Click to Search for Items"/>

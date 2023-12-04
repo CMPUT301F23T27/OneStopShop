@@ -143,6 +143,25 @@ public class InventoryController {
                     // Handle failure to add the item to Firestore
                 });
     }
+    public void searchItemsByKeywords(String keywords, OnInventorySearchListener listener) {
+        itemsRef.get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    ArrayList<Item> mySearchData = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        Item item = doc.toObject(Item.class);
+                        if (item.getItemName().toLowerCase().contains(keywords)
+                                || item.getDescription().toLowerCase().contains(keywords)) {
+                            mySearchData.add(item);
+                        }
+                    }
+                    listener.onSearchAnswer(mySearchData);
+                })
+                .addOnFailureListener(e -> {
+                    listener.Error(e.getMessage());
+                });
+    }
+
+
 
     /**
      * Deletes an item from the inventory in Firestore.
@@ -233,5 +252,9 @@ public class InventoryController {
     }
     public interface ItemAddedCallback {
         void onItemAdded(String addedItemId);
+    }
+    public interface OnInventorySearchListener {
+        void onSearchAnswer(ArrayList<Item> searchResults);
+        void Error(String errorMessage);
     }
 }
