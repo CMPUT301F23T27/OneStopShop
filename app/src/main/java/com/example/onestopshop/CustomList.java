@@ -1,13 +1,16 @@
 package com.example.onestopshop;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
     private final Context context;
     private ArrayList<Item> inventory;
+    private boolean checkboxVisible;
 
     /**
      * Constructs a new CustomList.
@@ -36,6 +40,17 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
     public CustomList(Context context, ArrayList<Item> inventory) {
         this.inventory = inventory;
         this.context = context;
+        this.checkboxVisible = false;
+    }
+
+    /**
+     * Changes boolean handling checkbox visibility
+     * @param checkboxVisible
+     *      New boolean value
+     */
+    public void setCheckboxVisible(boolean checkboxVisible) {
+        this.checkboxVisible = checkboxVisible;
+        notifyDataSetChanged();
     }
 
     /**
@@ -45,12 +60,28 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         TextView itemName, purchaseDate, estimatedValue;
         ChipGroup tags;
 
+        CheckBox checkBox;
+
+
         public ViewHolder(View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.itemName);
             purchaseDate = itemView.findViewById(R.id.purchaseDate);
             estimatedValue = itemView.findViewById(R.id.estimatedValue);
             tags = itemView.findViewById(R.id.tags);
+            checkBox = itemView.findViewById(R.id.itemCheckBox);
+
+            // Set a click listener for the checkbox
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                // Changes selected state of items when user checks checkbox
+                @Override
+                public void onClick(View v) {
+                    int adapterPosition = getAdapterPosition();
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        inventory.get(adapterPosition).setSelected(checkBox.isChecked());
+                    }
+                }
+            });
         }
     }
 
@@ -84,9 +115,10 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
 
         holder.itemName.setText(item.getItemName());
 
-
+        // Checkbox appearance relies on checkboxVisible
+        holder.checkBox.setVisibility(this.checkboxVisible ? View.VISIBLE : View.INVISIBLE);
+        holder.checkBox.setChecked(item.isSelected());
         holder.purchaseDate.setText(item.getPurchaseDate());
-
         // Format the estimated value to 2 decimal places
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         holder.estimatedValue.setText("$" + decimalFormat.format(item.getEstimatedValue()));
@@ -115,6 +147,7 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
             view.getContext().startActivity(intent);
         });
 
+
     }
 
     /**
@@ -127,7 +160,9 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         return inventory.size();
     }
 
-
+    public ArrayList<Item> getItemList() {
+        return inventory;
+    }
 
 
 }

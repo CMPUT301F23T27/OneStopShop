@@ -9,14 +9,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+
+import android.widget.Button;
+import android.widget.CheckBox;
+
 import android.widget.ImageButton;
-import android.widget.ImageView;
+
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,14 +44,22 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     CustomList filteredItemsAdapter;
     private InventoryController inventoryController;
     private TextView totalValueTextView;
+    private double totalEstimatedValue;
+    private Button selectButton;
+    private Button deleteMultipleButton;
+    private boolean checkboxVisible;
+    private LinearLayout totalValueLayout, multipleSelectButtons;
+    private ImageButton addButton;
+    private ImageButton profileButton;
+    private Button addMultipleTags;
+
     private Spinner sortSpinner;
     private ImageButton switchSortButton; // Separate button for ascending/descending
     private boolean isAscending = true;
-    private double totalEstimatedValue;
+
     private String startDate, endDate, makeFilter;
     private ArrayList<String> tagsFilter;
-    private ImageView addButton;
-    private ImageView profileButton;
+
     private final ActivityResultLauncher<Intent> filterActivityLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == this.RESULT_OK) {
@@ -106,11 +118,20 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         inventoryController.setListener(this);
         dataList = new ArrayList<>();
         filterButton = findViewById(R.id.filter_button);
-
+        addMultipleTags = findViewById(R.id.addTagsMultipleBtn);
         totalValueTextView = findViewById(R.id.total_estimated_value);
         recyclerView = findViewById(R.id.item_list);
         addButton = findViewById(R.id.add_button);
         profileButton = findViewById(R.id.profile_button);
+        selectButton = findViewById(R.id.select_button);
+        deleteMultipleButton = findViewById(R.id.deleteMultipleBtn);
+        totalValueLayout = findViewById(R.id.total_value_layout);
+        multipleSelectButtons = findViewById(R.id.multipleSelectBtns);
+        checkboxVisible = false;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemAdapter = new CustomList(this, dataList);
+        recyclerView.setAdapter(itemAdapter);
+        deselectAll();
         sortSpinner = findViewById(R.id.sort_spinner);
         switchSortButton = findViewById(R.id.switch_sort); // Separate button for ascending/descending
 
@@ -144,6 +165,55 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             }
         });
 
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkboxVisible = !checkboxVisible;
+                // Deselect all items
+                deselectAll();
+                itemAdapter.setCheckboxVisible(checkboxVisible);
+                selectButton.setText(checkboxVisible ? "DESELECT" : "SELECT");
+                setupMultipleSelect();
+                updateCheckboxVisibility(recyclerView);
+            }
+        });
+        addMultipleTags.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // First get an array of selected item ids
+                ArrayList<String> selectedItemIds = new ArrayList<>();
+                for (Item item : dataList) {
+                    if (item.isSelected()) {
+                        if (item.getItemId() != null && item.getItemId().isEmpty() == false) {
+                            selectedItemIds.add(item.getItemId());
+                        }
+                    }
+                }
+                MultipleTagsDialog multipleTagsDialog = new MultipleTagsDialog(InventoryActivity.this, selectedItemIds);
+                multipleTagsDialog.show();
+            }
+        });
+
+
+        deleteMultipleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // First get an array of selected item ids
+                ArrayList<String> selectedItemIds = new ArrayList<>();
+                for (Item item : dataList) {
+                    if (item.isSelected()) {
+                        if (item.getItemId() != null && item.getItemId().isEmpty() == false) {
+                            selectedItemIds.add(item.getItemId());
+                        }
+                    }
+                }
+                // Call Inventory Controller for multiple delete
+                inventoryController.deleteMultipleItems(selectedItemIds);
+                itemAdapter.notifyDataSetChanged();
+
+            }
+        });
+
         // Create an ArrayAdapter for the sort Spinner
         ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(
                 this,
@@ -158,10 +228,9 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Handle the sorting based on the selected item
                 String selectedSortCriteria = parentView.getItemAtPosition(position).toString();
-                if(isFiltered) {
+                if (isFiltered) {
                     sortItemList(selectedSortCriteria, filteredData);
-                }
-                else {
+                } else {
                     sortItemList(selectedSortCriteria, dataList);
                 }
 
@@ -179,19 +248,18 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                 // Toggle between ascending and descending
                 isAscending = !isAscending;
 
-                if(isFiltered) {
+                if (isFiltered) {
                     sortItemList(sortSpinner.getSelectedItem().toString(), filteredData);
-                }
-                else {
+                } else {
                     sortItemList(sortSpinner.getSelectedItem().toString(), dataList);
                 }
                 updateSwitchSortButtonAppearance();
             }
         });
 
-
-
     }
+
+
 
     @Override
     public void onInventoryDataChanged(ArrayList<Item> updatedData) {
@@ -251,7 +319,54 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         return false;
     }
 
-    private double calculateTotalEstimatedValue() {
+    /**
+     * Changes the visibility of checkboxes based on value of global boolean checkboxVisible
+     *
+     * @param recycler recyclerview containing checkbox
+     */
+    private void updateCheckboxVisibility(RecyclerView recycler) {
+        for (int i = 0; i < recycler.getChildCount(); i++) {
+            View itemView = recycler.getChildAt(i);
+            CheckBox checkBox = itemView.findViewById(R.id.itemCheckBox);
+
+            if (checkBox != null) {
+                if (checkboxVisible) {
+                    checkBox.setVisibility(View.VISIBLE);
+                } else {
+                    checkBox.setVisibility(View.INVISIBLE);
+                }
+                // In both situations we want all items to default as unselected
+            }
+        }
+        // Notify the adapter
+        int itemCount = recycler.getAdapter().getItemCount();
+        recycler.getAdapter().notifyItemRangeChanged(0,itemCount);
+    }
+
+
+    /**
+     * Enables/Disables the layout for select mode
+     */
+    private void setupMultipleSelect() {
+        if (checkboxVisible) {
+            totalValueLayout.setVisibility(View.INVISIBLE);
+            multipleSelectButtons.setVisibility(View.VISIBLE);
+
+        } else {
+            totalValueLayout.setVisibility(View.VISIBLE);
+            multipleSelectButtons.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Sets isSelected of each item in the list to false
+     */
+    private void deselectAll() {
+        for (Item item : dataList) {
+            item.setSelected(false);
+        }
+    }
+    public double calculateTotalEstimatedValue() {
         double totalEstimatedValue = 0;
         for (Item item : dataList) {
             totalEstimatedValue += item.getEstimatedValue();

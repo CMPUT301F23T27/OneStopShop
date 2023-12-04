@@ -134,7 +134,7 @@ public class InventoryController {
         itemData.put("comments", newItem.getComments());
         itemData.put("description", newItem.getDescription());
 
-        // Add the new item to Firestore
+        // Update the item in Firestore
         itemRef.update(itemData)
                 .addOnSuccessListener(documentReference -> {
 
