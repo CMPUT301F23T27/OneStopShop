@@ -32,10 +32,12 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
 
     private ArrayList<Item> dataList;
+    private ArrayList<Item> filteredData;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
-    private boolean shouldFilter;
+    private boolean isFiltered;
     private ImageButton filterButton;
+    CustomList filteredItemsAdapter;
     private InventoryController inventoryController;
     private TextView totalValueTextView;
     private Spinner sortSpinner;
@@ -63,20 +65,22 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                         endDate = "";
                         makeFilter = "";
                         tagsFilter = new ArrayList<>();
+                        isFiltered = false;
                         return;
                     }
                     startDate = filtersIntent.getStringExtra("startDate");
                     endDate = filtersIntent.getStringExtra("endDate");
                     makeFilter = filtersIntent.getStringExtra("make");
                     tagsFilter = filtersIntent.getStringArrayListExtra("tags");
-                    ArrayList<Item> filteredData = filterData(dataList, startDate, endDate, makeFilter, tagsFilter);
-                    CustomList filteredItemsAdapter = new CustomList(this, filteredData);
+                    filteredData = filterData(dataList, startDate, endDate, makeFilter, tagsFilter);
+                    filteredItemsAdapter = new CustomList(this, filteredData);
                     recyclerView.setAdapter(filteredItemsAdapter);
                     totalEstimatedValue = 0;
                     for(Item item : filteredData) {
                         totalEstimatedValue += item.getEstimatedValue();
                     }
                     totalValueTextView.setText("$" + String.format("%.2f", totalEstimatedValue));
+                    isFiltered = true;
                     filteredItemsAdapter.notifyDataSetChanged();
 
                     // Handle the received data
@@ -93,6 +97,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+        isFiltered = false;
         startDate = "";
         endDate = "";
         makeFilter = "";
@@ -153,7 +158,13 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Handle the sorting based on the selected item
                 String selectedSortCriteria = parentView.getItemAtPosition(position).toString();
-                sortItemList(selectedSortCriteria);
+                if(isFiltered) {
+                    sortItemList(selectedSortCriteria, filteredData);
+                }
+                else {
+                    sortItemList(selectedSortCriteria, dataList);
+                }
+
             }
 
             @Override
@@ -167,7 +178,13 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             public void onClick(View v) {
                 // Toggle between ascending and descending
                 isAscending = !isAscending;
-                sortItemList(sortSpinner.getSelectedItem().toString());
+
+                if(isFiltered) {
+                    sortItemList(sortSpinner.getSelectedItem().toString(), filteredData);
+                }
+                else {
+                    sortItemList(sortSpinner.getSelectedItem().toString(), dataList);
+                }
                 updateSwitchSortButtonAppearance();
             }
         });
@@ -242,29 +259,35 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         return totalEstimatedValue;
     }
 
-    private void sortItemList(String selectedSortCriteria) {
+    private void sortItemList(String selectedSortCriteria, ArrayList<Item> unsortedList) {
         // Extract sorting details
         String sortField = selectedSortCriteria.split(" ")[0];
 
         // Use the appropriate comparator based on the selected criteria
         switch (sortField) {
             case "Date":
-                sortItemsByDate();
+                sortItemsByDate(unsortedList);
                 break;
             case "Description":
-                sortItemsByDescription();
+                sortItemsByDescription(unsortedList);
                 break;
             case "Make":
-                sortItemsByMake();
+                sortItemsByMake(unsortedList);
                 break;
             case "Estimated":
-                sortItemsByEstimatedValue();
+                sortItemsByEstimatedValue(unsortedList);
                 break;
             // Handle additional sorting criteria if needed
         }
 
         // Notify the adapter of the data change
-        itemAdapter.notifyDataSetChanged();
+        if(isFiltered) {
+            filteredItemsAdapter.notifyDataSetChanged();
+        }
+        else {
+            itemAdapter.notifyDataSetChanged();
+        }
+
 
     }
 
@@ -276,20 +299,20 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         }
     }
 
-    private void sortItemsByDate() {
-        Collections.sort(dataList, new Comparator<Item>() {
+    private void sortItemsByDate(ArrayList<Item> unsortedList) {
+        Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
                 return item1.getPurchaseDate().compareTo(item2.getPurchaseDate());
             }
         });
         if (!isAscending) {
-            Collections.reverse(dataList);
+            Collections.reverse(unsortedList);
         }
     }
 
-    private void sortItemsByDescription() {
-        Collections.sort(dataList, new Comparator<Item>() {
+    private void sortItemsByDescription(ArrayList<Item> unsortedList) {
+        Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
                 String description1 = item1.getDescription();
@@ -312,15 +335,15 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         });
 
         // Reverse the list
-        Collections.reverse(dataList);
+        Collections.reverse(unsortedList);
     }
 
 
 
 
 
-    private void sortItemsByMake() {
-        Collections.sort(dataList, new Comparator<Item>() {
+    private void sortItemsByMake(ArrayList<Item> unsortedList) {
+        Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
                 // Check if the make contains a number
@@ -344,22 +367,22 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         });
 
         // Reverse the list
-        Collections.reverse(dataList);
+        Collections.reverse(unsortedList);
     }
 
 
 
 
 
-    private void sortItemsByEstimatedValue() {
-        Collections.sort(dataList, new Comparator<Item>() {
+    private void sortItemsByEstimatedValue(ArrayList<Item> unsortedList) {
+        Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
                 return Double.compare(item1.getEstimatedValue(), item2.getEstimatedValue());
             }
         });
         if (!isAscending) {
-            Collections.reverse(dataList);
+            Collections.reverse(unsortedList);
         }
     }
 
