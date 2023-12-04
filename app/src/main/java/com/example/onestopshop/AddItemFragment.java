@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -141,7 +142,11 @@ public class AddItemFragment extends Fragment {
                     }
                     catch(Exception e) {
                         Toast.makeText(getContext(), "Invalid Estimated Value", Toast.LENGTH_SHORT).show();
+                        return;
                     }
+                }else {
+                    Toast.makeText(getContext(), "Invalid Estimated Value", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 //List<String> tags = Arrays.asList(tagsText.getText().toString().split(","));
                 String comments = commentsText.getText().toString();
@@ -236,6 +241,10 @@ public class AddItemFragment extends Fragment {
             Toast.makeText(getContext(), "Invalid Description", Toast.LENGTH_SHORT).show();
             valid = false;
         }
+        else if(TextUtils.isEmpty(item.getPurchaseDate())){
+            Toast.makeText(getContext(), "Invalid Purchase Date", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
         else if(item.getMake() == null || item.getMake().isEmpty()) {
             Toast.makeText(getContext(), "Invalid Make", Toast.LENGTH_SHORT).show();
             valid = false;
@@ -246,6 +255,10 @@ public class AddItemFragment extends Fragment {
         }
         else if(item.getEstimatedValue() < 0) {
             Toast.makeText(getContext(), "Value must be greater than 0", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(selectedTags.size() == 0) {
+            Toast.makeText(getContext(), "Must have at least one tag", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
