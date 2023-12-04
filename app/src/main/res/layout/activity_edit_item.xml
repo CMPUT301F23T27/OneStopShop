@@ -146,11 +146,17 @@
                 />
 
             <EditText
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="yyyy-mm-dd"
-                android:textSize="14dp"
+                android:hint="Select Date"
+                android:textSize="18dp"
+                android:inputType="none"
+                android:focusable="false"
+                android:paddingVertical="2dp"
+                android:paddingHorizontal="10dp"
+                android:layout_marginTop="5dp"
+                android:onClick="showDatePickerDialog"
+                android:background="@drawable/no_underline_border"
                 android:id="@+id/purchaseDate"/>
         </LinearLayout>
 
@@ -330,7 +336,7 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/tagsGroup"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="40dp">
 
         </com.google.android.material.chip.ChipGroup>
 

@@ -2,8 +2,10 @@ package com.example.onestopshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.google.android.material.chip.ChipGroup;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -79,7 +82,19 @@ public class EditItemActivity extends AppCompatActivity {
                         String make = makeText.getText().toString();
                         String model = modelText.getText().toString();
                         String serialNumber = serialNumberText.getText().toString();
-                        Double estimatedValue = Double.parseDouble(estimatedValueText.getText().toString());
+                        Double estimatedValue = 0.0;
+                        if(estimatedValueText.getText().toString() != null && estimatedValueText.getText().toString().isEmpty() == false) {
+                            try {
+                                estimatedValue = Double.parseDouble(estimatedValueText.getText().toString());
+                            }
+                            catch(Exception e) {
+                                Toast.makeText(EditItemActivity.this, "Invalid Estimated Value", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }else {
+                            Toast.makeText(EditItemActivity.this, "Invalid Estimated Value", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         String comments = commentsText.getText().toString();
                         boolean valid = validItem(new Item(itemName, description, purchaseDate, make,
                                 model, estimatedValue, comments, serialNumber, selectedTags));
@@ -188,23 +203,31 @@ public class EditItemActivity extends AppCompatActivity {
     public boolean validItem(Item item) {
         boolean valid = true;
         if(item.getItemName() == null || item.getItemName().isEmpty()) {
-            Toast.makeText(this, "Invalid Product Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditItemActivity.this, "Invalid Product Name", Toast.LENGTH_SHORT).show();
             valid = false;
         }
         else if(item.getDescription() == null || item.getDescription().isEmpty()) {
-            Toast.makeText(this, "Invalid Description", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditItemActivity.this, "Invalid Description", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(TextUtils.isEmpty(item.getPurchaseDate())){
+            Toast.makeText(EditItemActivity.this, "Invalid Purchase Date", Toast.LENGTH_SHORT).show();
             valid = false;
         }
         else if(item.getMake() == null || item.getMake().isEmpty()) {
-            Toast.makeText(this, "Invalid Make", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditItemActivity.this, "Invalid Make", Toast.LENGTH_SHORT).show();
             valid = false;
         }
         else if(item.getModel() == null || item.getModel().isEmpty()) {
-            Toast.makeText(this, "Invalid Model", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditItemActivity.this, "Invalid Model", Toast.LENGTH_SHORT).show();
             valid = false;
         }
         else if(item.getEstimatedValue() < 0) {
-            Toast.makeText(this, "Value must be greater than 0", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditItemActivity.this, "Value must be greater than 0", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(selectedTags.size() == 0) {
+            Toast.makeText(EditItemActivity.this, "Must have at least one tag", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
@@ -225,5 +248,23 @@ public class EditItemActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    public void showDatePickerDialog(View v) {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                EditItemActivity.this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    // Update the EditText with the selected date
+                    String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+                    purchaseDateText.setText(selectedDate);
+                },
+                year, month, day);
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+        datePickerDialog.show();
     }
 }
