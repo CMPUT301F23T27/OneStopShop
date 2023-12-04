@@ -38,11 +38,13 @@ public class InventoryController {
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     String itemId = doc.getString("itemId");
                     String itemName = doc.getString("itemName");
+                    String make = doc.getString("make");
+                    String model = doc.getString("model");
                     String purchaseDate = doc.getString("purchaseDate");
                     double estimatedValue = doc.getDouble("estimatedValue");
                     List<String> tags = (List<String>) doc.get("tags");
 
-                    Item item = new Item(itemId, itemName, purchaseDate, estimatedValue, tags);
+                    Item item = new Item(itemId, itemName, purchaseDate, make, model, estimatedValue, tags);
                     updatedData.add(item);
                 }
                 if (listener != null) {

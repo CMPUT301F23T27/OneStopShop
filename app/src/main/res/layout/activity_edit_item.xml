@@ -74,7 +74,7 @@
     <LinearLayout
         android:id="@+id/productDetails"
         android:layout_width="377dp"
-        android:layout_height="425dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -302,27 +302,39 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="Tags: "
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            />
 
-            <TextView
+        <TextView
+            android:id="@+id/add_tag_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:text="+"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/black_border_rectangular"
+            android:textSize="18dp"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tags: "
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                />
+            ></TextView>
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/tagsGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/tags"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint=""
-                android:textSize="14dp"></EditText>
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
     </LinearLayout>
 
     <Button

@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="defaultChipColor">#BD2AC0</color>
+    <color name="defaultPurple">#BD2AC0</color>
 </resources>

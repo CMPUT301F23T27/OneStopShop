@@ -27,7 +27,7 @@ public class PhotosController {
 
     public PhotosController(String itemId) {
         if (itemId == null || itemId.isEmpty()) {
-            // Create a child reference using the itemId
+            // dont create reference
             return;
         }
         storageRef = FirebaseStorage.getInstance().getReference().child("photos").child(itemId);

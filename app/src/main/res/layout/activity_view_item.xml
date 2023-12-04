@@ -29,9 +29,9 @@
         android:layout_marginStart="128dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="126dp"
-        android:layout_marginBottom="444dp"
+        android:layout_marginBottom="465dp"
         android:background="#BD2AC0"
-        android:src="@drawable/baseline_image_24"/>
+        android:src="@drawable/baseline_image_24" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -71,11 +71,11 @@
     <LinearLayout
         android:id="@+id/productDetails"
         android:layout_width="393dp"
-        android:layout_height="425dp"
+        android:layout_height="450dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="75dp"
         android:background="#BD2AC0"
         android:orientation="vertical"
         android:padding="16dp">
@@ -228,13 +228,14 @@
         </Space>
 
         <TextView
-            android:id="@+id/tags"
+            android:id="@+id/comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tags: "
+            android:text="Comments: "
             android:textColor="@color/black"
             android:textSize="15dp"
             tools:ignore="TextSizeCheck" />
+
 
         <TextView
             android:layout_width="match_parent"
@@ -249,21 +250,30 @@
 
         </Space>
 
-        <TextView
-            android:id="@+id/comment"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comments: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:gravity="center_horizontal"
-            android:textSize="25sp" />
+            <TextView
+                android:id="@+id/tags"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="Tags: "
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:textSize="15dp"
+                tools:ignore="TextSizeCheck" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tagsGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </LinearLayout>
 
 
     </LinearLayout>
