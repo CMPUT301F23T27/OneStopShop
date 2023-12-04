@@ -501,5 +501,12 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         }
     }
 
+    public void search(View view) {
+
+        Intent intent = new Intent(InventoryActivity.this, SearchActivity.class);
+
+        startActivity(intent);
+
+    }
 
 }
