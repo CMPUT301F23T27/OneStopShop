@@ -73,7 +73,7 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void dispatchPickImageIntent() {
-        Intent pickImageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pickImageIntent.setType("image/*");
         pickImageLauncher.launch(pickImageIntent);
     }
