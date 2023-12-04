@@ -145,5 +145,8 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         return inventory.size();
     }
 
+    public ArrayList<Item> getItemList() {
+        return inventory;
+    }
 
 }
