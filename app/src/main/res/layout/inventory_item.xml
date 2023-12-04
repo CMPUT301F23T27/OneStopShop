@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
@@ -12,13 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:paddingBottom="0dp"
+        >
 
         <!-- Left column -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:orientation="vertical">
 
             <!-- Item name -->
@@ -29,7 +33,7 @@
                 android:text="Item Name"
                 android:textStyle="bold"
                 android:textColor="#BD2AC0"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <!-- Purchase date -->
             <TextView
@@ -37,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#BD2AC0"
-                android:text="Purchase Date" />
+                android:text="Purchase Date"
+                android:textSize="15sp"/>
         </LinearLayout>
 
         <!-- Right column -->
@@ -51,29 +56,25 @@
             <TextView
                 android:id="@+id/estimatedValue"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
                 android:text="Estimated Value"
                 android:textColor="#BD2AC0"
-                android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-            <!-- Associated tag -->
-            <TextView
-                android:id="@+id/tags"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Associated Tags"
-                android:textColor="#BD2AC0"/>
         </LinearLayout>
 
     </LinearLayout>
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:clickable="false"
-        android:layout_marginTop="8dp">
+        android:layoutDirection="rtl"
+
+        >
         <!-- Tags will be dynamically added here -->
 
     </com.google.android.material.chip.ChipGroup>

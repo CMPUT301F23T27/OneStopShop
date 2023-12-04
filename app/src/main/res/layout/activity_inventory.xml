@@ -24,7 +24,7 @@
 
             <!-- Left Button (Sort) -->
             <ImageButton
-                android:id="@+id/sort_button"
+                android:id="@+id/filter_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="#BD2AC0"

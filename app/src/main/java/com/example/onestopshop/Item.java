@@ -162,9 +162,11 @@ public class Item {
     }
 
     //These are for testing
-    public Item(String itemId, String itemName, String purchaseDate, double estimatedValue, List<String> tags) {
+    public Item(String itemId, String itemName, String purchaseDate, String make, String model, double estimatedValue, List<String> tags) {
         this.itemId = itemId;
         this.itemName = itemName;
+        this.make = make;
+        this.model = model;
         this.purchaseDate = purchaseDate;
         this.estimatedValue = estimatedValue;
         this.tags = tags;

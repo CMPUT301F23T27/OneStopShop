@@ -2,6 +2,8 @@ package com.example.onestopshop;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -37,7 +42,8 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
      * ViewHolder class representing each item view in the RecyclerView.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView itemName, purchaseDate, tags, estimatedValue;
+        TextView itemName, purchaseDate, estimatedValue;
+        ChipGroup tags;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -84,7 +90,15 @@ public class CustomList extends RecyclerView.Adapter<CustomList.ViewHolder> {
         // Format the estimated value to 2 decimal places
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         holder.estimatedValue.setText("$" + decimalFormat.format(item.getEstimatedValue()));
-        holder.tags.setText(item.getTags().toString());
+        holder.tags.removeAllViews();
+        for(String tag : item.getTags()) {
+
+            Chip chip = new Chip(context, null, R.style.ChipStyle);
+            chip.setText(tag);
+            chip.setTextColor(Color.WHITE);
+            chip.setChipBackgroundColor(ColorStateList.valueOf(Color.parseColor("#BD2AC0")));
+            holder.tags.addView(chip);
+        }
         // Set an OnClickListener for the item at this position
         holder.itemView.setOnClickListener(view -> {
             // Retrieve the item at the clicked position

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,6 +37,7 @@ public class ViewItemActivity extends AppCompatActivity {
     private Button btnBack;
     private Button btnDelete;
     private Button btnEdit;
+    ChipGroup tagsGroup;
     private ImageView itemPhoto;
 
     @Override
@@ -50,7 +53,7 @@ public class ViewItemActivity extends AppCompatActivity {
         model = findViewById(R.id.model);
         serialNumber = findViewById(R.id.serialnumber);
         estimatedValue = findViewById(R.id.value);
-        tags = findViewById(R.id.tags);
+        tagsGroup = findViewById(R.id.tagsGroup);
         comments = findViewById(R.id.comment);
         btnBack = findViewById(R.id.btnBack);
         btnDelete = findViewById(R.id.btnDelete);
@@ -101,14 +104,14 @@ public class ViewItemActivity extends AppCompatActivity {
             }
         });
 
-        itemPhoto.setOnClickListener(new View.OnClickListener() {
+        /*itemPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent galleryIntent = new Intent(ViewItemActivity.this, EditGalleryActivity.class);
                 galleryIntent.putExtra("itemId", itemId);
                 startActivity(galleryIntent);
             }
-        });
+        });*/
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +182,16 @@ public class ViewItemActivity extends AppCompatActivity {
                 commentsStr = item.getComments();
             }
             comments.setText("Comments: " + commentsStr);
-            tags.setText("Tags:  " + item.getTags().toString());
+            displayTags(tagsGroup, item.getTags());
+        }
+        private void displayTags(ChipGroup chipGroup, List<String> tags) {
+            chipGroup.removeAllViews();
+            for (String tag : tags) {
+                Chip chip = new Chip(this, null, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Action);
+                chip.setText(tag);
+                chip.setClickable(false);
+                chipGroup.addView(chip);
+            }
         }
 
 
