@@ -211,7 +211,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             item.setSelected(false);
         }
     }
-    double calculateTotalEstimatedValue() {
+    public double calculateTotalEstimatedValue() {
         double totalEstimatedValue = 0;
         for (Item item : dataList) {
             totalEstimatedValue += item.getEstimatedValue();
