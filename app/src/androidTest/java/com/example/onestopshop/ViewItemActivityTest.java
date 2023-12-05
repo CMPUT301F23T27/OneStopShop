@@ -86,7 +86,7 @@ public class ViewItemActivityTest {
     // add an item and test whether the details are displayed
     @Test
     public void testViewItems() {
-        onView(withId(R.id.sign_in_btn)).perform(click());
+        onView(withId(R.id.textViewLogin)).perform(click());
         addTestItem();
         int itemCount = getItemCount(R.id.item_list);
         onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(itemCount, click()));
