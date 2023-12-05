@@ -182,6 +182,13 @@ public class Item {
         this.estimatedValue = estimatedValue;
         this.tags = tags;
     }
+    public Item( String itemName, String purchaseDate, String make, double estimatedValue, List<String> tags) {
+        this.itemName = itemName;
+        this.purchaseDate = purchaseDate;
+        this.estimatedValue = estimatedValue;
+        this.make = make;
+        this.tags = tags;
+    }
 
     // Getters and Setters for the Item attributes
 

@@ -333,7 +333,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
      * @param tagsFilter List of tags to check against.
      * @return True if the item contains any of the specified tags, false otherwise.
      */
-    private boolean itemContainsAnyTags(Item item, ArrayList<String> tagsFilter) {
+    public boolean itemContainsAnyTags(Item item, ArrayList<String> tagsFilter) {
         for (String tag : tagsFilter) {
             if (item.getTags().contains(tag)) {
                 return true;

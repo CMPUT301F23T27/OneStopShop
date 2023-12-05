@@ -16,6 +16,9 @@ import androidx.test.filters.LargeTest;
 import org.junit.Rule;
 import org.junit.Test;
 
+/*
+    NOTE: YOU MUST LOG IN MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO AUTH
+ */
 @LargeTest
 public class UserProfileActivityTest {
 
