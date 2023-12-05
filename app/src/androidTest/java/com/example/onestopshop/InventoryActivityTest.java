@@ -48,6 +48,9 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
+/*
+    NOTE: YOU MUST LOG IN MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO AUTH
+ */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class InventoryActivityTest {

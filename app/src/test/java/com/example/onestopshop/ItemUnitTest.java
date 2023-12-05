@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ItemUnitTest {
     @Test
-    public void testMakeItem(){
+    public void testCreateItem(){
         String itemId = "1234567";
         String itemName = "Phone";
         String description = "this is a phone";
