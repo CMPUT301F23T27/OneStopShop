@@ -32,6 +32,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * InventoryActivity represents the main activity for managing and displaying the inventory of items.
+ * It provides functionality for adding, sorting, filtering, and deleting items.
+ */
 public class InventoryActivity extends AppCompatActivity implements InventoryController.OnInventoryUpdateListener {
 
 
@@ -100,6 +104,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
                     // Handle when the result is not OK
                 }
             });
+
 
 
 
@@ -268,6 +273,17 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         totalValueTextView.setText("$" + String.format("%.2f", calculateTotalEstimatedValue()));
         itemAdapter.notifyDataSetChanged();
     }
+
+    /**
+     * Filters the data based on the provided filters.
+     *
+     * @param updatedData List of items to be filtered.
+     * @param startDate   Start date filter.
+     * @param endDate     End date filter.
+     * @param makeFilter  Make filter.
+     * @param tagsFilter  Tags filter.
+     * @return Filtered list of items.
+     */
     public ArrayList<Item> filterData(ArrayList<Item> updatedData, String startDate, String endDate, String makeFilter, ArrayList<String> tagsFilter) {
         ArrayList<Item> filteredList = new ArrayList<>();
         boolean passFilter;
@@ -310,6 +326,13 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         Log.d("Debug", "" + filteredList.size());
         return filteredList;
     }
+    /**
+     * Checks if an item contains any of the specified tags.
+     *
+     * @param item       The item to check.
+     * @param tagsFilter List of tags to check against.
+     * @return True if the item contains any of the specified tags, false otherwise.
+     */
     private boolean itemContainsAnyTags(Item item, ArrayList<String> tagsFilter) {
         for (String tag : tagsFilter) {
             if (item.getTags().contains(tag)) {
@@ -366,6 +389,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             item.setSelected(false);
         }
     }
+
     public double calculateTotalEstimatedValue() {
         double totalEstimatedValue = 0;
         for (Item item : dataList) {
@@ -374,6 +398,12 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         return totalEstimatedValue;
     }
 
+    /**
+     * Sorts the item list based on the selected sorting criteria.
+     *
+     * @param selectedSortCriteria The selected sorting criteria.
+     * @param unsortedList         The unsorted list of items.
+     */
     private void sortItemList(String selectedSortCriteria, ArrayList<Item> unsortedList) {
         // Extract sorting details
         String sortField = selectedSortCriteria.split(" ")[0];
@@ -406,6 +436,9 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
     }
 
+    /**
+     * Updates the appearance of the switchSortButton based on the sorting order.
+     */
     private void updateSwitchSortButtonAppearance() {
         if (isAscending) {
             switchSortButton.setImageResource(R.drawable.rsz_arrow_copy);
@@ -414,6 +447,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         }
     }
 
+    /**
+     * Sorts the list of items by their purchase date.
+     *
+     * @param unsortedList The unsorted list of items.
+     */
     private void sortItemsByDate(ArrayList<Item> unsortedList) {
         Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
@@ -426,6 +464,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         }
     }
 
+    /**
+     * Sorts the list of items by their description.
+     *
+     * @param unsortedList The unsorted list of items.
+     */
     private void sortItemsByDescription(ArrayList<Item> unsortedList) {
         Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
@@ -456,7 +499,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
 
 
-
+    /**
+     * Sorts the list of items by their make.
+     *
+     * @param unsortedList The unsorted list of items.
+     */
     private void sortItemsByMake(ArrayList<Item> unsortedList) {
         Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
@@ -485,10 +532,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         Collections.reverse(unsortedList);
     }
 
-
-
-
-
+    /**
+     * Sorts the list of items by their estimated value.
+     *
+     * @param unsortedList The unsorted list of items.
+     */
     private void sortItemsByEstimatedValue(ArrayList<Item> unsortedList) {
         Collections.sort(unsortedList, new Comparator<Item>() {
             @Override
@@ -501,6 +549,11 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         }
     }
 
+    /**
+     * Navigates to the SearchActivity to perform a search operation.
+     *
+     * @param view The view that triggered the search operation.
+     */
     public void search(View view) {
 
         Intent intent = new Intent(InventoryActivity.this, SearchActivity.class);

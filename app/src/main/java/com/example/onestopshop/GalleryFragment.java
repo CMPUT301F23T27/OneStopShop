@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * GalleryFragment is a Fragment that allows the user to view and manage photos associated with an item.
+ */
 public class GalleryFragment extends Fragment {
     private List<Uri> localUris;
     private List<ItemPhoto> photoList;
@@ -63,6 +65,9 @@ public class GalleryFragment extends Fragment {
         });
         return view;
     }
+    /**
+     * Displays the photo options dialog when the "Add a Photo" button is clicked.
+     */
     private void showPhotoOptionsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Add a Photo");
@@ -84,8 +89,12 @@ public class GalleryFragment extends Fragment {
         // Create and show the dialog
         builder.create().show();
     }
+
+    /**
+     * Launches the intent to pick an image from the gallery.
+     */
     private void dispatchPickImageIntent() {
-        Intent pickImageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pickImageIntent.setType("image/*");
         pickImageLauncher.launch(pickImageIntent);
     }

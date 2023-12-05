@@ -270,7 +270,7 @@
                 android:hint=""
                 android:textSize="14dp"></EditText>
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/scanButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/scan_icon_black" />

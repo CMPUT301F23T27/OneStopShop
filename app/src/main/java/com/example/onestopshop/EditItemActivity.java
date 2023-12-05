@@ -1,11 +1,14 @@
 package com.example.onestopshop;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +47,20 @@ public class EditItemActivity extends AppCompatActivity {
     private Button confirm;
     private ImageButton addPhoto;
     private ImageView itemPhoto;
+    private ImageView scanButton;
+    private final ActivityResultLauncher<Intent> startForSerialNumberResult =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == this.RESULT_OK) {
+                            // Retrieve data from the intent returned by ScanActivity
+                            Intent data = result.getData();
+                            String serialNumberScan = data.getStringExtra("serialNumber");
+                            serialNumberText.setText(serialNumberScan);
+                            // Handle the received data
+                        } else {
+                            // Handle when the result is not OK
+                        }
+                    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +76,7 @@ public class EditItemActivity extends AppCompatActivity {
         estimatedValueText = findViewById(R.id.estimatedValue);
         tagsGroup = findViewById(R.id.tagsGroup);
         addTagBtn = findViewById(R.id.add_tag_button);
+        scanButton = findViewById(R.id.scanButton);
         commentsText = findViewById(R.id.comments);
         btnCancel = findViewById(R.id.btnCancel);
         addPhoto = findViewById(R.id.add_image_button);
@@ -113,11 +131,11 @@ public class EditItemActivity extends AppCompatActivity {
 
             }
         });
+
         photosController.getDownloadUrl(new PhotosController.DownloadUrlCallback() {
             @Override
             public void onSuccess(String downloadUrl) {
                 if (downloadUrl != null && !downloadUrl.isEmpty()) {
-                    // Use the download URL here, for example, load it into an ImageView
                     Picasso.get().load(downloadUrl).into(itemPhoto);
                     itemPhoto.setBackgroundColor(0);
                 } else {
@@ -130,6 +148,13 @@ public class EditItemActivity extends AppCompatActivity {
             public void onFailure(Exception e) {
                 // Handle failure, for example
 
+            }
+        });
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditItemActivity.this, ScanActivity.class);
+                startForSerialNumberResult.launch(intent);
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +192,28 @@ public class EditItemActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        photosController.getDownloadUrl(new PhotosController.DownloadUrlCallback() {
+            @Override
+            public void onSuccess(String downloadUrl) {
+                if (downloadUrl != null && !downloadUrl.isEmpty()) {
+                    Picasso.get().load(downloadUrl).into(itemPhoto);
+                    itemPhoto.setBackgroundColor(0);
+                } else {
+                    // If there's no download URL leave the default image
+
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Handle failure, for example
+
+            }
+        });
     }
     /**
      * Displays the details of the given item in the corresponding EditText fields.
@@ -233,6 +280,12 @@ public class EditItemActivity extends AppCompatActivity {
 
         return valid;
     }
+    /**
+     * Displays the selected tags in the ChipGroup.
+     *
+     * @param chipGroup The ChipGroup where tags should be displayed.
+     * @param tags      The list of tags to be displayed.
+     */
     private void displayTags(ChipGroup chipGroup, List<String> tags) {
         for (String tag : tags) {
             Chip chip = new Chip(this, null, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Action);
@@ -249,6 +302,11 @@ public class EditItemActivity extends AppCompatActivity {
             });
         }
     }
+    /**
+     * Shows the date picker dialog for selecting the purchase date.
+     *
+     * @param v The View that triggered the method (in this case, a button click).
+     */
     public void showDatePickerDialog(View v) {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -267,4 +325,5 @@ public class EditItemActivity extends AppCompatActivity {
 
         datePickerDialog.show();
     }
+
 }

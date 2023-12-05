@@ -20,11 +20,19 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Controller class for managing photos related operations, including upload, download, and deletion.
+ */
 public class PhotosController {
     private StorageReference storageRef;
     private CollectionReference photosRef;
     private OnPhotoListUpdateListener photoListUpdateListener;
 
+    /**
+     * Constructor for creating a PhotosController associated with a specific item.
+     *
+     * @param itemId The ID of the item to which the photos belong.
+     */
     public PhotosController(String itemId) {
         if (itemId == null || itemId.isEmpty()) {
             // dont create reference
@@ -54,6 +62,11 @@ public class PhotosController {
         });
     }
 
+    /**
+     * Uploads a single photo to Firebase Storage and stores its download link in Firestore.
+     *
+     * @param photoUri The URI of the photo to be uploaded.
+     */
     public void uploadPhoto(Uri photoUri) {
         // Get a reference to the location where you want to store the photo in Firebase Storage
         String photoId = UUID.randomUUID().toString();
@@ -81,6 +94,12 @@ public class PhotosController {
                     }
                 });
     }
+    /**
+     * Stores the download link and photo ID in Firestore after a successful photo upload.
+     *
+     * @param photoId  The unique ID associated with the uploaded photo.
+     * @param photoUrl The download URL of the uploaded photo.
+     */
     private void storeDownloadLink(String photoId, String photoUrl) {
         // Create a new document in the "images" collection and store the download link
         Map<String, Object> itemData = new HashMap<>();
@@ -94,11 +113,22 @@ public class PhotosController {
                     // Handle failure to store download link
                 });
     }
+    /**
+     * Uploads multiple photos to Firebase Storage and stores their download links in Firestore.
+     *
+     * @param photoUris A list of URIs for the photos to be uploaded.
+     */
     public void uploadAllPhotos(List<Uri> photoUris) {
         for(Uri uri : photoUris){
             uploadPhoto(uri);
         }
     }
+
+    /**
+     * Deletes a photo from Firebase Storage and its reference from Firestore.
+     *
+     * @param photoId The ID of the photo to be deleted.
+     */
     public void deletePhoto(String photoId) {
         // Create references to the photo in Firebase Storage and Firestore
         StorageReference photoStorageRef = storageRef.child(photoId + ".jpg");
@@ -122,27 +152,44 @@ public class PhotosController {
                 });
     }
 
+    /**
+     * Retrieves the download URL of a photo from Firestore.
+     *
+     * @param callback Callback to handle success or failure of the download URL retrieval.
+     */
     public void getDownloadUrl(DownloadUrlCallback callback) {
-        photosRef.limit(1).get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        String downloadUrl = queryDocumentSnapshots.getDocuments().get(0).getString("photoUrl");
-                        callback.onSuccess(downloadUrl);
-                    } else {
+        if(photosRef != null) {
+            photosRef.limit(1).get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            String downloadUrl = queryDocumentSnapshots.getDocuments().get(0).getString("photoUrl");
+                            callback.onSuccess(downloadUrl);
+                        } else {
 
-                    }
-                })
-                .addOnFailureListener(e -> callback.onFailure(e));
+                        }
+                    })
+                    .addOnFailureListener(e -> callback.onFailure(e));
+        }
     }
 
+    /**
+     * Interface for handling success or failure of the download URL retrieval.
+     */
     public interface DownloadUrlCallback {
         void onSuccess(String downloadUrl);
 
         void onFailure(Exception e);
     }
+
+    /**
+     * @param listener
+     */
     public void setOnPhotoListUpdateListener(OnPhotoListUpdateListener listener) {
         photoListUpdateListener = listener;
     }
+    /**
+     * Interface for handling updates to the photo list.
+     */
     public interface OnPhotoListUpdateListener {
         void onPhotoListUpdated(List<ItemPhoto> updatedPhotoList);
     }

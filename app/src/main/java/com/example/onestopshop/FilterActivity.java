@@ -23,6 +23,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * FilterActivity allows the user to filter items based on various criteria such as make, date, and tags.
+ */
 public class FilterActivity extends AppCompatActivity {
 
     private EditText makeEditText, startDate, endDate, tags;
@@ -110,12 +113,20 @@ public class FilterActivity extends AppCompatActivity {
         });
     }
 
-    private void displayPreviousFilters(String prevstartDate, String prevendDate, String prevMake, ArrayList<String> prevTags) {
-        if(!TextUtils.isEmpty(prevstartDate)){
-            startDate.setText(prevstartDate);
+    /**
+     * Displays the previous filter values in the corresponding UI elements.
+     *
+     * @param prevStartDate The previous start date filter value.
+     * @param prevEndDate   The previous end date filter value.
+     * @param prevMake       The previous make filter value.
+     * @param prevTags       The previous tags filter values.
+     */
+    private void displayPreviousFilters(String prevStartDate, String prevEndDate, String prevMake, ArrayList<String> prevTags) {
+        if(!TextUtils.isEmpty(prevStartDate)){
+            startDate.setText(prevStartDate);
         }
-        if(!TextUtils.isEmpty(prevendDate)){
-            endDate.setText(prevendDate);
+        if(!TextUtils.isEmpty(prevEndDate)){
+            endDate.setText(prevEndDate);
         }
         if(!TextUtils.isEmpty(prevMake)){
             makeEditText.setText(prevMake);
@@ -125,6 +136,12 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Shows the date picker dialog for selecting a date.
+     *
+     * @param v        The View that triggered the method (in this case, a button click).
+     * @param editText The EditText where the selected date should be displayed.
+     */
     public void showDatePickerDialog(View v, EditText editText) {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -144,6 +161,14 @@ public class FilterActivity extends AppCompatActivity {
 
         datePickerDialog.show();
     }
+
+    /**
+     * Validates the selected start and end dates.
+     *
+     * @param startDateStr The selected start date as a string.
+     * @param endDateStr   The selected end date as a string.
+     * @return True if the dates are valid; false otherwise.
+     */
     public boolean validDate(String startDateStr, String endDateStr) {
         Log.d("In ValidDate", startDateStr + endDateStr);
         final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");

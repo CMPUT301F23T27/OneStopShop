@@ -163,6 +163,24 @@ public class ViewItemActivity extends AppCompatActivity {
                 }
             });
         }
+        photosController.getDownloadUrl(new PhotosController.DownloadUrlCallback() {
+            @Override
+            public void onSuccess(String downloadUrl) {
+                if (downloadUrl != null && !downloadUrl.isEmpty()) {
+                    Picasso.get().load(downloadUrl).into(itemPhoto);
+                    itemPhoto.setBackgroundColor(0);
+                } else {
+                    // If there's no download URL leave the default image
+
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Handle failure, for example
+
+            }
+        });
     }
         private void displayItemDetails (Item item){
             // Update your views with the retrieved item data
@@ -184,6 +202,7 @@ public class ViewItemActivity extends AppCompatActivity {
             comments.setText("Comments: " + commentsStr);
             displayTags(tagsGroup, item.getTags());
         }
+
         private void displayTags(ChipGroup chipGroup, List<String> tags) {
             chipGroup.removeAllViews();
             for (String tag : tags) {

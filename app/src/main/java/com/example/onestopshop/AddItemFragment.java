@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -22,20 +21,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.ChipGroup;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 /**
- * Add an item
+ * Fragment to add an item to the inventory
  */
 public class AddItemFragment extends Fragment {
 
@@ -67,7 +61,7 @@ public class AddItemFragment extends Fragment {
     private ImageButton addPhoto;
 
     // Activity result launcher for handling results from ScanActivity
-    private final ActivityResultLauncher<Intent> startForResult =
+    private final ActivityResultLauncher<Intent> startForSerialNumberResult =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     result -> {
                         if (result.getResultCode() == requireActivity().RESULT_OK) {
@@ -142,7 +136,7 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireContext(), ScanActivity.class);
-                startForResult.launch(intent);
+                startForSerialNumberResult.launch(intent);
             }
         });
 
@@ -293,12 +287,20 @@ public class AddItemFragment extends Fragment {
 
         return valid;
     }
+    /**
+     * Launches the gallery fragment for adding images.
+     */
     public void launchGalleryFragment() {
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new GalleryFragment())
                 .addToBackStack(null)
                 .commit();
     }
+    /**
+     * Shows a date picker dialog for selecting the purchase date.
+     *
+     * @param v The view that triggered the date picker.
+     */
     public void showDatePickerDialog(View v) {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -317,6 +319,9 @@ public class AddItemFragment extends Fragment {
 
         datePickerDialog.show();
     }
+    /**
+     * Resumes the fragment, updating the item photo if available.
+     */
     @Override
     public void onResume() {
         super.onResume();

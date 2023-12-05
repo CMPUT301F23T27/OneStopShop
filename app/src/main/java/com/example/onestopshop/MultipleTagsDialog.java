@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
+/**
+ * This is a dialog for adding tags to multiple items
+ */
 public class MultipleTagsDialog extends Dialog {
     EditText tagInputEditText;
     Button createButton;

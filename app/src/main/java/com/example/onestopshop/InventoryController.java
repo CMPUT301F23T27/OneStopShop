@@ -143,6 +143,12 @@ public class InventoryController {
                     // Handle failure to add the item to Firestore
                 });
     }
+
+    /**
+     * Searches item names and descriptions for keyword
+     * @param keywords
+     * @param listener
+     */
     public void searchItemsByKeywords(String keywords, OnInventorySearchListener listener) {
         itemsRef.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
