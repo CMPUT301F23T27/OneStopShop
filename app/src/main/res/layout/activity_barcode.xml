@@ -5,22 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/black"
     tools:context=".BarcodeActivity">
     <Button
-        android:id="@+id/scan_barcode"
+        android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan Barcode"
-        android:layout_marginBottom="50dp"
+        android:text="Cancel"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
         android:backgroundTint="@color/defaultPurple"></Button>
-    <Button
-        android:id="@+id/add_barcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Barcode"
-        android:backgroundTint="@color/defaultPurple"></Button>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/scan_barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan Barcode"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="@color/defaultPurple"></Button>
+        <Button
+            android:id="@+id/add_barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Barcode"
+            android:backgroundTint="@color/defaultPurple"></Button>
+
+    </LinearLayout>
+
+
 
 
 

@@ -35,6 +35,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Activity for scanning and adding barcodes to the inventory.
+ */
 public class BarcodeActivity extends AppCompatActivity {
 
     private Button scanButton;
@@ -45,12 +48,16 @@ public class BarcodeActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> pickImageLauncherScanBarcode;
     String descriptionVal, makeVal, scannedDescription, scannedMake;
     Double estimatedValueVal, scannedEstimatedValue;
+    /**
+     * Creates the activity, initializes UI elements, and sets up click listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode);
         addButton = findViewById(R.id.add_barcode);
         scanButton = findViewById(R.id.scan_barcode);
+        Button cancelButton = findViewById(R.id.cancel_button);
         descriptionVal = "";
         makeVal = "";
         estimatedValueVal = 0.0;
@@ -67,7 +74,7 @@ public class BarcodeActivity extends AppCompatActivity {
                 addBarcodeDialog.show();
             }
         });
-
+        cancelButton.setOnClickListener(view-> finish());
         pickImageLauncherScanBarcode = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -93,11 +100,19 @@ public class BarcodeActivity extends AppCompatActivity {
                     }
                 });
     }
+    /**
+     * Custom dialog for adding barcode information.
+     */
     public class AddBarcodeDialog extends Dialog {
         private Button choosePhoto;
         private Button takePhoto;
         private EditText description, make, estimatedValueText;
         private Double estimatedValue;
+        /**
+         * Constructor for the custom dialog.
+         *
+         * @param context The context of the dialog.
+         */
         public AddBarcodeDialog(@NonNull Context context) {
             super(context);
             setContentView(R.layout.dialog_add_barcode);
@@ -106,6 +121,7 @@ public class BarcodeActivity extends AppCompatActivity {
             description = findViewById(R.id.description);
             make = findViewById(R.id.make);
             estimatedValueText = findViewById(R.id.estimatedValue);
+
             choosePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,6 +149,11 @@ public class BarcodeActivity extends AppCompatActivity {
             });
 
         }
+        /**
+         * Validates the input fields in the dialog.
+         *
+         * @return True if the fields are valid, false otherwise.
+         */
         public boolean validFields(){
             boolean valid = true;
             if(TextUtils.isEmpty(description.getText().toString())){
@@ -151,6 +172,9 @@ public class BarcodeActivity extends AppCompatActivity {
         }
 
     }
+    /**
+     * Displays a dialog with options for adding a photo.
+     */
     private void showPhotoOptionsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add a Photo");
@@ -172,11 +196,17 @@ public class BarcodeActivity extends AppCompatActivity {
         // Create and show the dialog
         builder.create().show();
     }
+    /**
+     * Launches the image picker intent for adding barcode images when adding a barcode.
+     */
     private void dispatchPickImageIntentAdd() {
         Intent pickImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pickImageIntent.setType("image/*");
         pickImageLauncherAddBarcode.launch(pickImageIntent);
     }
+    /**
+     * Launches the image picker intent for adding barcode images when scanning a barcode.
+     */
     private void dispatchPickImageIntentScan() {
         Intent pickImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pickImageIntent.setType("image/*");
@@ -184,6 +214,11 @@ public class BarcodeActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Processes the barcode from the scanned image and retrieves information from Firestore.
+     *
+     * @param imageBitmap The bitmap image containing the barcode.
+     */
     public void processBarcodeForScan(Bitmap imageBitmap){
         //check firestore for existence
         //Barcode scanning from MLKit documentation
@@ -215,6 +250,11 @@ public class BarcodeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrieves barcode information from Firestore based on the barcode value.
+     *
+     * @param barcodeValue The value of the scanned barcode.
+     */
     public void retrieveBarcodeFromFirestore(String barcodeValue) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -251,6 +291,14 @@ public class BarcodeActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Processes the barcode from the manually entered image and uploads information to Firestore.
+     *
+     * @param imageBitmap      The bitmap image containing the barcode.
+     * @param description      The description of the item.
+     * @param make             The make of the item.
+     * @param estimatedValue   The estimated value of the item.
+     */
     public void processBarcodeForAdd(Bitmap imageBitmap, String description, String make, Double estimatedValue){
         //add barcode to firestore
         //Barcode scanning from MLKit documentation
@@ -278,6 +326,14 @@ public class BarcodeActivity extends AppCompatActivity {
                     }
                 });
     }
+    /**
+     * Uploads barcode information to Firestore.
+     *
+     * @param barcodeValue    The value of the scanned barcode.
+     * @param description     The description of the item.
+     * @param make            The make of the item.
+     * @param estimatedValue  The estimated value of the item.
+     */
     public void uploadBarcodeToFirestore(String barcodeValue, String description, String make, Double estimatedValue){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();

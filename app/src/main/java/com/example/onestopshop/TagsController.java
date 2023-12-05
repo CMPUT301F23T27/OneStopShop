@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class for TagsController that fetches tags from firestore
+ */
 public class TagsController {
     private CollectionReference itemsRef;
 
@@ -32,6 +35,12 @@ public class TagsController {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         itemsRef = db.collection("users").document(userId).collection("items");
     }
+
+    /**
+     * Fetches existing tags from Firestore and invokes the listener's onSuccess method with the unique tags.
+     *
+     * @param listener The listener to handle the result of tag fetch operation.
+     */
     public void fetchExistingTags(OnTagsFetchListener listener) {
         // Fetch existing tags from Firestore
         itemsRef.get()
@@ -58,6 +67,13 @@ public class TagsController {
                     listener.onFailure(e);
                 });
     }
+
+    /**
+     * Uploads a tag to the specified item in Firestore.
+     *
+     * @param itemId The ID of the item to which the tag is added.
+     * @param tag    The tag to be added to the item.
+     */
     public void uploadTag(String itemId, String tag) {
         itemsRef.document(itemId).update("tags", FieldValue.arrayUnion(tag))
                 .addOnSuccessListener(documentReference -> {
@@ -68,6 +84,9 @@ public class TagsController {
                 });
     }
 
+    /**
+     * The interface to listen for tag fetch operations.
+     */
     public interface OnTagsFetchListener {
         void onSuccess(List<String> existingTags);
 

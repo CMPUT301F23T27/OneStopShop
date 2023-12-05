@@ -13,6 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+ * Adapter class for binding ItemPhoto data to RecyclerView.
+ */
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
     private List<ItemPhoto> photoList;
 
@@ -38,6 +41,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         return photoList.size();
     }
 
+    /**
+     * ViewHolder class representing each item in the RecyclerView.
+     */
     static class PhotoViewHolder extends RecyclerView.ViewHolder {
         ImageView photoImageView;
 

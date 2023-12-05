@@ -17,6 +17,9 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity for editing the gallery of photos associated with an item.
+ */
 public class EditGalleryActivity extends AppCompatActivity implements PhotosController.OnPhotoListUpdateListener {
     private List<ItemPhoto> photoList;
     private RecyclerView recyclerView;
@@ -29,6 +32,11 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
 
+    /**
+     * Called when the activity is created. Initializes UI elements and sets up necessary listeners.
+     *
+     * @param savedInstanceState A Bundle containing the activity's previously saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +71,9 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
         backBtn.setOnClickListener(v -> finish());
 
     }
+    /**
+     * Displays a dialog with options for adding a photo.
+     */
     private void showPhotoOptionsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add a Photo");
@@ -84,12 +95,20 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
         // Create and show the dialog
         builder.create().show();
     }
+    /**
+     * Launches the image picker intent for adding gallery images.
+     */
     private void dispatchPickImageIntent() {
-        Intent pickImageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pickImageIntent.setType("image/*");
         pickImageLauncher.launch(pickImageIntent);
     }
 
+    /**
+     * Callback method invoked when the photo list is updated.
+     *
+     * @param updatedPhotoList The updated list of item photos.
+     */
     @Override
     public void onPhotoListUpdated(List<ItemPhoto> updatedPhotoList) {
         photoList.clear();

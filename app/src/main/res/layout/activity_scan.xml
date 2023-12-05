@@ -1,26 +1,49 @@
 <!-- activity_main.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
+    android:background="@color/black"
+    android:orientation="vertical">
     <Button
-        android:id="@+id/btnTakePhoto"
+        android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Take Photo"
-        android:layout_centerInParent="true" />
-
-    <Button
-        android:id="@+id/btnChooseFromGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose from Gallery"
-        android:layout_below="@id/btnTakePhoto"
-        android:layout_centerInParent="true" />
-    <androidx.camera.view.PreviewView
-        android:id="@+id/viewFinder"
+        android:text="Cancel"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@color/defaultPurple"></Button>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/btnTakePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take a Photo"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/defaultPurple"
+            android:layout_marginBottom="30dp"/>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btnChooseFromGallery"
+            android:layout_width="wrap_content"
+            android:backgroundTint="@color/defaultPurple"
+            android:layout_height="wrap_content"
+            android:text="Choose from Gallery"
+            android:layout_below="@id/btnTakePhoto"
+            android:layout_centerInParent="true" />
+        <androidx.camera.view.PreviewView
+            android:id="@+id/viewFinder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

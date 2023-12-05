@@ -12,6 +12,9 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
+/**
+ * Activity for searching items in the inventory by keywords
+ */
 public class SearchActivity extends AppCompatActivity {
     private InventoryController inventoryController;
 
@@ -63,7 +66,11 @@ public class SearchActivity extends AppCompatActivity {
         this.inventoryController = inventoryController;
     }
 
-    // Package-private method for search by keyword
+    /**
+     * method for searching items by keyword.
+     *
+     * @param keyword The keyword to search for.
+     */
     void searchByKeyword(String keyword) {
         inventoryController.searchItemsByKeywords(keyword, new InventoryController.OnInventorySearchListener() {
             @Override

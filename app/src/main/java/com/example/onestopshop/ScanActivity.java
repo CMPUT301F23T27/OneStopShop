@@ -38,7 +38,9 @@ public class ScanActivity extends AppCompatActivity {
 
         Button btnTakePhoto = findViewById(R.id.btnTakePhoto);
         Button btnChooseFromGallery = findViewById(R.id.btnChooseFromGallery);
+        Button cancelButton = findViewById(R.id.cancel_button);
 
+        cancelButton.setOnClickListener(view -> finish());
         btnTakePhoto.setOnClickListener(view -> dispatchTakePictureIntent());
         btnChooseFromGallery.setOnClickListener(view -> dispatchPickImageIntent());
 
@@ -63,6 +65,7 @@ public class ScanActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 
     private void dispatchTakePictureIntent() {
