@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * InventoryActivity represents the main activity for managing and displaying the inventory of items.
@@ -40,6 +41,9 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
 
 
     private ArrayList<Item> dataList;
+
+    private ArrayList<Item> originalDataList;
+
     private ArrayList<Item> filteredData;
     private RecyclerView recyclerView;
     private CustomList itemAdapter;
@@ -122,6 +126,8 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
         inventoryController = new InventoryController(); // Initialize the Inventory Controller
         inventoryController.setListener(this);
         dataList = new ArrayList<>();
+        originalDataList = new ArrayList<>();
+
         filterButton = findViewById(R.id.filter_button);
         addMultipleTags = findViewById(R.id.addTagsMultipleBtn);
         totalValueTextView = findViewById(R.id.total_estimated_value);
@@ -270,6 +276,8 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     public void onInventoryDataChanged(ArrayList<Item> updatedData) {
         dataList.clear();
         dataList.addAll(updatedData);
+        originalDataList.clear();
+        originalDataList.addAll(updatedData);
         totalValueTextView.setText("$" + String.format("%.2f", calculateTotalEstimatedValue()));
         itemAdapter.notifyDataSetChanged();
     }
@@ -333,7 +341,7 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
      * @param tagsFilter List of tags to check against.
      * @return True if the item contains any of the specified tags, false otherwise.
      */
-    public boolean itemContainsAnyTags(Item item, ArrayList<String> tagsFilter) {
+    private boolean itemContainsAnyTags(Item item, ArrayList<String> tagsFilter) {
         for (String tag : tagsFilter) {
             if (item.getTags().contains(tag)) {
                 return true;
@@ -407,6 +415,10 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
     private void sortItemList(String selectedSortCriteria, ArrayList<Item> unsortedList) {
         // Extract sorting details
         String sortField = selectedSortCriteria.split(" ")[0];
+        if ("None".equals(sortField)) {
+            sortItemsByNone();
+            return;
+        }
 
         // Use the appropriate comparator based on the selected criteria
         switch (sortField) {
@@ -422,7 +434,10 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             case "Estimated":
                 sortItemsByEstimatedValue(unsortedList);
                 break;
-            // Handle additional sorting criteria if needed
+            case "Tag":
+                sortItemsByTag(unsortedList);
+                break;
+
         }
 
         // Notify the adapter of the data change
@@ -463,6 +478,51 @@ public class InventoryActivity extends AppCompatActivity implements InventoryCon
             Collections.reverse(unsortedList);
         }
     }
+
+
+    /**
+     * Sorts the list of items by "None" (original order).
+     */
+    private void sortItemsByNone() {
+        dataList.clear();
+        dataList.addAll(originalDataList);
+
+        // Notify the adapter of the data change
+        if (isFiltered) {
+            filteredItemsAdapter.notifyDataSetChanged();
+        } else {
+            itemAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+
+    /**
+     * Sorts the list of items by their tags.
+     *
+     * @param unsortedList The unsorted list of items.
+     */
+    public void sortItemsByTag(List<Item> unsortedList) {
+        Collections.sort(unsortedList, new Comparator<Item>() {
+            @Override
+            public int compare(Item item1, Item item2) {
+                // Get the first tag of each item for comparison
+                String tag1 = item1.getTags().isEmpty() ? "" : item1.getTags().get(0);
+                String tag2 = item2.getTags().isEmpty() ? "" : item2.getTags().get(0);
+
+                int result = tag1.compareTo(tag2);
+
+                // Return the comparison result
+                return result;
+            }
+
+        });
+        if (!isAscending) {
+            Collections.reverse(unsortedList);
+        }
+    }
+
+
 
     /**
      * Sorts the list of items by their description.
