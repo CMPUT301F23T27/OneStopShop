@@ -28,13 +28,12 @@
         android:layout_alignBottom="@+id/productDetails"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="128dp"
+        android:layout_marginStart="131dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="126dp"
-        android:layout_marginBottom="444dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginBottom="526dp"
         android:background="#BD2AC0"
-        android:src="@drawable/baseline_image_24"
-        />
+        android:src="@drawable/baseline_image_24" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -70,6 +69,21 @@
         android:layout_marginRight="50dp"
         android:layout_marginBottom="-72dp"
         android:src="@drawable/baseline_arrow_forward_24" />-->
+    <Button
+        android:id="@+id/btn_scan_barcode_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/productDetails"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="137dp"
+
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#BD2AC0"
+        android:text="Scan Barcode"
+        android:textColor="#000000"
+
+        ></Button>
 
     <LinearLayout
         android:id="@+id/productDetails"
@@ -98,11 +112,12 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/itemName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Enter Product Name"
-                android:id="@+id/itemName"/>
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -124,7 +139,8 @@
             android:background="@drawable/border_pink"
             android:padding="8dp"
             android:text=""
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
         <Space
             android:layout_width="wrap_content"
@@ -149,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Select Date"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:inputType="none"
                 android:focusable="false"
                 android:paddingVertical="2dp"
@@ -173,7 +189,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:textSize="12dp"
+                android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Make: "
@@ -185,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:id="@+id/make"/>
         </LinearLayout>
 
@@ -207,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:text="Model: "
                 android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/model"
@@ -215,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="14dp"></EditText>
+                android:textSize="16dp"></EditText>
         </LinearLayout>
 
 
@@ -236,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:text="Estimated Value: "
                 android:textColor="@color/black"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 />
 
             <EditText
@@ -245,7 +261,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="12dp"></EditText>
+                android:textSize="16dp"></EditText>
         </LinearLayout>
 
         <LinearLayout
@@ -259,7 +275,7 @@
                 android:layout_height="wrap_content"
                 android:text="Serial Number (opt.): "
                 android:textColor="@color/black"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 />
 
             <EditText
@@ -271,9 +287,10 @@
                 android:textSize="14dp"></EditText>
             <ImageView
                 android:id="@+id/scanButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/scan_icon_black" />
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                app:srcCompat="@drawable/scan_icon_black"
+                android:layout_gravity="center_vertical"/>
 
 
         </LinearLayout>
@@ -295,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:text="Comments (opt.): "
                 android:textColor="@color/black"
-                android:textSize="12dp"
+                android:textSize="16dp"
                 />
 
             <EditText
@@ -304,43 +321,43 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="14dp"></EditText>
+                android:textSize="16dp"></EditText>
         </LinearLayout>
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tags: "
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/add_tag_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:text="+"
-            android:gravity="center"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/black_border_rectangular"
-            android:textSize="18dp"
+            <TextView
 
-            ></TextView>
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/tagsGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tags: "
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                />
 
-        </com.google.android.material.chip.ChipGroup>
+            <TextView
+                android:id="@+id/add_tag_button"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:text="+"
+                android:gravity="center"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/black_border_rectangular"
+                android:textSize="18dp"
 
-    </LinearLayout>
+                ></TextView>
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tagsGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp">
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </LinearLayout>
     </LinearLayout>
 
     <Button
@@ -364,8 +381,8 @@
         android:layout_height="34dp"
         android:layout_above="@+id/productDetails"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="102dp"
         android:background="#FFBD2AC0"
         app:srcCompat="@drawable/baseline_photo_camera_24"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />

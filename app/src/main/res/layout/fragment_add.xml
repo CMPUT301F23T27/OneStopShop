@@ -28,9 +28,9 @@
 
         android:layout_above="@+id/productDetails"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="137dp"
+        android:layout_marginEnd="146dp"
 
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="#BD2AC0"
         android:text="Scan Barcode"
         android:textColor="#000000"
@@ -44,10 +44,10 @@
         android:layout_alignBottom="@+id/productDetails"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="132dp"
+        android:layout_marginStart="127dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="486dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginBottom="531dp"
         android:background="#BD2AC0"
         android:src="@drawable/baseline_image_24" />
 
@@ -72,7 +72,7 @@
     <LinearLayout
         android:id="@+id/productDetails"
         android:layout_width="377dp"
-        android:layout_height="420dp"
+        android:layout_height="430dp"
         android:layout_above="@+id/btn_add_item"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -100,7 +100,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter Product Name" />
+                android:hint="Enter Product Name"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -121,7 +122,8 @@
             android:background="@drawable/border_pink"
             android:padding="8dp"
             android:text=""
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
         <Space
             android:layout_width="wrap_content"
@@ -147,17 +149,17 @@
                 android:id="@+id/purchaseDate"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                android:focusable="false"
                 android:layout_gravity="center_vertical"
-                android:gravity="bottom"
-                android:paddingStart="5dp"
-                android:paddingBottom="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/no_underline_border"
+                android:focusable="false"
+                android:gravity="bottom"
                 android:hint="Select a date"
                 android:inputType="none"
                 android:onClick="showDatePickerDialog"
-                android:textSize="15dp" />
+                android:paddingStart="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="16sp" />
         </LinearLayout>
 
 
@@ -186,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
 
@@ -207,7 +209,7 @@
                 android:layout_height="wrap_content"
                 android:text="Model: "
                 android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/model"
@@ -215,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="16dp"></EditText>
         </LinearLayout>
 
 
@@ -244,7 +246,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="16sp"></EditText>
         </LinearLayout>
 
         <LinearLayout
@@ -266,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="16dp"></EditText>
 
             <ImageView
                 android:id="@+id/scanButton"
@@ -301,12 +303,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint=""
-                android:textSize="10dp"></EditText>
+                android:textSize="16sp"></EditText>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="327dp"
+            android:layout_height="41dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -320,13 +322,13 @@
 
             <TextView
                 android:id="@+id/add_tag_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/black_border_rectangular"
                 android:gravity="center"
                 android:text="+"
-                android:textSize="18dp"
+                android:textSize="15dp"
 
                 ></TextView>
 
