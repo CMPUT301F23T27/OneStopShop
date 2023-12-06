@@ -21,14 +21,13 @@
 
     <ImageView
         android:id="@+id/productImage"
-        android:layout_width="wrap_content"
-        android:layout_height="147dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_alignBottom="@+id/productDetails"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="131dp"
+        android:layout_centerHorizontal="true"
+
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="123dp"
+
         android:layout_marginBottom="512dp"
         android:background="#BD2AC0"
         android:src="@drawable/baseline_image_24" />
