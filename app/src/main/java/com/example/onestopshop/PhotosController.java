@@ -134,21 +134,19 @@ public class PhotosController {
         StorageReference photoStorageRef = storageRef.child(photoId + ".jpg");
         DocumentReference photoDocRef = photosRef.document(photoId);
 
-        // Delete the photo from Firebase Storage
-        photoStorageRef.delete()
+        photoDocRef.delete()
                 .addOnSuccessListener(aVoid -> {
-                    // Photo deleted from storage, now delete its reference from Firestore
-                    photoDocRef.delete()
+                    // Photo reference deleted from Firestore, now delete the photo from storage
+                    photoStorageRef.delete()
                             .addOnSuccessListener(aVoid1 -> {
-                                // Photo reference deleted from Firestore
-
+                                // Photo deleted from storage
                             })
                             .addOnFailureListener(e -> {
-                                // Handle failure to delete photo reference from Firestore
+                                // Handle failure to delete photo from storage
                             });
                 })
                 .addOnFailureListener(e -> {
-                    // Handle failure to delete photo from storage
+                    // Handle failure to delete photo reference from Firestore
                 });
     }
 

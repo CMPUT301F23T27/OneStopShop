@@ -9,31 +9,43 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.view.KeyEvent;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.concurrent.CountDownLatch;
+
+/*
+    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
+ */
 public class SearchActivityTest {
-    //Note: SIGN IN THROUGH EMULATOR FIRST TO RUN TEST
 
     @Rule
-    public ActivityScenarioRule<SearchActivity> searchActivityRule = new ActivityScenarioRule<>(SearchActivity.class);
+    public ActivityScenarioRule<MainActivity> searchActivityRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
     public void searchWithValidKeyword() {
+        onView(withId(R.id.textViewLogin)).perform(click());
         // Type a valid search keyword
-        try(ActivityScenario<InventoryActivity> inventoryActivityScenario = ActivityScenario.launch(InventoryActivity.class)) {
-            addTestItem();
-        }
-
-        ActivityScenario<SearchActivity> searchActivityScenario = ActivityScenario.launch(SearchActivity.class);
-
+        addTestItem();
+        onView(withId(R.id.search_button)).perform(click());
         Espresso.onView(ViewMatchers.withId(R.id.search))
                 .perform(ViewActions.typeText("Test Item Description"));
 
@@ -41,15 +53,18 @@ public class SearchActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.bsearch))
                 .perform(ViewActions.click());
 
-        // Check if the search results are displayed (replace R.id.itemlist with the actual ID)
+        // Check if the search results are displayed
         Espresso.onView(ViewMatchers.withId(R.id.itemlist))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-        // You can add more assertions based on your application's behavior
+        onView(withId(R.id.back)).perform(click());
+        deleteTestItem();
     }
 
     @Test
     public void searchWithEmptyKeyword() {
+        onView(withId(R.id.textViewLogin)).perform(click());
+        onView(withId(R.id.search_button)).perform(click());
         // Click the search button without entering a search keyword
         Espresso.onView(ViewMatchers.withId(R.id.bsearch))
                 .perform(ViewActions.click());
@@ -81,5 +96,33 @@ public class SearchActivityTest {
         onView(withId(R.id.btn_add_item)).perform(click());
 
 
+    }
+    private void deleteTestItem() {
+        //int positionToDelete = getPositionOfTestItem();
+        onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.btnDelete)).perform(click());
+    }
+    @Before
+    public void signIn(){
+        final CountDownLatch latch = new CountDownLatch(1);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword("testuser@gmail.com", "password")
+                .addOnCompleteListener(ApplicationProvider.getApplicationContext().getMainExecutor(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            latch.countDown();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                        }
+                    }
+                });
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

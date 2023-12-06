@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
@@ -25,6 +27,7 @@ import android.widget.Button;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import android.Manifest;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -157,7 +160,8 @@ public class CameraXFragment extends Fragment {
     private void requestCameraPermission() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted, request it
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA);
+
         } else {
             // Permission is already granted, proceed with your camera-related tasks
             // For example, you can start the camera preview here
@@ -165,19 +169,17 @@ public class CameraXFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission is granted, start the camera
+                    startCamera();
+                } else {
+                    // Permission is denied, handle it (e.g., show a message to the user)
+                    Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show();
 
-        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Camera permission granted, proceed with your camera-related tasks
-                startCamera();
-            } else {
-                // Camera permission denied, handle accordingly (e.g., show a message to the user)
-            }
-        }
-    }
+                }
+            });
     public void setOnImageCapturedListener(OnImageCapturedListener listener) {
         this.onImageCapturedListener = listener;
     }

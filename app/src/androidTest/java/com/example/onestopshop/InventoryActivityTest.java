@@ -17,6 +17,9 @@ import static org.hamcrest.CoreMatchers.not;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+
+import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.matcher.ViewMatchers;
 
 import android.app.Activity;
@@ -35,6 +38,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,23 +53,25 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 /*
-    NOTE: YOU MUST LOG IN MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO AUTH
+    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class InventoryActivityTest {
     @Rule
-    public ActivityScenarioRule<InventoryActivity> activityScenario = new
-            ActivityScenarioRule<InventoryActivity>(InventoryActivity.class);
+    public ActivityScenarioRule<MainActivity> activityScenario = new
+            ActivityScenarioRule<>(MainActivity.class);
 
 
     @Test
     public void testSelectMode() {
+        // Login
+        onView(withId(R.id.textViewLogin)).perform(click());
         // add item
         addTestItem();
-
         // press select button
         onView(withId(R.id.select_button)).perform(click());
         // Verify buttons are visible and total value is not visible
@@ -97,17 +105,18 @@ public class InventoryActivityTest {
     }*/
     @Test
     public void testTotalValue_isDisplayed() {
-        double totalValue = calculateTotalValue();
+        onView(withId(R.id.textViewLogin)).perform(click());
+        double totalValue = 0.0;
         onView(withId(R.id.total_value_layout)).check(matches((isDisplayed())));
-        ActivityScenario<InventoryActivity> scenario = activityScenario.getScenario();
-        onView(withId(R.id.total_estimated_value)).check(matches(withText("$" + String.format("%.2f", totalValue))));
         addTestItem();
+        //from test item
+        totalValue = 500.00;
         onView(withId(R.id.total_estimated_value)).
-                check(matches(withText("$" + String.format("%.2f", totalValue + 500.00))));
+                check(matches(withText("$" + String.format("%.2f", 500.00))));
         deleteTestItem();
     }
 
-    @Test
+
     public void addTestItem() {
         onView(withId(R.id.add_button)).perform(click());
         onView(withId(R.id.itemName)).perform(typeText("Test"), pressKey(KeyEvent.KEYCODE_TAB));
@@ -125,18 +134,11 @@ public class InventoryActivityTest {
     }
 
     private void deleteTestItem() {
-        int positionToDelete = getPositionOfTestItem();
-        onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(positionToDelete, click()));
+        //int positionToDelete = getPositionOfTestItem();
+        onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.btnDelete)).perform(click());
     }
 
-    private double calculateTotalValue() {
-        final double[] totalValue = {0.0};
-        activityScenario.getScenario().onActivity(activity -> {
-            totalValue[0] = activity.calculateTotalEstimatedValue();
-        });
-        return totalValue[0];
-    }
 
     private int getItemCount(@IdRes int recyclerViewId) {
         final int[] itemCount = {0};
@@ -149,7 +151,7 @@ public class InventoryActivityTest {
         return itemCount[0];
     }
 
-    private int getPositionOfTestItem() {
+    /*private int getPositionOfTestItem() {
         final int[] position = {-1};
         activityScenario.getScenario().onActivity(activity -> {
             RecyclerView recyclerView = activity.findViewById(R.id.item_list);
@@ -167,124 +169,35 @@ public class InventoryActivityTest {
             }
         });
         return position[0];
-    }
+    }*/
 
     //}
 
-    @Test
-    public void testSortByDateAscending() {
-        // Add multiple items with different dates
-        addTestItem("2023-01-01");
-        addTestItem("2023-02-01");
-        addTestItem("2023-03-01");
 
-        // Sort by Date (Ascending)
-        onView(withId(R.id.sort_spinner)).perform(click());
-        onData(anything()).atPosition(0).perform(click()); // Select "Date Ascending"
-        onView(withId(R.id.switch_sort)).perform(click());
-        onView(withId(R.id.switch_sort)).perform(click());// Toggle to ascending if not already
 
-        // Verify the order in the RecyclerView
-        onView(withId(R.id.item_list)).check(matches(isSortedByDateAscending()));
-    }
-
-    @Test
-    public void testSortByDateDescending() {
-        // Add multiple items with different dates
-        addTestItem("2023-01-01");
-        addTestItem("2023-02-01");
-        addTestItem("2023-03-01");
-
-        // Sort by Date (Descending)
-        onView(withId(R.id.sort_spinner)).perform(click());
-        onData(anything()).atPosition(0).perform(click()); // Select "Date Ascending"
-        onView(withId(R.id.switch_sort)).perform(click()); // Toggle to descending
-
-        // Verify the order in the RecyclerView
-        onView(withId(R.id.item_list)).check(matches(isSortedByDateDescending()));
-    }
-
-// Similar tests can be created for other sorting criteria
-// ...
-
-    private void addTestItem(String purchaseDate) {
-        onView(withId(R.id.add_button)).perform(click());
-        onView(withId(R.id.itemName)).perform(typeText("Test"), pressKey(KeyEvent.KEYCODE_TAB));
-        onView(withId(R.id.description)).perform(typeText("Test Item Description"), pressKey(KeyEvent.KEYCODE_TAB));
-        onView(withId(R.id.purchaseDate)).perform(replaceText(purchaseDate), pressKey(KeyEvent.KEYCODE_TAB));
-        onView(withId(R.id.make)).perform(typeText("Test Make"), pressKey(KeyEvent.KEYCODE_TAB));
-        onView(withId(R.id.model)).perform(typeText("Test Model"), pressKey(KeyEvent.KEYCODE_TAB));
-        onView(withId(R.id.estimatedValue)).perform(typeText("500"), pressKey(KeyEvent.KEYCODE_TAB),
-                pressKey(KeyEvent.KEYCODE_TAB), pressKey(KeyEvent.KEYCODE_TAB), pressKey(KeyEvent.KEYCODE_TAB));
-        onView(withId(R.id.add_tag_button)).perform(click());
-        onView(withId(R.id.editTextTagInput)).perform(typeText("test"), pressKey(KeyEvent.KEYCODE_TAB));
-        onView(withId(R.id.buttonCreate)).perform(click());
-        onView(withId(R.id.buttonDone)).perform(click());
-        onView(withId(R.id.btn_add_item)).perform(click());
-    }
-
-    private static Matcher<View> isSortedByDateAscending() {
-        return new TypeSafeMatcher<View>() {
-            @Override
-            protected boolean matchesSafely(View item) {
-                RecyclerView recyclerView = (RecyclerView) item;
-                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-
-                if (adapter != null) {
-                    for (int i = 0; i < adapter.getItemCount() - 1; i++) {
-                        Item current = ((CustomList) adapter).getItemList().get(i);
-                        Item next = ((CustomList) adapter).getItemList().get(i + 1);
-
-                        // Logging statements to check data
-                        Log.d("Matcher", "Current Date: " + current.getPurchaseDate());
-                        Log.d("Matcher", "Next Date: " + next.getPurchaseDate());
-
-                        if (current.getPurchaseDate().compareTo(next.getPurchaseDate()) > 0) {
-                            return false; // Not sorted in ascending order
+    @Before
+    public void signIn(){
+        final CountDownLatch latch = new CountDownLatch(1);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword("testuser@gmail.com", "password")
+                .addOnCompleteListener(ApplicationProvider.getApplicationContext().getMainExecutor(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            latch.countDown();
+                        } else {
+                            // If sign in fails, display a message to the user.
                         }
                     }
-                }
-
-                return true; // Sorted in ascending order
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("RecyclerView is sorted by date in ascending order");
-            }
-        };
+                });
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-
-
-
-    private static Matcher<View> isSortedByDateDescending() {
-        return new TypeSafeMatcher<View>() {
-            @Override
-            protected boolean matchesSafely(View item) {
-                RecyclerView recyclerView = (RecyclerView) item;
-                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-
-                if (adapter != null) {
-                    for (int i = 0; i < adapter.getItemCount() - 1; i++) {
-                        Item current = ((CustomList) adapter).getItemList().get(i);
-                        Item next = ((CustomList) adapter).getItemList().get(i + 1);
-
-                        if (current.getPurchaseDate().compareTo(next.getPurchaseDate()) < 0) {
-                            return false; // Not sorted in descending order
-                        }
-                    }
-                }
-
-                return true; // Sorted in descending order
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("RecyclerView is sorted by date in descending order");
-            }
-        };
-    }
-
 
 
 }

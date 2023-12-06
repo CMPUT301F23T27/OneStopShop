@@ -36,6 +36,9 @@ import org.junit.Test;
 import java.util.concurrent.CountDownLatch;
 
 
+/*
+    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
+ */
 public class TagsTest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =

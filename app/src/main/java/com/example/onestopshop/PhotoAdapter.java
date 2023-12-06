@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
     private List<ItemPhoto> photoList;
+    private PhotoClickListener clickListener;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public PhotoAdapter( List<ItemPhoto> photoList) {
         this.photoList = photoList;
@@ -34,11 +36,36 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
         ItemPhoto currentPhoto = photoList.get(position);
         Picasso.get().load(currentPhoto.getPhotoUrl()).fit().centerCrop().into(holder.photoImageView);
+        holder.itemView.setOnClickListener(v -> {
+            // Toggle the selection state when the photo is clicked
+            int previousSelectedPosition = selectedPosition;
+            selectedPosition = holder.getAdapterPosition();
+
+            // Update the visibility of the selection overlay
+            notifyItemChanged(previousSelectedPosition);
+            notifyItemChanged(selectedPosition);
+
+            // Handle the click event (e.g., pass the clicked item to the activity)
+            if (clickListener != null) {
+                clickListener.onPhotoClick(photoList.get(selectedPosition));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return photoList.size();
+    }
+
+    public ItemPhoto getSelectedPhoto() {
+        if (selectedPosition != RecyclerView.NO_POSITION) {
+            return photoList.get(selectedPosition);
+        }
+        return null;
+    }
+    public void clearSelection() {
+        selectedPosition = RecyclerView.NO_POSITION;
+        notifyDataSetChanged();
     }
 
     /**
@@ -51,5 +78,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             super(itemView);
             photoImageView = itemView.findViewById(R.id.photoImageView);
         }
+    }
+    public interface PhotoClickListener {
+        void onPhotoClick(ItemPhoto clickedPhoto);
     }
 }

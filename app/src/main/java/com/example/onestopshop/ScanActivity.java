@@ -43,7 +43,7 @@ public class ScanActivity extends AppCompatActivity implements CameraXFragment.O
         Button cancelButton = findViewById(R.id.cancel_button);
 
         cancelButton.setOnClickListener(view -> finish());
-        btnTakePhoto.setOnClickListener(view -> dispatchTakePictureIntent());
+        btnTakePhoto.setOnClickListener(view -> dispatchTakePictureFragment());
         btnChooseFromGallery.setOnClickListener(view -> dispatchPickImageIntent());
 
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -61,7 +61,7 @@ public class ScanActivity extends AppCompatActivity implements CameraXFragment.O
 
     }
 
-    private void dispatchTakePictureIntent() {
+    private void dispatchTakePictureFragment() {
         CameraXFragment cameraXFragment = new CameraXFragment();
         cameraXFragment.setOnImageCapturedListener(this);
         getSupportFragmentManager()

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -330,6 +331,11 @@ public class AddItemFragment extends Fragment {
         if(localUris.size() > 0) {
             Picasso.get().load(localUris.get(0)).into(itemPhotoView);
             itemPhotoView.setBackgroundColor(0);
+        }
+        else {
+            itemPhotoView.setImageResource(R.drawable.baseline_image_24);
+            int defaultColor = ContextCompat.getColor(requireContext(), R.color.defaultPurple);
+            itemPhotoView.setBackgroundColor(defaultColor);
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.onestopshop;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -204,7 +205,9 @@ public class EditItemActivity extends AppCompatActivity {
                     itemPhoto.setBackgroundColor(0);
                 } else {
                     // If there's no download URL leave the default image
-
+                    itemPhoto.setImageResource(R.drawable.baseline_image_24);
+                    int defaultColor = ContextCompat.getColor(EditItemActivity.this, R.color.defaultPurple);
+                    itemPhoto.setBackgroundColor(defaultColor);
                 }
             }
 
