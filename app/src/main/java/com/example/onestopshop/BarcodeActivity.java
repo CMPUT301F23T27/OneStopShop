@@ -25,6 +25,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
@@ -305,9 +306,12 @@ public class BarcodeActivity extends AppCompatActivity {
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
                         .setBarcodeFormats(
-                                Barcode.FORMAT_UPC_A,
-                                Barcode.FORMAT_QR_CODE,
-                                Barcode.FORMAT_AZTEC)
+                                Barcode.FORMAT_CODE_128, Barcode.FORMAT_CODE_39, Barcode.FORMAT_CODE_93,
+                                Barcode.FORMAT_CODABAR, Barcode.FORMAT_DATA_MATRIX, Barcode.FORMAT_EAN_13,
+                                Barcode.FORMAT_EAN_8, Barcode.FORMAT_ITF, Barcode.FORMAT_QR_CODE,
+                                Barcode.FORMAT_UPC_A, Barcode.FORMAT_UPC_E, Barcode.FORMAT_PDF417,
+                                Barcode.FORMAT_AZTEC
+                                )
                         .build();
         BarcodeScanner barcodeScanner = BarcodeScanning.getClient(options);
         InputImage image = InputImage.fromBitmap(imageBitmap, 0);
@@ -324,6 +328,9 @@ public class BarcodeActivity extends AppCompatActivity {
                         // Upload barcode information to Firestore
                         uploadBarcodeToFirestore(barcodeValue, description, make, estimatedValue);
                     }
+                    else{
+                        Toast.makeText(BarcodeActivity.this, "Barcode not found in this image (Format not supported)", Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
     /**
@@ -339,23 +346,38 @@ public class BarcodeActivity extends AppCompatActivity {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference barcodesRef = db.collection("users").document(userId).collection("barcodes");
 
-        // Create a map with the barcode information
-        Map<String, Object> barcodeData = new HashMap<>();
-        barcodeData.put("barcodeValue", barcodeValue);
-        barcodeData.put("description", description);
-        barcodeData.put("make", make);
-        barcodeData.put("estimatedValue", estimatedValue);
+        barcodesRef.whereEqualTo("barcodeValue", barcodeValue)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            // Barcode with the same value already exists
+                            Toast.makeText(BarcodeActivity.this, "Barcode already exists", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Create a map with the barcode information
+                            Map<String, Object> barcodeData = new HashMap<>();
+                            barcodeData.put("barcodeValue", barcodeValue);
+                            barcodeData.put("description", description);
+                            barcodeData.put("make", make);
+                            barcodeData.put("estimatedValue", estimatedValue);
 
-        // Add the document to the "barcodes" collection
-        barcodesRef// Use the barcode value as the document ID
-                .add(barcodeData)
-                .addOnSuccessListener(aVoid -> {
-                    // Handle success
-                    Toast.makeText(BarcodeActivity.this, "Barcode information uploaded successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    // Handle failure
-                    Toast.makeText(BarcodeActivity.this, "Failed to upload barcode information", Toast.LENGTH_SHORT).show();
+                            // Add the document to the "barcodes" collection
+                            barcodesRef// Use the barcode value as the document ID
+                                    .add(barcodeData)
+                                    .addOnSuccessListener(aVoid -> {
+                                        // Handle success
+                                        Toast.makeText(BarcodeActivity.this, "Barcode information uploaded successfully", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Handle failure
+                                        Toast.makeText(BarcodeActivity.this, "Failed to upload barcode information", Toast.LENGTH_SHORT).show();
+                                    });
+                        }
+                    }else{
+                        Toast.makeText(BarcodeActivity.this, "Error checking barcode existence", Toast.LENGTH_SHORT).show();
+                    }
                 });
+
     }
 }
