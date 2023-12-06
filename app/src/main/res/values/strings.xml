@@ -11,10 +11,14 @@
 
 
     <string-array name="sort_criteria">
+        <item>None</item>
         <item>Date</item>
         <item>Description</item>
         <item>Make</item>
         <item>Estimated Value</item>
+        <item>Tag</item>
+
+
     </string-array>
 
 
