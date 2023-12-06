@@ -2,6 +2,7 @@ package com.example.onestopshop;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,8 +10,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
+import android.window.OnBackInvokedDispatcher;
 
 
 import com.google.mlkit.common.MlKitException;
@@ -26,9 +29,8 @@ import java.util.regex.Pattern;
 /**
  * ScanActivity allows the user to capture or choose an image and extracts a serial number using ML Kit Text Recognition.
  */
-public class ScanActivity extends AppCompatActivity {
+public class ScanActivity extends AppCompatActivity implements CameraXFragment.OnImageCapturedListener{
 
-    private ActivityResultLauncher<Intent> takePictureLauncher;
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
     @Override
@@ -41,17 +43,8 @@ public class ScanActivity extends AppCompatActivity {
         Button cancelButton = findViewById(R.id.cancel_button);
 
         cancelButton.setOnClickListener(view -> finish());
-        btnTakePhoto.setOnClickListener(view -> dispatchTakePictureIntent());
+        btnTakePhoto.setOnClickListener(view -> dispatchTakePictureFragment());
         btnChooseFromGallery.setOnClickListener(view -> dispatchPickImageIntent());
-
-        takePictureLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Bundle extras = result.getData().getExtras();
-                        Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        processImageWithMLKit(imageBitmap);
-                    }
-                });
 
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -68,10 +61,23 @@ public class ScanActivity extends AppCompatActivity {
 
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            takePictureLauncher.launch(takePictureIntent);
+    private void dispatchTakePictureFragment() {
+        CameraXFragment cameraXFragment = new CameraXFragment();
+        cameraXFragment.setOnImageCapturedListener(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, cameraXFragment)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -104,6 +110,9 @@ public class ScanActivity extends AppCompatActivity {
                         }
                     });
         }
+        else{
+            Toast.makeText(this, "Bitmap is null", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -128,6 +137,16 @@ public class ScanActivity extends AppCompatActivity {
             Toast.makeText(this, "No valid serial number found in the text.", Toast.LENGTH_LONG).show();
         }
 
+    }
+    @Override
+    public void onImageCaptured(Uri imageUri) {
+        Log.d("ScanTakePhoto", "Now Scanning for SN");
+        try {
+            Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            processImageWithMLKit(imageBitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

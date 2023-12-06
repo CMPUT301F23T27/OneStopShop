@@ -20,7 +20,8 @@ import java.util.List;
 /**
  * Activity for editing the gallery of photos associated with an item.
  */
-public class EditGalleryActivity extends AppCompatActivity implements PhotosController.OnPhotoListUpdateListener {
+public class EditGalleryActivity extends AppCompatActivity
+        implements PhotosController.OnPhotoListUpdateListener, CameraXFragment.OnImageCapturedListener{
     private List<ItemPhoto> photoList;
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
@@ -28,7 +29,6 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
     private Button addBtn;
     private Button deleteBtn;
     private Button backBtn;
-    private ActivityResultLauncher<Intent> takePictureLauncher;
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
 
@@ -66,6 +66,18 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
             @Override
             public void onClick(View v) {
 
+                ItemPhoto selectedPhoto = photoAdapter.getSelectedPhoto();
+
+                // Handle the deletion action here
+                if (selectedPhoto != null) {
+                    // Remove the selected photo from the list
+                    photosController.deletePhoto(selectedPhoto.getPhotoId());
+                    // Clear the selection state in the adapter
+                    photoAdapter.clearSelection();
+                    // Notify the adapter of the data change
+                    photoAdapter.notifyDataSetChanged();
+
+                }
             }
         });
         backBtn.setOnClickListener(v -> finish());
@@ -83,7 +95,7 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
             switch (choice) {
                 case 0:
                     // Take Photo option clicked
-
+                    dispatchTakePictureFragment();
                     break;
                 case 1:
                     // Choose from Gallery option clicked
@@ -102,6 +114,20 @@ public class EditGalleryActivity extends AppCompatActivity implements PhotosCont
         Intent pickImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pickImageIntent.setType("image/*");
         pickImageLauncher.launch(pickImageIntent);
+    }
+    private void dispatchTakePictureFragment() {
+        CameraXFragment cameraXFragment = new CameraXFragment();
+        cameraXFragment.setOnImageCapturedListener(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, cameraXFragment)
+                .addToBackStack(null)
+                .commit();
+
+    }
+    @Override
+    public void onImageCaptured(Uri selectedImage) {
+        photosController.uploadPhoto(selectedImage);
     }
 
     /**

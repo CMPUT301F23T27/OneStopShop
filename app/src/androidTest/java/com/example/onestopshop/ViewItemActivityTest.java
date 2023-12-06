@@ -42,7 +42,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /*
-    NOTE: YOU MUST LOG IN MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO AUTH
+    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
  */
 @LargeTest
 public class ViewItemActivityTest {

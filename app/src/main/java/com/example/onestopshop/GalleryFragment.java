@@ -2,6 +2,7 @@ package com.example.onestopshop;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,19 +18,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 /**
  * GalleryFragment is a Fragment that allows the user to view and manage photos associated with an item.
  */
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment implements CameraXFragment.OnImageCapturedListener{
     private List<Uri> localUris;
     private List<ItemPhoto> photoList;
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
     private Button addBtn;
+    private Button deleteButton;
     private Button backBtn;
-    private ActivityResultLauncher<Intent> takePictureLauncher;
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class GalleryFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         addBtn = view.findViewById(R.id.btnAddPhoto);
         backBtn = view.findViewById(R.id.back_button);
+        deleteButton = view.findViewById(R.id.btnDelete);
         photoList = new ArrayList<>();
         localUris = ((AddItemActivity) requireActivity()).getUriList();
         //treat uris as download urls for the adapter so we can use the same adapter
@@ -63,6 +66,23 @@ public class GalleryFragment extends Fragment {
         backBtn.setOnClickListener(v -> {
             requireActivity().onBackPressed();
         });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ItemPhoto selectedPhoto = photoAdapter.getSelectedPhoto();
+
+                // Handle the deletion action here
+                if (selectedPhoto != null) {
+                    // Remove the selected photo from the list
+                    photoList.remove(selectedPhoto);
+                    // Clear the selection state in the adapter
+                    photoAdapter.clearSelection();
+                    // Notify the adapter of the data change
+                    photoAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
         return view;
     }
     /**
@@ -77,7 +97,7 @@ public class GalleryFragment extends Fragment {
             switch (choice) {
                 case 0:
                     // Take Photo option clicked
-
+                    dispatchTakePictureFragment();
                     break;
                 case 1:
                     // Choose from Gallery option clicked
@@ -98,6 +118,26 @@ public class GalleryFragment extends Fragment {
         pickImageIntent.setType("image/*");
         pickImageLauncher.launch(pickImageIntent);
     }
+
+    private void dispatchTakePictureFragment() {
+        CameraXFragment cameraXFragment = new CameraXFragment();
+        cameraXFragment.setOnImageCapturedListener(this);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, cameraXFragment)
+                .addToBackStack(null)
+                .commit();
+
+    }
+    @Override
+    public void onImageCaptured(Uri selectedImage) {
+        photoList.add(new ItemPhoto(selectedImage.toString()));
+        localUris.add(selectedImage);
+        //String tag = "AddGalleryActivity";
+        //Log.d(tag, "" + localUris.size());
+        photoAdapter.notifyDataSetChanged();
+    }
+
 
 
 }

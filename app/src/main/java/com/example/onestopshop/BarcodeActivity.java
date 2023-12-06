@@ -39,13 +39,13 @@ import java.util.Map;
 /**
  * Activity for scanning and adding barcodes to the inventory.
  */
-public class BarcodeActivity extends AppCompatActivity {
+public class BarcodeActivity extends AppCompatActivity implements CameraXFragment.OnImageCapturedListener{
 
     private Button scanButton;
     private Button addButton;
-    private ActivityResultLauncher<Intent> takePictureLauncherAddBarcode;
+    private boolean isAddBarcode;
+
     private ActivityResultLauncher<Intent> pickImageLauncherAddBarcode;
-    private ActivityResultLauncher<Intent> takePictureLauncherScanBarcode;
     private ActivityResultLauncher<Intent> pickImageLauncherScanBarcode;
     String descriptionVal, makeVal, scannedDescription, scannedMake;
     Double estimatedValueVal, scannedEstimatedValue;
@@ -59,6 +59,7 @@ public class BarcodeActivity extends AppCompatActivity {
         addButton = findViewById(R.id.add_barcode);
         scanButton = findViewById(R.id.scan_barcode);
         Button cancelButton = findViewById(R.id.cancel_button);
+        isAddBarcode = false;
         descriptionVal = "";
         makeVal = "";
         estimatedValueVal = 0.0;
@@ -174,7 +175,7 @@ public class BarcodeActivity extends AppCompatActivity {
 
     }
     /**
-     * Displays a dialog with options for adding a photo.
+     * Displays a dialog with options for scanning a barcode.
      */
     private void showPhotoOptionsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -185,7 +186,8 @@ public class BarcodeActivity extends AppCompatActivity {
             switch (choice) {
                 case 0:
                     // Take Photo option clicked
-
+                    isAddBarcode = false;
+                    dispatchTakePictureFragment();
                     break;
                 case 1:
                     // Choose from Gallery option clicked
@@ -380,4 +382,32 @@ public class BarcodeActivity extends AppCompatActivity {
                 });
 
     }
+    private void dispatchTakePictureFragment() {
+        CameraXFragment cameraXFragment = new CameraXFragment();
+        cameraXFragment.setOnImageCapturedListener(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, cameraXFragment)
+                .addToBackStack(null)
+                .commit();
+
+    }
+    @Override
+    public void onImageCaptured(Uri selectedImage) {
+        try {
+            Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(BarcodeActivity.this.getContentResolver(), selectedImage);
+            // taking a photo for Adding barcode
+            if(isAddBarcode) {
+                processBarcodeForAdd(imageBitmap, descriptionVal, makeVal, estimatedValueVal);
+            }
+            // taking a photo for Scanning barcode
+            else {
+                processBarcodeForScan(imageBitmap);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

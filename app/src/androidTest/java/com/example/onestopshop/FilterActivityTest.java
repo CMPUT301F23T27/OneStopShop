@@ -40,6 +40,9 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
+/*
+    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
+ */
 public class FilterActivityTest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =

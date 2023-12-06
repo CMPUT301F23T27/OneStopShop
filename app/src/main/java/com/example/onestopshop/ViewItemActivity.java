@@ -1,6 +1,7 @@
 package com.example.onestopshop;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -104,14 +105,14 @@ public class ViewItemActivity extends AppCompatActivity {
             }
         });
 
-        /*itemPhoto.setOnClickListener(new View.OnClickListener() {
+        itemPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent galleryIntent = new Intent(ViewItemActivity.this, EditGalleryActivity.class);
                 galleryIntent.putExtra("itemId", itemId);
                 startActivity(galleryIntent);
             }
-        });*/
+        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +172,9 @@ public class ViewItemActivity extends AppCompatActivity {
                     itemPhoto.setBackgroundColor(0);
                 } else {
                     // If there's no download URL leave the default image
-
+                    itemPhoto.setImageResource(R.drawable.baseline_image_24);
+                    int defaultColor = ContextCompat.getColor(ViewItemActivity.this, R.color.defaultPurple);
+                    itemPhoto.setBackgroundColor(defaultColor);
                 }
             }
 

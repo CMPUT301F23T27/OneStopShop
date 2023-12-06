@@ -9,29 +9,49 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 
+import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.concurrent.CountDownLatch;
+
 /*
-    NOTE: YOU MUST LOG IN MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO AUTH
+    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
  */
 @LargeTest
 public class UserProfileActivityTest {
 
     @Rule
-    public ActivityScenarioRule<UserProfileActivity> activityRule =
-            new ActivityScenarioRule<>(UserProfileActivity.class);
+    public ActivityScenarioRule<MainActivity> activityRule =
+            new ActivityScenarioRule<>(MainActivity.class);
 
-    @Rule
-    public IntentsTestRule<UserProfileActivity> intentsTestRule =
-            new IntentsTestRule<>(UserProfileActivity.class);
+    @Before
+    public void setUp() {
+        Intents.init();
+    }
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
 
     @Test
     public void testEmail() {
+        onView(withId(R.id.textViewLogin)).perform(click());
+        onView(withId(R.id.profile_button)).perform(click());
         InventoryController inventoryController = new InventoryController();
         String email = inventoryController.getUserEmail();
         onView(withId(R.id.tvEmail))
@@ -40,6 +60,8 @@ public class UserProfileActivityTest {
 
     @Test
     public void testName() {
+        onView(withId(R.id.textViewLogin)).perform(click());
+        onView(withId(R.id.profile_button)).perform(click());
         InventoryController inventoryController = new InventoryController();
         String name = inventoryController.getUserName();
         onView(withId(R.id.tvName))
@@ -48,11 +70,36 @@ public class UserProfileActivityTest {
 
     @Test
     public void testLogoutProcess() {
+        onView(withId(R.id.textViewLogin)).perform(click());
+        onView(withId(R.id.profile_button)).perform(click());
         // Click the logout button
         onView(withId(R.id.btnLogout)).perform(click());
 
         // Since we cannot verify the Toast directly, we assume the logout process is successful if the LoginActivity is launched
         intended(allOf(hasComponent(LoginActivity.class.getName())));
 
+    }
+    @Before
+    public void signIn(){
+        final CountDownLatch latch = new CountDownLatch(1);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword("testuser@gmail.com", "password")
+                .addOnCompleteListener(ApplicationProvider.getApplicationContext().getMainExecutor(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            latch.countDown();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                        }
+                    }
+                });
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
