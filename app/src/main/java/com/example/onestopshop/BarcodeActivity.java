@@ -45,6 +45,7 @@ public class BarcodeActivity extends AppCompatActivity implements CameraXFragmen
     private Button addButton;
     private boolean isAddBarcode;
 
+
     private ActivityResultLauncher<Intent> pickImageLauncherAddBarcode;
     private ActivityResultLauncher<Intent> pickImageLauncherScanBarcode;
     String descriptionVal, makeVal, scannedDescription, scannedMake;
@@ -149,6 +150,34 @@ public class BarcodeActivity extends AppCompatActivity implements CameraXFragmen
                     }
                 }
             });
+            takePhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    estimatedValue = 0.0;
+                    if(estimatedValueText.getText().toString() != null && estimatedValueText.getText().toString().isEmpty() == false) {
+                        try {
+                            estimatedValue = Double.parseDouble(estimatedValueText.getText().toString());
+                        }
+                        catch(Exception e) {
+                            Toast.makeText(getContext(), "Invalid Estimated Value", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }else {
+                        Toast.makeText(getContext(), "Invalid Estimated Value", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(validFields()){
+                        isAddBarcode = true;
+                        estimatedValueVal = estimatedValue;
+                        descriptionVal = description.getText().toString();
+                        makeVal = make.getText().toString();
+                        dispatchTakePictureFragment();
+                        dismiss();
+                    }
+                }
+
+            });
+
 
         }
         /**
@@ -238,17 +267,24 @@ public class BarcodeActivity extends AppCompatActivity implements CameraXFragmen
         InputImage image = InputImage.fromBitmap(imageBitmap, 0);
         barcodeScanner.process(image)
                 .addOnSuccessListener(barcodes -> {
-                    Log.d("AddBarcode", "Success");
-                    Log.d("AddBarcode", ""+barcodes.size());
-                    if (barcodes.size() > 0) {
+                    Log.d("ScanBarcode", "Success");
+                    Log.d("ScanBarcode", ""+barcodes.size());
+                    if (!barcodes.isEmpty()) {
                         // Get the first barcode (assuming there is only one in the image)
                         Barcode barcode = barcodes.get(0);
                         // Extract information from the barcode
                         String barcodeValue = barcode.getDisplayValue();
-                        Log.d("AddBarcode", barcodeValue);
+                        Log.d("ScanBarcode", barcodeValue);
                         // Upload barcode information to Firestore
                         retrieveBarcodeFromFirestore(barcodeValue);
                     }
+                    else{
+                        Log.d("ScanBarcode", "Empty");
+                        Toast.makeText(BarcodeActivity.this, "Barcode not found in this image (Format not supported)", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(BarcodeActivity.this, "Barcode not found in this image (Format not supported)", Toast.LENGTH_SHORT).show();
                 });
 
     }
@@ -320,8 +356,8 @@ public class BarcodeActivity extends AppCompatActivity implements CameraXFragmen
         barcodeScanner.process(image)
                 .addOnSuccessListener(barcodes -> {
                     Log.d("AddBarcode", "Success");
-                    Log.d("AddBarcode", ""+barcodes.size());
-                    if (barcodes.size() > 0) {
+                    if (!barcodes.isEmpty()) {
+                        Log.d("AddBarcode", "Not empty");
                         // Get the first barcode (assuming there is only one in the image)
                         Barcode barcode = barcodes.get(0);
                         // Extract information from the barcode
@@ -331,8 +367,12 @@ public class BarcodeActivity extends AppCompatActivity implements CameraXFragmen
                         uploadBarcodeToFirestore(barcodeValue, description, make, estimatedValue);
                     }
                     else{
+                        Log.d("AddBarcode", "Empty");
                         Toast.makeText(BarcodeActivity.this, "Barcode not found in this image (Format not supported)", Toast.LENGTH_SHORT).show();
                     }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(BarcodeActivity.this, "Barcode not found in this image (Format not supported)", Toast.LENGTH_SHORT).show();
                 });
     }
     /**
