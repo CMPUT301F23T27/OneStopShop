@@ -56,25 +56,17 @@ public class FilterActivityTest {
     private Double estimatedValue = 200.0;
     private String tag = "device";
 
+    // filter out one item by tag and filter out another by make
     @Test
     public void testCombinedFilter() {
         onView(withId(R.id.textViewLogin)).perform(click());
         addTestItem();
-        purchaseDate = "2021-07-01";
         tag = "use";
         addTestItem();
-        purchaseDate = "2022-05-01";
         itemName = "Mac";
         addTestItem();
-        /*itemName = "useHeadphones";
-        purchaseDate = "2021-07-04";
+        make = "nike";
         addTestItem();
-        make = "Sony";
-        itemName = "DontUse";
-        addTestItem();
-        make = "apple";
-        itemName = "useIphone";
-        addTestItem();*/
         onView(withId(R.id.filter_button)).perform(click());
         onView(withId(R.id.make)).perform(typeText("apple"), pressKey(KeyEvent.KEYCODE_TAB));
         onView(withId(R.id.tags)).perform(typeText("use"), pressKey(KeyEvent.KEYCODE_TAB));
@@ -87,7 +79,7 @@ public class FilterActivityTest {
         deleteItem();
         deleteItem();
         deleteItem();
-
+        deleteItem();
     }
 
     public void addTestItem() {

@@ -41,6 +41,7 @@ public class UserProfileActivityTest {
 
     @Before
     public void setUp() {
+        signIn();
         Intents.init();
     }
 
@@ -89,7 +90,7 @@ public class UserProfileActivityTest {
         intended(allOf(hasComponent(LoginActivity.class.getName())));
 
     }
-    @Before
+
     public void signIn(){
         signOut();
         final CountDownLatch latch = new CountDownLatch(1);

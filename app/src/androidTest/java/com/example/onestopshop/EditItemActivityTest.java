@@ -7,6 +7,7 @@ import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -77,11 +78,22 @@ public class EditItemActivityTest {
     public void testEditItems() {
         onView(withId(R.id.textViewLogin)).perform(click());
         addTestItem();
-        int itemCount = getItemCount(R.id.item_list);
-        onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(itemCount, click()));
+        try {
+            // Introduce a delay of 1 seconds for firestore to upload
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.item_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.btnEdit)).perform(click());
         editItems();
         onView(withId(R.id.btnConfirm)).perform(click());
+        try {
+            // Introduce a delay of 1 seconds for firestore to upload
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         testViewItems();
         deleteItem();
     }
