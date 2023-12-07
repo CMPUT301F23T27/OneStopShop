@@ -32,6 +32,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,7 +43,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /*
-    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
+    NOTE TO TA: YOU MAY NEED TO RUN TESTS AGAIN IF TEST FAILS DUE TO ASYNCHRONOUS CALLS
  */
 @LargeTest
 public class ViewItemActivityTest {
@@ -52,6 +53,7 @@ public class ViewItemActivityTest {
             new ActivityScenarioRule<>(MainActivity.class);
     @Before
     public void signIn(){
+        signOut();
         final CountDownLatch latch = new CountDownLatch(1);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword("testuser@gmail.com", "password")
@@ -125,5 +127,21 @@ public class ViewItemActivityTest {
     }
     private void deleteItem() {
         onView(withId(R.id.btnDelete)).perform(click());
+    }
+    private void signOut(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null) {
+            onView(withId(R.id.profile_button)).perform(click());
+            // Click the logout button
+            onView(withId(R.id.btnLogout)).perform(click());
+        }
+    }
+
+    // Delete items in testuser DB
+    @After
+    public void tearDown() {
+        InventoryController inventoryController = new InventoryController();
+        inventoryController.clearInventory();
     }
 }
