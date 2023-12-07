@@ -49,6 +49,7 @@ public class EditItemActivity extends AppCompatActivity {
     private ImageButton addPhoto;
     private ImageView itemPhoto;
     private ImageView scanButton;
+    private Button scanBarcodeButton;
     private final ActivityResultLauncher<Intent> startForSerialNumberResult =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     result -> {
@@ -62,6 +63,27 @@ public class EditItemActivity extends AppCompatActivity {
                             // Handle when the result is not OK
                         }
                     });
+    private final ActivityResultLauncher<Intent> scanBarcodeLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Log.d("AddItemBarcode", "ResultOK");
+                    // Handle the result, extract the scanned information
+                    Intent data = result.getData();
+                    if (data != null) {
+                        Log.d("AddItemBarcode", "Data Available");
+                        String scannedDescription = data.getStringExtra("scannedDescription");
+                        String scannedMake = data.getStringExtra("scannedMake");
+                        Double scannedEstimatedValue = data.getDoubleExtra("scannedEstimatedValue", 0);
+                        Log.d("AddItemBarcode", scannedDescription);
+                        // Set the text to EditText
+                        descriptionText.setText(scannedDescription);
+                        makeText.setText(scannedMake);
+                        estimatedValueText.setText("" + scannedEstimatedValue);
+                    }
+                }
+            }
+    );
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +104,7 @@ public class EditItemActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
         addPhoto = findViewById(R.id.add_image_button);
         itemPhoto = findViewById(R.id.productImage);
+        scanBarcodeButton = findViewById(R.id.btn_scan_barcode_edit);
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
 
@@ -191,20 +214,31 @@ public class EditItemActivity extends AppCompatActivity {
                 });
             }
         });
+        scanBarcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditItemActivity.this, BarcodeActivity.class);
+                scanBarcodeLauncher.launch(intent);
+            }
+        });
 
 
     }
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("EditItemActivity", "onResume");
         photosController.getDownloadUrl(new PhotosController.DownloadUrlCallback() {
             @Override
             public void onSuccess(String downloadUrl) {
+                Log.d("EditItemActivity", "onResume-SgotDurl");
                 if (downloadUrl != null && !downloadUrl.isEmpty()) {
+                    Log.d("EditItemActivity", "onResume-SgotDurlexists");
                     Picasso.get().load(downloadUrl).into(itemPhoto);
                     itemPhoto.setBackgroundColor(0);
                 } else {
                     // If there's no download URL leave the default image
+                    Log.d("EditItemActivity", "onResume-SgotDurlNotexists");
                     itemPhoto.setImageResource(R.drawable.baseline_image_24);
                     int defaultColor = ContextCompat.getColor(EditItemActivity.this, R.color.defaultPurple);
                     itemPhoto.setBackgroundColor(defaultColor);
@@ -214,6 +248,7 @@ public class EditItemActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 // Handle failure, for example
+                Log.d("EditItemActivity", "onResume-Failure");
 
             }
         });
