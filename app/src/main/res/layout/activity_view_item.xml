@@ -107,6 +107,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/border_pink"
             android:padding="8dp"
+            android:maxLines="2"
+            android:scrollbars="vertical"
             android:text=""
             android:textColor="#000000"
             android:textSize="16sp" />
@@ -144,6 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Make: "
+            android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="16dp"
             tools:ignore="TextSizeCheck" />
@@ -168,6 +171,7 @@
             android:text="Model: "
             android:textColor="@color/black"
             android:textSize="16dp"
+            android:maxLines="1"
             tools:ignore="TextSizeCheck" />
 
         <TextView
@@ -227,14 +231,33 @@
 
         </Space>
 
-        <TextView
-            android:id="@+id/comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comments: "
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            tools:ignore="TextSizeCheck" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comment: "
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                >
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/comment"
+                android:layout_width="265dp"
+                android:layout_height="25dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                ></TextView>
+
+
+        </LinearLayout>
+
+
 
 
         <TextView
@@ -251,8 +274,8 @@
         </Space>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="340dp"
+            android:layout_height="38dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -260,9 +283,9 @@
                 android:id="@+id/tags"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:gravity="center_vertical"
                 android:text="Tags: "
                 android:textColor="@color/black"
-                android:gravity="center_vertical"
                 android:textSize="16dp"
                 tools:ignore="TextSizeCheck" />
 

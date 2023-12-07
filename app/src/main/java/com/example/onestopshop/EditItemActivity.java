@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -120,9 +121,12 @@ public class EditItemActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String itemName = itemNameText.getText().toString();
                         String description = descriptionText.getText().toString();
+                        descriptionText.setMovementMethod(new ScrollingMovementMethod());
                         String purchaseDate = purchaseDateText.getText().toString();
                         String make = makeText.getText().toString();
+                        commentsText.setMovementMethod(new ScrollingMovementMethod());
                         String model = modelText.getText().toString();
+
                         String serialNumber = serialNumberText.getText().toString();
                         Double estimatedValue = 0.0;
                         if(estimatedValueText.getText().toString() != null && estimatedValueText.getText().toString().isEmpty() == false) {

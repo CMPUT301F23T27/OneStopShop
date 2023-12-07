@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,6 +149,8 @@ public class AddItemFragment extends Fragment {
                 // Extract data from UI elements
                 String itemName = itemNameText.getText().toString();
                 String description = descriptionText.getText().toString();
+                descriptionText.setMovementMethod(new ScrollingMovementMethod());
+                commentsText.setMovementMethod(new ScrollingMovementMethod());
                 String purchaseDate = purchaseDateText.getText().toString();
                 String make = makeText.getText().toString();
                 String model = modelText.getText().toString();
