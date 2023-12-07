@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -30,6 +31,7 @@ public class EditGalleryActivity extends AppCompatActivity
     private Button deleteBtn;
     private Button backBtn;
     private ActivityResultLauncher<Intent> pickImageLauncher;
+
 
 
     /**
@@ -70,8 +72,10 @@ public class EditGalleryActivity extends AppCompatActivity
 
                 // Handle the deletion action here
                 if (selectedPhoto != null) {
+                    Log.d("EditItemActivity", "Delete-before");
                     // Remove the selected photo from the list
                     photosController.deletePhoto(selectedPhoto.getPhotoId());
+                    Log.d("EditItemActivity", "Delete-after");
                     // Clear the selection state in the adapter
                     photoAdapter.clearSelection();
                     // Notify the adapter of the data change

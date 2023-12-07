@@ -74,6 +74,7 @@ public class GalleryFragment extends Fragment implements CameraXFragment.OnImage
                 // Handle the deletion action here
                 if (selectedPhoto != null) {
                     // Remove the selected photo from the list
+                    localUris.remove(Uri.parse(selectedPhoto.getPhotoUrl()));
                     photoList.remove(selectedPhoto);
                     // Clear the selection state in the adapter
                     photoAdapter.clearSelection();

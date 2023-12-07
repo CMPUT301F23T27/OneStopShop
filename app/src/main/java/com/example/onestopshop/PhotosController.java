@@ -1,6 +1,7 @@
 package com.example.onestopshop;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,9 +39,9 @@ public class PhotosController {
             // dont create reference
             return;
         }
-        storageRef = FirebaseStorage.getInstance().getReference().child("photos").child(itemId);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        storageRef = FirebaseStorage.getInstance().getReference().child("users").child(userId).child("photos").child(itemId);
         photosRef = db.collection("users").document(userId).collection("items").document(itemId).collection("photos");
         photosRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
@@ -131,18 +132,20 @@ public class PhotosController {
      */
     public void deletePhoto(String photoId) {
         // Create references to the photo in Firebase Storage and Firestore
-        StorageReference photoStorageRef = storageRef.child(photoId + ".jpg");
+        StorageReference photoStorageRef = storageRef.child(photoId);
         DocumentReference photoDocRef = photosRef.document(photoId);
-
+        Log.d("EditItemGalleryController", "Delete-during");
         photoDocRef.delete()
                 .addOnSuccessListener(aVoid -> {
                     // Photo reference deleted from Firestore, now delete the photo from storage
                     photoStorageRef.delete()
                             .addOnSuccessListener(aVoid1 -> {
                                 // Photo deleted from storage
+                                Log.d("EditItemGalleryController", "Delete-duringStorageS");
                             })
                             .addOnFailureListener(e -> {
                                 // Handle failure to delete photo from storage
+                                Log.d("EditItemGalleryController", "Delete-duringStorageF");
                             });
                 })
                 .addOnFailureListener(e -> {
