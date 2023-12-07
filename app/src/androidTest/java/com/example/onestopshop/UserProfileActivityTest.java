@@ -30,7 +30,7 @@ import org.junit.Test;
 import java.util.concurrent.CountDownLatch;
 
 /*
-    NOTE TO TA: YOU MUST LOG OUT MANUALLY FIRST BY RUNNING THE APP FOR TEST TO WORK DUE TO ONE TAP SIGN IN
+    NOTE TO TA: YOU MAY NEED TO RUN TESTS AGAIN IF TEST FAILS DUE TO ASYNCHRONOUS CALLS
  */
 @LargeTest
 public class UserProfileActivityTest {
@@ -43,10 +43,20 @@ public class UserProfileActivityTest {
     public void setUp() {
         Intents.init();
     }
+
+    // Delete items in testuser DB
     @After
     public void tearDown() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            InventoryController inventoryController = new InventoryController();
+            inventoryController.clearInventory();
+        }
         Intents.release();
     }
+
+
 
     @Test
     public void testEmail() {
@@ -81,6 +91,7 @@ public class UserProfileActivityTest {
     }
     @Before
     public void signIn(){
+        signOut();
         final CountDownLatch latch = new CountDownLatch(1);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword("testuser@gmail.com", "password")
@@ -102,4 +113,14 @@ public class UserProfileActivityTest {
             e.printStackTrace();
         }
     }
+    private void signOut(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null) {
+            onView(withId(R.id.profile_button)).perform(click());
+            // Click the logout button
+            onView(withId(R.id.btnLogout)).perform(click());
+        }
+    }
+
 }
