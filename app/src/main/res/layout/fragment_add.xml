@@ -117,7 +117,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/border_pink"
             android:padding="8dp"
-            android:text=""
+            android:maxLines="1"
+            android:scrollbars="vertical"
             android:textColor="#000000"
             android:textSize="16sp" />
 
@@ -298,6 +299,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:scrollbars="vertical"
                 android:hint=""
                 android:textSize="16sp"></EditText>
         </LinearLayout>

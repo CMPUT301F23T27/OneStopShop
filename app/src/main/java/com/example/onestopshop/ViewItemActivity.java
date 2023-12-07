@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -185,26 +186,29 @@ public class ViewItemActivity extends AppCompatActivity {
             }
         });
     }
-        private void displayItemDetails (Item item){
-            // Update your views with the retrieved item data
-            itemName.setText("Product Name: " + item.getItemName());
-            tvDescriptionContent.setText("" + item.getDescription());
-            date.setText("Date of Purchase:  " + item.getPurchaseDate());
-            make.setText("Make:  " + item.getMake());
-            model.setText("Model:  " + item.getModel());
-            String serialNumberStr = "";
-            if (!(item.getSerialNumber() == null || item.getSerialNumber().isEmpty())) {
-                serialNumberStr = item.getSerialNumber().toString();
-            }
-            serialNumber.setText("Serial Number:  " + serialNumberStr);
-            estimatedValue.setText("Estimated Value:  " + String.format("$%.2f", item.getEstimatedValue()));
-            String commentsStr = "";
-            if (!(item.getComments() == null || item.getComments().isEmpty())) {
-                commentsStr = item.getComments();
-            }
-            comments.setText("Comments: " + commentsStr);
-            displayTags(tagsGroup, item.getTags());
+    private void displayItemDetails (Item item){
+        // Update your views with the retrieved item data
+        itemName.setText("Product Name: " + item.getItemName());
+        tvDescriptionContent.setText("" + item.getDescription());
+        tvDescriptionContent.setMovementMethod(new ScrollingMovementMethod());
+        date.setText("Date of Purchase:  " + item.getPurchaseDate());
+        make.setText("Make:  " + item.getMake());
+        make.setMovementMethod(new ScrollingMovementMethod());
+        model.setText("Model:  " + item.getModel());
+        String serialNumberStr = "";
+        if (!(item.getSerialNumber() == null || item.getSerialNumber().isEmpty())) {
+            serialNumberStr = item.getSerialNumber().toString();
         }
+        serialNumber.setText("Serial Number:  " + serialNumberStr);
+        estimatedValue.setText("Estimated Value:  " + String.format("$%.2f", item.getEstimatedValue()));
+        String commentsStr = "";
+        if (!(item.getComments() == null || item.getComments().isEmpty())) {
+            commentsStr = item.getComments();
+        }
+        comments.setText(commentsStr);
+        comments.setMovementMethod(new ScrollingMovementMethod());
+        displayTags(tagsGroup, item.getTags());
+    }
 
         private void displayTags(ChipGroup chipGroup, List<String> tags) {
             chipGroup.removeAllViews();
