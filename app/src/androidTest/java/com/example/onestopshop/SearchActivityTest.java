@@ -65,6 +65,7 @@ public class SearchActivityTest {
     @Test
     public void searchWithEmptyKeyword() {
         onView(withId(R.id.textViewLogin)).perform(click());
+        addTestItem();
         onView(withId(R.id.search_button)).perform(click());
         // Click the search button without entering a search keyword
         Espresso.onView(ViewMatchers.withId(R.id.bsearch))
