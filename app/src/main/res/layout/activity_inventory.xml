@@ -32,7 +32,6 @@
                 android:src="@drawable/rsz_sort"
                 android:contentDescription="Click to Sort Items"/>
 
-            <!-- App Name -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +75,6 @@
             android:layout_toStartOf="@+id/select_button"
             android:orientation="horizontal">
 
-            <!-- Sorted by -->
 
             <!-- Sort Dropdown -->
             <TextView
@@ -161,7 +159,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Prompt -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

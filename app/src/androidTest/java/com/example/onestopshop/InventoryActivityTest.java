@@ -89,20 +89,7 @@ public class InventoryActivityTest {
         deleteTestItem();
     }
 
-    /*@Test
-    public void testItemIsDisplayed() {
-        int itemCount = getItemCount(R.id.item_list);
-        // Should be no items displayed to begin with
-        onView(withId(R.id.item_list)).check(matches(isDisplayed()))
-                .check(matches(hasChildCount(itemCount)));
-        // add an item
-        addTestItem();
-        // There should now be 1 item visible
-        onView(withId(R.id.item_list)).check(matches(isDisplayed()))
-                .check(matches(hasChildCount(itemCount + 1)));
-        // delete test item
-        deleteTestItem();
-    }*/
+
     @Test
     public void testTotalValue_isDisplayed() {
         onView(withId(R.id.textViewLogin)).perform(click());
@@ -151,27 +138,8 @@ public class InventoryActivityTest {
         return itemCount[0];
     }
 
-    /*private int getPositionOfTestItem() {
-        final int[] position = {-1};
-        activityScenario.getScenario().onActivity(activity -> {
-            RecyclerView recyclerView = activity.findViewById(R.id.item_list);
-            RecyclerView.Adapter adapter = recyclerView.getAdapter();
 
-            ArrayList<Item> itemList = ((CustomList) adapter).getItemList();
-            String testName = "Test";
-            String testDate = "2023-12-03";
 
-            for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i).getItemName().equals(testName) && itemList.get(i).getPurchaseDate().equals(testDate)) {
-                    position[0] = i;
-                    break;
-                }
-            }
-        });
-        return position[0];
-    }*/
-
-    //}
 
 
 

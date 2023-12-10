@@ -358,7 +358,7 @@ public class BarcodeActivity extends AppCompatActivity implements CameraXFragmen
                     Log.d("AddBarcode", "Success");
                     if (!barcodes.isEmpty()) {
                         Log.d("AddBarcode", "Not empty");
-                        // Get the first barcode (assuming there is only one in the image)
+                        // Get the first barcode
                         Barcode barcode = barcodes.get(0);
                         // Extract information from the barcode
                         String barcodeValue = barcode.getDisplayValue();

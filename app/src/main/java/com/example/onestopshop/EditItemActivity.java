@@ -174,7 +174,7 @@ public class EditItemActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception e) {
-                // Handle failure, for example
+                // Handle failure
 
             }
         });
@@ -251,7 +251,7 @@ public class EditItemActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception e) {
-                // Handle failure, for example
+                // Handle failure
                 Log.d("EditItemActivity", "onResume-Failure");
 
             }
@@ -263,7 +263,7 @@ public class EditItemActivity extends AppCompatActivity {
      * @param item The item whose details should be displayed.
      */
     private void displayItemDetails(Item item) {
-        // Update your views with the retrieved item data
+        // Update views with the retrieved item data
         itemNameText.setText(item.getItemName());
         descriptionText.setText(item.getDescription());
         purchaseDateText.setText(item.getPurchaseDate());
@@ -280,7 +280,7 @@ public class EditItemActivity extends AppCompatActivity {
             commentsStr = item.getComments();
         }
         commentsText.setText(commentsStr);
-        //remove brackets
+
         selectedTags = item.getTags();
         displayTags(tagsGroup, selectedTags);
     }

@@ -8,11 +8,7 @@
     tools:context=".LoginActivity"
     android:background="#000000">
 
-    <!-- Triangle Shape -->
 
-    <!-- Login Text in the middle -->
-
-    <!-- Welcome back message -->
 
     <View
         android:layout_width="189dp"

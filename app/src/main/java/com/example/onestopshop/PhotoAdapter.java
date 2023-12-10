@@ -45,7 +45,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             notifyItemChanged(previousSelectedPosition);
             notifyItemChanged(selectedPosition);
 
-            // Handle the click event (e.g., pass the clicked item to the activity)
+            // pass the clicked item to the activity
             if (clickListener != null) {
                 clickListener.onPhotoClick(photoList.get(selectedPosition));
             }

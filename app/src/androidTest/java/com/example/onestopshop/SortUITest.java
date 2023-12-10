@@ -87,7 +87,6 @@ public class SortUITest {
     }
 
 // Similar tests can be created for other sorting criteria
-// ...
 
     private void addTestItem(String purchaseDate) {
         onView(withId(R.id.add_button)).perform(click());

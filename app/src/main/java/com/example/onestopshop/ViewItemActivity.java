@@ -64,14 +64,14 @@ public class ViewItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
         photosController = new PhotosController(itemId);
-        inventoryController = new InventoryController(); // Initialize your controller
+        inventoryController = new InventoryController(); // Initialize controller
 
         if (itemId != null) {
             inventoryController.getItemById(itemId, new InventoryController.OnItemFetchListener() {
                 @Override
                 public void onItemFetched(Item item) {
                     if (item != null) {
-                        // Item retrieved successfully, now use it to populate the UI
+                        // Item retrieved successfully, now use it to populate the view
                         displayItemDetails(item);
                     } else {
                         // Handle case when item fetch fails
@@ -101,7 +101,7 @@ public class ViewItemActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception e) {
-                // Handle failure, for example
+                // Handle failure
 
             }
         });
@@ -151,7 +151,7 @@ public class ViewItemActivity extends AppCompatActivity {
                 @Override
                 public void onItemFetched(Item item) {
                     if (item != null) {
-                        // Item retrieved successfully, now use it to populate the UI
+                        // Item retrieved successfully, now use it to populate the view
                         displayItemDetails(item);
                     } else {
                         // Handle case when item fetch fails
@@ -181,7 +181,7 @@ public class ViewItemActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception e) {
-                // Handle failure, for example
+                // Handle failure
 
             }
         });

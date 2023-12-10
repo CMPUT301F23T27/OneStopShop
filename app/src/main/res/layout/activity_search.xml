@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:background="#BD2AC0"
                 android:src="@drawable/arrow" />
-            <!-- App Name -->
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

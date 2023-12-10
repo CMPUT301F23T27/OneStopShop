@@ -30,7 +30,7 @@ import android.Manifest;
 import android.widget.Toast;
 
 import java.io.File;
-
+//Citations: Use of CameraX documentation and ChatGPT (Dec 3) to understand binding to camera
 /**
  * CameraX screen
  */
@@ -55,7 +55,6 @@ public class CameraXFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_camera_x, container, false);
 
-        // Initialize UI components
         previewView = view.findViewById(R.id.viewFinder);
         takePhotoButton = view.findViewById(R.id.image_capture_button);
         isCameraReady = false;
@@ -64,7 +63,7 @@ public class CameraXFragment extends Fragment {
         imageCapture = new ImageCapture.Builder().build();
 
 
-        // Set up camera and bind use cases
+
         requestCameraPermission();
 
         // Set up the listener for capturing photos
@@ -136,14 +135,14 @@ public class CameraXFragment extends Fragment {
         imageCapture.takePicture(outputFileOptions, ContextCompat.getMainExecutor(requireContext()), new ImageCapture.OnImageSavedCallback() {
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                // You can set the result URI for the launching activity here
+
                 Uri savedPhotoUri = Uri.fromFile(photoFile);
 
                 // Notify the listener with the captured image URI
                 if (onImageCapturedListener != null) {
                     onImageCapturedListener.onImageCaptured(savedPhotoUri);
                 }
-                // Finish the fragment to return to the hosting activity
+
                 requireActivity().onBackPressed();
 
             }
@@ -163,8 +162,7 @@ public class CameraXFragment extends Fragment {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
 
         } else {
-            // Permission is already granted, proceed with your camera-related tasks
-            // For example, you can start the camera preview here
+            // Permission is granted
             startCamera();
         }
     }
@@ -175,7 +173,7 @@ public class CameraXFragment extends Fragment {
                     // Permission is granted, start the camera
                     startCamera();
                 } else {
-                    // Permission is denied, handle it (e.g., show a message to the user)
+                    // Permission is denied, handle it
                     Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show();
 
                 }

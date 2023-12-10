@@ -37,7 +37,6 @@ public class UserProfileActivity extends AppCompatActivity {
         // Initialize the inventory controller
         inventoryController = new InventoryController();
 
-        // Initialize UI elements by finding them in the layout XML
         logOutButton = findViewById(R.id.btnLogout);
         backButton = findViewById(R.id.buttonBack);
         email = findViewById(R.id.tvEmail);
