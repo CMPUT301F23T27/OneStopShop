@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         configureGoogleSignIn();
         setupSignInButton();
-        // This is so test user can log in
+        // This is so test user can log in easily
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +151,6 @@ public class LoginActivity extends AppCompatActivity {
                     // Handle any errors here
                 });
         startActivity(new Intent(this, MainActivity.class));
-        finish(); // Finish the AuthenticationActivity
+        finish(); // Finish the LoginActivity
     }
 }
